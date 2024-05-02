@@ -1,8 +1,10 @@
-# React + Vite
+# 실행방법
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+npm install
+npm run dev
+터미널에 뜨는 "localhost:포트번호" 로 접속하기
 
-Currently, two official plugins are available:
+# 24.05.02 개발 특이사항
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 명언 데이터 요청 시 CORS 에러 발생
+- 서버 측에서 CORS 허용 처리 부탁드립니다.
