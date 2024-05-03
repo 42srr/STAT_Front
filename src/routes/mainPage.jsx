@@ -71,8 +71,9 @@ export default function MainPage() {
   useEffect(() => {
     axios
       .get(url)
-      .then((data) => {
-        setGoodWords(data.name);
+      .then((response) => {
+        setGoodWords(`${response.data.content} / ${response.data.name}`);
+        console.log(response);
       })
       .catch((err) => {
         console.log(err);
@@ -91,7 +92,7 @@ export default function MainPage() {
           <SideBtn>Setting</SideBtn>
         </Sidebox>
         <Mainbox>
-          <Goodwords>{goodWords}노페인이 어쩌구 라이크 명언 저쩌구</Goodwords>
+          <Goodwords>{goodWords}</Goodwords>
           <div>
             42경산 현황
             <Now>
