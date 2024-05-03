@@ -72,8 +72,7 @@ export default function MainPage() {
     axios
       .get(url)
       .then((response) => {
-        setGoodWords(`${response.data.content} / ${response.data.name}`);
-        console.log(response);
+        setGoodWords(`${response.data.content} - ${response.data.name}`);
       })
       .catch((err) => {
         console.log(err);
