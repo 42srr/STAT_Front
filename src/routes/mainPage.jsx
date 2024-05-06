@@ -2,6 +2,8 @@ import styled from "styled-components";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import SideBar from "../components/SideBar.jsx";
+
 let Goodwords = styled.div`
   border-radius: 1rem;
   padding: 2rem;
@@ -59,11 +61,16 @@ let NowboxTitle = styled.div`
   height: 2rem;
   width: 100%;
 `;
+
 const datas = [
   "현재사람들이참여하는과제",
   "여행중인유저레벨분포",
   "평가포인트랭킹",
 ];
+
+const innerCircles = ["직전 회차 시험 통과율"];
+
+const records = ["보유 월렛 랭킹"];
 
 export default function MainPage() {
   const url = "http://118.67.134.143:8080/quotes";
@@ -82,20 +89,37 @@ export default function MainPage() {
   return (
     <>
       <Layout>
-        <Sidebox>
-          <Logo>42경산 로고</Logo>
-          <Search>검색창</Search>
-          <SideBtn>Home</SideBtn>
-          <SideBtn>Ranking</SideBtn>
-          <SideBtn>Information</SideBtn>
-          <SideBtn>Setting</SideBtn>
-        </Sidebox>
+        <SideBar />
         <Mainbox>
           <Goodwords>{goodWords}</Goodwords>
           <div>
             42경산 현황
             <Now>
               {datas.map(function (data) {
+                return (
+                  <Nowbox>
+                    <NowboxTitle>{data}</NowboxTitle>
+                  </Nowbox>
+                );
+              })}
+            </Now>
+          </div>
+          <div>
+            현재 이너서클 멤버 관련 통계
+            <Now>
+              {innerCircles.map(function (data) {
+                return (
+                  <Nowbox>
+                    <NowboxTitle>{data}</NowboxTitle>
+                  </Nowbox>
+                );
+              })}
+            </Now>
+          </div>
+          <div>
+            역대 기록
+            <Now>
+              {records.map(function (data) {
                 return (
                   <Nowbox>
                     <NowboxTitle>{data}</NowboxTitle>
