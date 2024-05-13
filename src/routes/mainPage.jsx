@@ -4,6 +4,52 @@ import { useEffect, useState } from "react";
 
 import SideBar from "../components/SideBar.jsx";
 
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+} from "chart.js";
+import { Doughnut, Bar } from "react-chartjs-2";
+
+ChartJS.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend
+);
+
+const Main = styled.div`
+  align-items: center;
+`;
+
+const Data = {
+  labels: ["getnextline", "born2beroot", "printf"],
+  datasets: [
+    {
+      data: [40, 20, 35],
+      backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+      borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+    },
+  ],
+};
+const BarData = {
+  labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  datasets: [
+    {
+      data: [10, 20, 5, 30, 7, 3, 11, 12, 1, 0],
+      backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+      borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+    },
+  ],
+};
+const Options = {};
+
 let Goodwords = styled.div`
   border-radius: 1rem;
   padding: 2rem;
@@ -98,7 +144,29 @@ export default function MainPage() {
               {datas.map(function (data) {
                 return (
                   <Nowbox>
-                    <NowboxTitle>{data}</NowboxTitle>
+                    <NowboxTitle>
+                      {data}{" "}
+                      <Main>
+                        {data === "현재사람들이참여하는과제" ? (
+                          <Doughnut data={Data} options={Options}></Doughnut>
+                        ) : data === "여행중인유저레벨분포" ? (
+                          <Bar data={BarData} options={Options}></Bar>
+                        ) : (
+                          <table>
+                            <thead>
+                              <th>순위</th>
+                              <th>이름</th>
+                              <th>포인트</th>
+                            </thead>
+                            <tbody>
+                              <td>1</td>
+                              <td>babbi</td>
+                              <td>5</td>
+                            </tbody>
+                          </table>
+                        )}
+                      </Main>
+                    </NowboxTitle>
                   </Nowbox>
                 );
               })}
@@ -110,7 +178,12 @@ export default function MainPage() {
               {innerCircles.map(function (data) {
                 return (
                   <Nowbox>
-                    <NowboxTitle>{data}</NowboxTitle>
+                    <NowboxTitle>
+                      {data}
+                      <Main>
+                        <Bar data={BarData} options={Options}></Bar>
+                      </Main>
+                    </NowboxTitle>
                   </Nowbox>
                 );
               })}
@@ -122,7 +195,23 @@ export default function MainPage() {
               {records.map(function (data) {
                 return (
                   <Nowbox>
-                    <NowboxTitle>{data}</NowboxTitle>
+                    <NowboxTitle>
+                      {data}
+                      <div>
+                        <table>
+                          <thead>
+                            <th>순위</th>
+                            <th>이름</th>
+                            <th>월렛</th>
+                          </thead>
+                          <tbody>
+                            <td>1</td>
+                            <td>babbi</td>
+                            <td>5</td>
+                          </tbody>
+                        </table>
+                      </div>
+                    </NowboxTitle>
                   </Nowbox>
                 );
               })}

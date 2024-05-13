@@ -51,8 +51,20 @@ export default function SideBar() {
       >
         Ranking
       </SideBtn>
-      <SideBtn>Information</SideBtn>
-      <SideBtn>Setting</SideBtn>
+      <SideBtn
+        onClick={() => {
+          navigate("/info");
+        }}
+      >
+        Information
+      </SideBtn>
+      <SideBtn
+        onClick={() => {
+          navigate("/set");
+        }}
+      >
+        Setting
+      </SideBtn>
     </Sidebox>
   );
 }

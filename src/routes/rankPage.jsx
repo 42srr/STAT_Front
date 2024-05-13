@@ -1,10 +1,10 @@
 import SideBar from "../components/SideBar.jsx";
 import { useState } from "react";
-
 import styled from "styled-components";
 
 export default function RankPage() {
   let [switchs, setSwitchs] = useState(0);
+
   let datas = [
     {
       순위: 1,
