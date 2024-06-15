@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import styled from "styled-components"; // js 코드 안에서 일반 css 구성 요소의 스타일 지정 가능
+import axios from "axios"; // http요청을 만들 때 사용됨, api와 통신할 때 사용됨
+import { useEffect, useState } from "react"; // react의 {컴포넌트가 }
 
 import SideBar from "../components/SideBar.jsx";
 
@@ -50,71 +50,75 @@ const BarData = {
 };
 const Options = {};
 
-let Goodwords = styled.div`
-  border-radius: 1rem;
-  padding: 2rem;
-  color: white;
-  background: #fd9214;
-  text-align: center;
-  font-weight: bold;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-`;
+
+// div요소를 기본으로하는 스타일링된 컴포넌트, flexbox 레이아웃 사용하도록 설정
 let Layout = styled.div`
   display: flex;
+  justify-content: flex-start;
 `;
-let Sidebox = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 1rem;
-  text-align: center;
-  font-size: 1.2rem;
-`;
+
+// mainbox : 세로방향 배치
 let Mainbox = styled.div`
-  display: flex;
-  flex-direction: column;
+  flex: 3;
 `;
-let SideBtn = styled.button`
-  background: white;
-  color: black;
-  text-align: left;
-  margin-top: 1rem;
-`;
-let Logo = styled.div`
-  margin-bottom: 2rem;
-`;
-let Search = styled.div`
-  border: 0.08rem solid black;
-  border-radius: 0.4rem;
-  width: 10rem;
-  margin-bottom: 2rem;
-`;
+
 let Now = styled.div`
   display: flex;
 `;
+let Goodwords = styled.div`
+
+  width: 1049px;
+  height: 187px;
+  margin: 100px 0 120px 0;
+  padding: 82px 667px 69px 309px;
+  transform: rotate(-180deg);
+  border-radius: 30px;
+  background-color: #fff;
+  border: solid 2px rgba(189, 191, 163, 0.3);
+
+  @media (max-width: 768px) {
+  padding: 1rem;
+  font-size: 0.8rem;
+  margin-top; 1rem;
+  margin-bottom: 1rem;
+}
+`;
+
 let Nowbox = styled.div`
-  border-radius: 0.4rem;
-  border: 0.08rem solid black;
-  width: 12rem;
-  height: 15rem;
-  margin-right: 1rem;
+  margin-right: 36px;
   display: flex;
   display-direction: column;
+  width: 320px;
+  height: 380px;
+  margin: 20px 36px 120px 0;
+  padding: 36px 14px 301px 10px;
+  object-fit: contain;
+  border-radius: 30px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: rgba(189, 191, 163, 0.15);
 `;
 let NowboxTitle = styled.div`
+  width: 329px;
+  height: 30px;
+  margin: 0 36px 7px 0;
+  font-family: Inter;
+  font-size: 25px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
   text-align: center;
-  border-bottom: 0.08rem solid black;
-  height: 2rem;
-  width: 100%;
+  color: #4b4545;
 `;
 
 const datas = [
-  "현재사람들이참여하는과제",
-  "여행중인유저레벨분포",
-  "평가포인트랭킹",
+  "과제 참여 분포",
+  "유저 레벨 분포",
+  "평가 포인트 랭킹",
 ];
 
-const innerCircles = ["직전 회차 시험 통과율"];
+const innerCircles = ["과제 참여 분포"];
 
 const records = ["보유 월렛 랭킹"];
 
@@ -139,7 +143,6 @@ export default function MainPage() {
         <Mainbox>
           <Goodwords>{goodWords}</Goodwords>
           <div>
-            42경산 현황
             <Now>
               {datas.map(function (data) {
                 return (
@@ -147,9 +150,9 @@ export default function MainPage() {
                     <NowboxTitle>
                       {data}{" "}
                       <Main>
-                        {data === "현재사람들이참여하는과제" ? (
+                        {data === "과제 참여 분포" ? (
                           <Doughnut data={Data} options={Options}></Doughnut>
-                        ) : data === "여행중인유저레벨분포" ? (
+                        ) : data === "유저 레벨 분포" ? (
                           <Bar data={BarData} options={Options}></Bar>
                         ) : (
                           <table>

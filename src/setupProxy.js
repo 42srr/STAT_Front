@@ -10,7 +10,7 @@ module.exports = function(app){
       changeOrigin: true
     })
   )
-  
+
   app.use(
     createProxyMiddleware('/118.67.134.143', {
       target: 'https://다른호스트',
@@ -19,4 +19,4 @@ module.exports = function(app){
       },
       changeOrigin: true
     })
-  )
+  )}
