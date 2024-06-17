@@ -67,7 +67,7 @@ let Now = styled.div`
 `;
 let Goodwords = styled.div`
 
-  width: 1049px;
+  width: 1032px;
   height: 187px;
   margin: 100px 0 120px 0;
   padding: 82px 667px 69px 309px;
@@ -85,17 +85,17 @@ let Goodwords = styled.div`
 `;
 
 let Nowbox = styled.div`
-  margin-right: 36px;
   display: flex;
   display-direction: column;
   width: 320px;
   height: 380px;
-  margin: 20px 36px 120px 0;
-  padding: 36px 14px 301px 10px;
+  margin: 7px 36px 120px 0;
+  padding: 36px 15px 280px 10px;
   object-fit: contain;
   border-radius: 30px;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   background-color: rgba(189, 191, 163, 0.15);
+
 `;
 let NowboxTitle = styled.div`
   width: 329px;
@@ -151,7 +151,18 @@ export default function MainPage() {
                       {data}{" "}
                       <Main>
                         {data === "과제 참여 분포" ? (
-                          <Doughnut data={Data} options={Options}></Doughnut>
+                            <table>
+                              <thead>
+                                <th>순위</th>
+                                <th>과제명</th>
+                                <th>인원수</th>
+                              </thead>
+                              <tbody>
+                                <td>1</td>
+                                <td>babbi</td>
+                                <td>5</td>
+                              </tbody>
+                            </table>
                         ) : data === "유저 레벨 분포" ? (
                           <Bar data={BarData} options={Options}></Bar>
                         ) : (
