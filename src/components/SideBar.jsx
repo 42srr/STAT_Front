@@ -29,6 +29,7 @@ export default function SideBar() {
     border: none;
     height: 24px;
   `;
+
   let SvgIcon = styled.svg`
     margin-right: 38px;
     margin-left: 42px;
