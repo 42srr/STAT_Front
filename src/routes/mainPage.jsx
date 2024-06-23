@@ -50,7 +50,6 @@ const BarData = {
 };
 const Options = {};
 
-
 // div요소를 기본으로하는 스타일링된 컴포넌트, flexbox 레이아웃 사용하도록 설정
 let Layout = styled.div`
   display: flex;
@@ -95,7 +94,6 @@ let Nowbox = styled.div`
   border-radius: 30px;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   background-color: rgba(189, 191, 163, 0.15);
-
 `;
 let NowboxTitle = styled.div`
   width: 329px;
@@ -112,24 +110,33 @@ let NowboxTitle = styled.div`
   color: #4b4545;
 `;
 
-const datas = [
-  "과제 참여 분포",
-  "유저 레벨 분포",
-  "평가 포인트 랭킹",
-];
+const datas = ["과제 참여 분포", "유저 레벨 분포", "평가 포인트 랭킹"];
 
 const innerCircles = ["과제 참여 분포"];
 
 const records = ["보유 월렛 랭킹"];
 
 export default function MainPage() {
-  const url = "http://118.67.134.143:8080/quotes";
   let [goodWords, setGoodWords] = useState("");
+  // 명언 부분 주석 처리
+  // const url = "http://118.67.134.143:8080/quotes";
+  // useEffect(() => {
+  //   axios
+  //     .get(url)
+  //     .then((response) => {
+  //       setGoodWords(`${response.data.content} - ${response.data.name}`);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+  // 42 프로젝트 데이터 불러오는 코드(CORS 에러 발생함)
+  const url2 = "http://118.67.134.143:8080/project";
   useEffect(() => {
     axios
-      .get(url)
+      .get(url2)
       .then((response) => {
-        setGoodWords(`${response.data.content} - ${response.data.name}`);
+        console.log(response);
       })
       .catch((err) => {
         console.log(err);
@@ -151,18 +158,18 @@ export default function MainPage() {
                       {data}{" "}
                       <Main>
                         {data === "과제 참여 분포" ? (
-                            <table>
-                              <thead>
-                                <th>순위</th>
-                                <th>과제명</th>
-                                <th>인원수</th>
-                              </thead>
-                              <tbody>
-                                <td>1</td>
-                                <td>babbi</td>
-                                <td>5</td>
-                              </tbody>
-                            </table>
+                          <table>
+                            <thead>
+                              <th>순위</th>
+                              <th>과제명</th>
+                              <th>인원수</th>
+                            </thead>
+                            <tbody>
+                              <td>1</td>
+                              <td>babbi</td>
+                              <td>5</td>
+                            </tbody>
+                          </table>
                         ) : data === "유저 레벨 분포" ? (
                           <Bar data={BarData} options={Options}></Bar>
                         ) : (
