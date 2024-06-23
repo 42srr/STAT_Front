@@ -131,7 +131,7 @@ export default function MainPage() {
   //     });
   // }, []);
   // 42 프로젝트 데이터 불러오는 코드(CORS 에러 발생함)
-  const url2 = "http://118.67.134.143:8080/project";
+  const url2 = "http://118.67.134.143:8080/projects";
   useEffect(() => {
     axios
       .get(url2)
