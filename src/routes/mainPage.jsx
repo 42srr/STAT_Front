@@ -38,6 +38,7 @@ const Data = {
     },
   ],
 };
+
 const BarData = {
   labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
   datasets: [
@@ -48,6 +49,7 @@ const BarData = {
     },
   ],
 };
+
 const Options = {};
 
 // div요소를 기본으로하는 스타일링된 컴포넌트, flexbox 레이아웃 사용하도록 설정
@@ -64,6 +66,7 @@ let Mainbox = styled.div`
 let Now = styled.div`
   display: flex;
 `;
+
 let Goodwords = styled.div`
 
   width: 1032px;
