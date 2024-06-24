@@ -1,12 +1,13 @@
-import styled from "styled-components"; // css in js, react컴포넌트에 스타일을 직접 작성할 수 있게 해줌
-import { useNavigate } from "react-router-dom"; // 다름페이지로 이동할 때 사용
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export default function loginPage() {
   let navigate = useNavigate();
   let Flexs = styled.div`
     display: flex;
     flex-direction: column;
-  `; // 로그인 페이지
+  `;
+  
   let Logo = styled.div`
     margin: auto;
   `;
