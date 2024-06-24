@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
 import SideBar from "../components/SideBar.jsx";
+import { Doughnut, Bar } from "react-chartjs-2";
 
 import {
   Chart as ChartJS,
@@ -13,7 +13,6 @@ import {
   LinearScale,
   BarElement,
 } from "chart.js";
-import { Doughnut, Bar } from "react-chartjs-2";
 
 ChartJS.register(
   ArcElement,
@@ -96,6 +95,7 @@ let Nowbox = styled.div`
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   background-color: rgba(189, 191, 163, 0.15);
 `;
+
 let NowboxTitle = styled.div`
   width: 329px;
   height: 30px;
@@ -148,7 +148,6 @@ export default function MainPage() {
         console.log(err);
       });
   }, []);
-
 
   return (
     <>
