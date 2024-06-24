@@ -1,6 +1,6 @@
-import styled from "styled-components"; // js 코드 안에서 일반 css 구성 요소의 스타일 지정 가능
-import axios from "axios"; // http요청을 만들 때 사용됨, api와 통신할 때 사용됨
-import { useEffect, useState } from "react"; // react의 {컴포넌트가 }
+import styled from "styled-components";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 import SideBar from "../components/SideBar.jsx";
 
@@ -52,13 +52,11 @@ const BarData = {
 
 const Options = {};
 
-// div요소를 기본으로하는 스타일링된 컴포넌트, flexbox 레이아웃 사용하도록 설정
 let Layout = styled.div`
   display: flex;
   justify-content: flex-start;
 `;
 
-// mainbox : 세로방향 배치
 let Mainbox = styled.div`
   flex: 3;
 `;
@@ -81,7 +79,7 @@ let Goodwords = styled.div`
   @media (max-width: 768px) {
   padding: 1rem;
   font-size: 0.8rem;
-  margin-top; 1rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 `;
@@ -113,11 +111,16 @@ let NowboxTitle = styled.div`
   color: #4b4545;
 `;
 
-const datas = ["과제 참여 분포", "유저 레벨 분포", "평가 포인트 랭킹"];
+const dataRank = [
+  "과제 참여 랭킹",
+  "보유 월렛 랭킹",
+  "평가 포인트 랭킹",
+];
 
-const innerCircles = ["과제 참여 분포"];
-
-const records = ["보유 월렛 랭킹"];
+const datasBar = [
+  "직전 회차 시험 통과율",
+  "유저 레벨 분포",
+];
 
 export default function MainPage() {
   let [goodWords, setGoodWords] = useState("");
@@ -146,6 +149,7 @@ export default function MainPage() {
       });
   }, []);
 
+
   return (
     <>
       <Layout>
@@ -154,27 +158,38 @@ export default function MainPage() {
           <Goodwords>{goodWords}</Goodwords>
           <div>
             <Now>
-              {datas.map(function (data) {
+              {dataRank.map(function (data) {
                 return (
                   <Nowbox>
                     <NowboxTitle>
                       {data}{" "}
                       <Main>
-                        {data === "과제 참여 분포" ? (
+                        {data === "과제 참여 랭킹" ? (
+                            <table>
+                              <thead>
+                                <th>순위</th>
+                                <th>과제명</th>
+                                <th>인원수</th>
+                              </thead>
+                              <tbody>
+                                <td>1</td>
+                                <td>gnl</td>
+                                <td>5</td>
+                              </tbody>
+                            </table>
+                        ) : data === "보유 월렛 랭킹" ? (
                           <table>
-                            <thead>
-                              <th>순위</th>
-                              <th>과제명</th>
-                              <th>인원수</th>
-                            </thead>
-                            <tbody>
-                              <td>1</td>
-                              <td>babbi</td>
-                              <td>5</td>
-                            </tbody>
-                          </table>
-                        ) : data === "유저 레벨 분포" ? (
-                          <Bar data={BarData} options={Options}></Bar>
+                          <thead>
+                            <th>순위</th>
+                            <th>이름</th>
+                            <th>보유한 월렛</th>
+                          </thead>
+                          <tbody>
+                            <td>1</td>
+                            <td>babbi</td>
+                            <td>5</td>
+                          </tbody>
+                        </table>
                         ) : (
                           <table>
                             <thead>
@@ -197,44 +212,20 @@ export default function MainPage() {
             </Now>
           </div>
           <div>
-            현재 이너서클 멤버 관련 통계
             <Now>
-              {innerCircles.map(function (data) {
+              {datasBar.map(function (data) {
                 return (
                   <Nowbox>
                     <NowboxTitle>
-                      {data}
+                      {data}{" "}
                       <Main>
-                        <Bar data={BarData} options={Options}></Bar>
+                        {data == "직전 회차 시험 통과율" ? (
+                          <Bar data={BarData} options={Options}></Bar>
+                        ) : (
+                          <Bar data={BarData} options={Options}></Bar>
+                        )
+                      }
                       </Main>
-                    </NowboxTitle>
-                  </Nowbox>
-                );
-              })}
-            </Now>
-          </div>
-          <div>
-            역대 기록
-            <Now>
-              {records.map(function (data) {
-                return (
-                  <Nowbox>
-                    <NowboxTitle>
-                      {data}
-                      <div>
-                        <table>
-                          <thead>
-                            <th>순위</th>
-                            <th>이름</th>
-                            <th>월렛</th>
-                          </thead>
-                          <tbody>
-                            <td>1</td>
-                            <td>babbi</td>
-                            <td>5</td>
-                          </tbody>
-                        </table>
-                      </div>
                     </NowboxTitle>
                   </Nowbox>
                 );
