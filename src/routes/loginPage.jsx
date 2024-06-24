@@ -7,6 +7,7 @@ export default function loginPage() {
     display: flex;
     flex-direction: column;
   `;
+  
   let Logo = styled.div`
     margin: auto;
   `;
