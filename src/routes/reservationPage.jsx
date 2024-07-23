@@ -41,7 +41,6 @@ export default function ReservationPage() {
             className="continue-button">
             Continue
           </button>
-          
         </div>
       </main>
     </div>
