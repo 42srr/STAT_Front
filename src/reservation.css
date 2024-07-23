@@ -1,0 +1,175 @@
+.container {
+    display: flex;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #f8f8f8;
+    padding: 10px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav ul li {
+    margin: 20px 0;
+}
+
+.nav .search {
+    margin-bottom: 20px;
+}
+
+.nav .search input {
+    width: 100%;
+    padding: 5px;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.tab {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: #ccc;
+}
+
+.calendar {
+    margin-top: 20px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.calendar-body {
+    margin-top: 10px;
+}
+
+.calendar-description {
+    background-color: #eee;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.confirmation {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.continue-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.main-content h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.time-selection-container {
+    display: flex;
+    gap: 20px;
+}
+
+.time-line {
+    width: 100px;
+    background-color: #f8f8f8;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.reservation-details {
+    flex: 1;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    margin : 0 auto;
+}
+
+.members, .time, .reservation-status {
+    margin-bottom: 20px;
+}
+
+.members h2, .time h2, .reservation-status h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.members-count {
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+}
+
+.reservation-status p {
+    margin: 5px 0;
+}
+
+.reservation-status > div > p:first-child {
+    font-weight: 600;
+    width: 20%;
+}
+
+.reservation-status > div.reservation-status-elements {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cancel-button, .done-button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.cancel-button {
+    background-color: #eee;
+    color: #555;
+}
+
+.done-button {
+    background-color: #ccc;
+    color: #fff;
+}
