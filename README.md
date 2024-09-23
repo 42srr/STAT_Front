@@ -45,8 +45,8 @@ npm run dev
 - front 프로젝트 로컬에 clone
 - vite.config(cors테스트용).js 파일의 파일명을 vite.config.js로 변경(기존 vite.config.js의 파일명은 vite.config2.js 등으로 수정해서 중복 피하기)
 - vite.config.js 파일이 존재하는 경로에서 아래 명령어 실행하여 프론트 서버 실행
-  npm install
-  npm run dev
+  -- npm install
+  -- npm run dev
 - 개발자 도구에서 console 탭을 통해 cors 에러 확인
 
 ## 패키지 제거
