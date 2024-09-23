@@ -129,11 +129,12 @@ export default function MainPage() {
   //     });
   // }, []);
   // 42 프로젝트 데이터 불러오는 코드(CORS 에러 발생함)
-  const url2 = "/api/projects";
+  const url2 = "projects";
   useEffect(() => {
     axios
       .get(url2)
       .then((response) => {
+        console.log("됐나?");
         console.log(response);
       })
       .catch((err) => {
