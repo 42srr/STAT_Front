@@ -32,3 +32,23 @@ npm run dev
 
 - 명언 데이터 로드하는 코드 주석 처리(goodWords 변수가 참조되고 있어서 남겨둠)
 - 42 프로젝트 데이터 로드하는 코드 작성(CORS 에러 발생)
+
+# 24.09.23 개발 특이사항(yutsong)
+
+## cors 에러 해결에 대한 건
+
+- cors에러 해결을 위해 react에서 프록시를 활용해 우회하여 해결 함
+- 근본적인 해결책은 아니기 때문에 서버 측에서 cors 에러 해결하면 원복 예정
+
+## 서버 측에서 해결하는 방법
+
+- front 프로젝트 로컬에 clone
+- vite.config(cors테스트용).js 파일의 파일명을 vite.config.js로 변경(기존 vite.config.js의 파일명은 vite.config2.js 등으로 수정해서 중복 피하기)
+- vite.config.js 파일이 존재하는 경로에서 아래 명령어 실행하여 프론트 서버 실행
+  npm install
+  npm run dev
+- 개발자 도구에서 console 탭을 통해 cors 에러 확인
+
+## 패키지 제거
+
+- mui
