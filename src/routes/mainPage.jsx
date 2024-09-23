@@ -65,7 +65,6 @@ let Now = styled.div`
 `;
 
 let Goodwords = styled.div`
-
   width: 1032px;
   height: 187px;
   margin: 100px 0 120px 0;
@@ -76,11 +75,11 @@ let Goodwords = styled.div`
   border: solid 2px rgba(189, 191, 163, 0.3);
 
   @media (max-width: 768px) {
-  padding: 1rem;
-  font-size: 0.8rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
+    padding: 1rem;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 let Nowbox = styled.div`
@@ -111,16 +110,9 @@ let NowboxTitle = styled.div`
   color: #4b4545;
 `;
 
-const dataRank = [
-  "과제 참여 랭킹",
-  "보유 월렛 랭킹",
-  "평가 포인트 랭킹",
-];
+const dataRank = ["과제 참여 랭킹", "보유 월렛 랭킹", "평가 포인트 랭킹"];
 
-const datasBar = [
-  "직전 회차 시험 통과율",
-  "유저 레벨 분포",
-];
+const datasBar = ["직전 회차 시험 통과율", "유저 레벨 분포"];
 
 export default function MainPage() {
   let [goodWords, setGoodWords] = useState("");
@@ -137,7 +129,7 @@ export default function MainPage() {
   //     });
   // }, []);
   // 42 프로젝트 데이터 불러오는 코드(CORS 에러 발생함)
-  const url2 = "http://118.67.134.143:8080/projects";
+  const url2 = "/api/projects";
   useEffect(() => {
     axios
       .get(url2)
@@ -164,31 +156,31 @@ export default function MainPage() {
                       {data}{" "}
                       <Main>
                         {data === "과제 참여 랭킹" ? (
-                            <table>
-                              <thead>
-                                <th>순위</th>
-                                <th>과제명</th>
-                                <th>인원수</th>
-                              </thead>
-                              <tbody>
-                                <td>1</td>
-                                <td>gnl</td>
-                                <td>5</td>
-                              </tbody>
-                            </table>
+                          <table>
+                            <thead>
+                              <th>순위</th>
+                              <th>과제명</th>
+                              <th>인원수</th>
+                            </thead>
+                            <tbody>
+                              <td>1</td>
+                              <td>gnl</td>
+                              <td>5</td>
+                            </tbody>
+                          </table>
                         ) : data === "보유 월렛 랭킹" ? (
                           <table>
-                          <thead>
-                            <th>순위</th>
-                            <th>이름</th>
-                            <th>보유한 월렛</th>
-                          </thead>
-                          <tbody>
-                            <td>1</td>
-                            <td>babbi</td>
-                            <td>5</td>
-                          </tbody>
-                        </table>
+                            <thead>
+                              <th>순위</th>
+                              <th>이름</th>
+                              <th>보유한 월렛</th>
+                            </thead>
+                            <tbody>
+                              <td>1</td>
+                              <td>babbi</td>
+                              <td>5</td>
+                            </tbody>
+                          </table>
                         ) : (
                           <table>
                             <thead>
@@ -222,8 +214,7 @@ export default function MainPage() {
                           <Bar data={BarData} options={Options}></Bar>
                         ) : (
                           <Bar data={BarData} options={Options}></Bar>
-                        )
-                      }
+                        )}
                       </Main>
                     </NowboxTitle>
                   </Nowbox>
