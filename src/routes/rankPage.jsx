@@ -2,8 +2,18 @@ import SideBar from "../components/SideBar.jsx";
 import { useState } from "react";
 import styled from "styled-components";
 
+/*
+
+
 export default function RankPage() {
   let [switchs, setSwitchs] = useState(0);
+
+  let [activeBtn, setActiveBtn] = useState(0);
+
+  let btnClick = (idx) => {
+    setSwitchs(idx);
+    setActiveBtn(idx);
+  }
 
   let datas = [
     {
@@ -36,9 +46,7 @@ export default function RankPage() {
   let countEvals = ["순위", "사진", "이름", "횟수"];
   let lenComments = ["순위", "사진", "이름", "최대길이"];
 
-  let Layout = styled.div`
-    display: flex;
-  `;
+
   let Sidebox = styled.div`
     display: flex;
     flex-direction: column;
@@ -47,14 +55,13 @@ export default function RankPage() {
     font-size: 1.2rem;
   `;
   let Mainbox = styled.div`
-    display: flex;
-    flex-direction: column;
+    flex: 3;
   `;
   let TopBtn = styled.button`
     padding: 1rem;
   `;
 
-  const switcher = () => {
+  let switcher = () => {
     if (switchs === 0) {
       return (
         <div>
@@ -163,37 +170,265 @@ export default function RankPage() {
   return (
     <Layout>
       <SideBar />
+      <Mainbox>
       <div>
+      <Line />
         <TopBtn
           onClick={() => {
             setSwitchs(0);
+            setActiveBtn(0);
           }}
         >
-          종합평균
+          <RankTitle>
+            <BoxContainer>
+              <Label>
+              종합평균
+              </Label>
+            </BoxContainer>
+          </RankTitle>
+
         </TopBtn>
         <TopBtn
           onClick={() => {
             setSwitchs(1);
+            setActiveBtn(1);
           }}
         >
-          Level
+          <RankTitle>
+          <BoxContainer>
+            <Label>
+            Level
+            </Label>
+          </BoxContainer>
+          </RankTitle>
         </TopBtn>
         <TopBtn
           onClick={() => {
             setSwitchs(2);
+            setActiveBtn(2);
           }}
         >
-          평가횟수
+          <RankTitle>
+            <BoxContainer>
+              <Label>
+              평가 횟수
+              </Label>
+            </BoxContainer>
+          </RankTitle>
         </TopBtn>
         <TopBtn
           onClick={() => {
             setSwitchs(3);
+            setActiveBtn(3);
           }}
         >
-          코멘트길이
+          <RankTitle>
+            <BoxContainer>
+              <Label>
+              코멘트 길이
+              </Label>
+            </BoxContainer>
+          </RankTitle>
         </TopBtn>
       </div>
       <div>{switcher()}</div>
+      </Mainbox>
+    </Layout>
+  );
+}
+*/
+
+// styled-components
+let Layout = styled.div`
+  display: flex;
+`;
+
+let Mainbox = styled.div`
+  flex: 3;
+  padding: 20px;
+  margin-right: 50px;
+`;
+
+let TopBar = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+let Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+let TableHeader = styled.th`
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #f4f4f4;
+  padding: 10px 20px;
+  border-left: none;
+  border-right: none;
+
+  &:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  &:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  &:nth-child(1) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '10%' : '10%')}; }  // 순위
+  &:nth-child(2) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '20%' : '20%')}; }  // 사진
+  &:nth-child(3) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '35%' : '70%')}; }  // 이름
+  &:nth-child(4) { width: 35%; }
+`;
+
+let TableData = styled.td`
+  font-size: 16px;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  border-left: none;
+  border-right: none;
+
+  &:nth-child(1) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '10%' : '10%')}; }  // 순위
+  &:nth-child(2) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '20%' : '20%')}; }  // 사진
+  &:nth-child(3) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '35%' : '70%')}; }  // 이름
+  &:nth-child(4) { width: 35%; }
+`;
+
+let TableRow = styled.tr`
+  &:nth-chlild(even) {
+    background-color: #f9f9f9;
+  }
+`;
+
+let RankTitle = styled.div`
+  width: 150px;
+  height: 50px;
+  display: flex;
+  margin-top: 50px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 10px;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: ${({ isActive }) => (isActive ? '#8f9078' : 'transparent')};
+    border-radius: 10px 10px 0 0;
+    transition: background-color 0.3s ease;
+  }
+
+  color: ${({ isActive }) => (isActive ? "white" : "black")};
+`;
+
+let Label = styled.span`
+  font-size: 20px;
+  color: ${({ isActive }) => (isActive ? "#8f9078" : "#4b4545")};
+  font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
+`;
+
+let BoxContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+let Line = styled.div`
+  width: 100%;
+  height: 1.1px;
+  background-color: #bdbfa3;
+  margin-bottom: 30px;
+`;
+
+
+// RankPage 컴포넌트
+export default function RankPage() {
+  let [switchs, setSwitchs] = useState(0); // 데이터 변경을 위한 상태
+  let [activeBtn, setActiveBtn] = useState(0); // 활성화된 버튼 상태
+
+  let btnClick = (idx) => {
+    setSwitchs(idx);
+    setActiveBtn(idx);
+  };
+
+  let datas = [
+    { 순위: 1, 사진: "이미지", 이름: "제갈민수", 레벨: 10, 횟수: 5, 최대길이: 255 },
+    { 순위: 2, 사진: "이미지", 이름: "남궁민수", 레벨: 10, 횟수: 5, 최대길이: 255 },
+    { 순위: 3, 사진: "이미지", 이름: "사공민수", 레벨: 10, 횟수: 5, 최대길이: 255 },
+    { 순위: 4, 사진: "이미지", 이름: "사공민수", 레벨: 10, 횟수: 5, 최대길이: 255 },
+  ];
+
+  let totalAvg = ["순위", "사진", "이름"];
+  let levels = ["순위", "사진", "이름", "레벨"];
+  let countEvals = ["순위", "사진", "이름", "횟수"];
+  let lenComments = ["순위", "사진", "이름", "최대길이"];
+
+  let renderTable = () => {
+    let headers = switchs === 0 ? totalAvg : switchs === 1 ? levels : switchs === 2 ? countEvals : lenComments;
+
+    return (
+      <Table>
+        <thead>
+          <TableRow>
+            {headers.map((header) => (
+              <TableHeader key={header} switchs={switchs}>{header}</TableHeader>
+            ))}
+          </TableRow>
+        </thead>
+        <tbody>
+          {datas.map((data) => (
+            <TableRow key={data.순위}>
+              <TableData switchs={switchs}>{data.순위}</TableData>
+              <TableData switchs={switchs}>{data.사진}</TableData>
+              <TableData switchs={switchs}>{data.이름}</TableData>
+              {switchs === 1 && <TableData switchs={switchs}>{data.레벨}</TableData>}
+              {switchs === 2 && <TableData switchs={switchs}>{data.횟수}</TableData>}
+              {switchs === 3 && <TableData switchs={switchs}>{data.최대길이}</TableData>}
+            </TableRow>
+          ))}
+        </tbody>
+      </Table>
+    );
+  };
+
+  return (
+    <Layout>
+      <SideBar />
+      <Mainbox>
+        <TopBar>
+          <RankTitle isActive={activeBtn === 0} onClick={() => btnClick(0)}>
+            <BoxContainer>
+              <Label isActive={activeBtn === 0}>종합 평균</Label>
+            </BoxContainer>
+          </RankTitle>
+          <RankTitle isActive={activeBtn === 1} onClick={() => btnClick(1)}>
+            <BoxContainer>
+              <Label isActive={activeBtn === 1}>Level</Label>
+            </BoxContainer>
+          </RankTitle>
+          <RankTitle isActive={activeBtn === 2} onClick={() => btnClick(2)}>
+            <BoxContainer>
+              <Label isActive={activeBtn === 2}>평가 횟수</Label>
+            </BoxContainer>
+          </RankTitle>
+          <RankTitle isActive={activeBtn === 3} onClick={() => btnClick(3)}>
+            <BoxContainer>
+              <Label isActive={activeBtn === 3}>코멘트 길이</Label>
+            </BoxContainer>
+          </RankTitle>
+        </TopBar>
+        <Line />
+        {renderTable()}
+      </Mainbox>
     </Layout>
   );
 }
