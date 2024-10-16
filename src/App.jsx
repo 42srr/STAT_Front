@@ -6,13 +6,36 @@ import InfoPage from "./routes/infoPage.jsx";
 import ReservationPage from "./routes/reservationPage.jsx";
 import ReservationDetail from "./routes/reservationDetail.jsx";
 import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
 function App() {
+  const [accessToken, setAccessToken] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
   return (
     <>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/main" element={<MainPage />} />
+        <Route
+          path="/"
+          element={
+            <LoginPage
+              setAccessToken={setAccessToken}
+              setRefreshToken={setRefreshToken}
+              accessToken={accessToken}
+              refreshToken={refreshToken}
+            />
+          }
+        />
+        <Route
+          path="/main"
+          element={
+            <MainPage
+              setAccessToken={setAccessToken}
+              setRefreshToken={setRefreshToken}
+              accessToken={accessToken}
+              refreshToken={refreshToken}
+            />
+          }
+        />
         <Route path="/rank" element={<RankPage />} />
         <Route path="/set" element={<SetPage />} />
         <Route path="/reservation" element={<ReservationPage />} />

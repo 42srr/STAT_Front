@@ -75,3 +75,23 @@ npm run dev
 ## UI 수정
 
 - ID 및 Password 입력란 제거
+
+# 24.10.16 개발 특이사항(yutsong)
+
+## 상태관리
+
+- app.js 파일에서 token 상태 관리
+- token은 하위 페이지에 props로 전달(추후 상태가 복잡해지면 redux 도입 고려)
+
+## UI 수정
+
+- sidebar 컴포넌트 코드 수정(컴포넌트 내부에 styledcomponent가 들어있어서 함수 밖으로 빼냄)
+
+## 인증 기능 수정
+
+- login 페이지에서 인증 버튼 클릭 시 인증 진행
+- 인증 후 main 페이지로 이동
+
+## 서버로 요청하는 기능 구현
+
+- main 페이지 진입 후 useEffect를 활용해 서버에 데이터 요청

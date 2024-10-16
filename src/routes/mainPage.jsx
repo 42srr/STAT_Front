@@ -114,7 +114,12 @@ const dataRank = ["과제 참여 랭킹", "보유 월렛 랭킹", "평가 포인
 
 const datasBar = ["직전 회차 시험 통과율", "유저 레벨 분포"];
 
-export default function MainPage() {
+export default function MainPage({
+  setAccessToken,
+  setRefreshToken,
+  accessToken,
+  refreshToken,
+}) {
   let [goodWords, setGoodWords] = useState("");
   // 명언 부분 주석 처리
   // const url = "http://118.67.134.143:8080/quotes";
@@ -129,19 +134,49 @@ export default function MainPage() {
   //     });
   // }, []);
   // 42 프로젝트 데이터 불러오는 코드(CORS 에러 발생함)
-  const url2 = "projects";
-  useEffect(() => {
-    axios
-      .get(url2)
-      .then((response) => {
-        console.log("됐나?");
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
+  useEffect(() => {
+    getProjects();
+    getLevels();
+    getRankWallet();
+    getUsers();
+  }, []);
+  function getProjects() {
+    axios
+      .get("http://118.67.134.143:8080/projects/yutsong", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }
+  function getRankWallet() {
+    axios
+      .get("http://118.67.134.143:8080/ranking/wallet", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }
+  function getLevels() {
+    axios
+      .get("http://118.67.134.143:8080/levels", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }
+  function getUsers() {
+    axios
+      .get("http://118.67.134.143:8080/users", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }
   return (
     <>
       <Layout>

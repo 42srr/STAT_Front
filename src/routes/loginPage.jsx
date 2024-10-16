@@ -24,10 +24,15 @@ let Buttons = styled.button`
   width: 10rem;
 `;
 
-export default function loginPage() {
+export default function loginPage({
+  setAccessToken,
+  setRefreshToken,
+  accessToken,
+  refreshToken,
+}) {
   const navigate = useNavigate();
-  const [accessToken, setAccesToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
+  // const [accessToken, setAccesToken] = useState("");
+  // const [refreshToken, setRefreshToken] = useState("");
   // local용 URL
   const toGetAuthCodeUrl =
     "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-598ae18e7a326adf87c4c13c715a91675c6b68458bb4082e24e297616ebd98d4&redirect_uri=http%3A%2F%2Flocalhost%3A5173&response_type=code";
@@ -45,8 +50,11 @@ export default function loginPage() {
         console.log(res.data.accessToken);
         console.log("refreshToken:");
         console.log(res.data.refreshToken);
-        setAccesToken(res.data.accessToken);
+        setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
+      })
+      .then(() => {
+        navigate("/main");
       });
   }
   async function getRefresh() {
