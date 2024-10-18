@@ -120,7 +120,8 @@ export default function MainPage({
   accessToken,
   refreshToken,
 }) {
-  let [goodWords, setGoodWords] = useState("");
+  const [walletRank, setWalletRank] = useState([]);
+  const [goodWords, setGoodWords] = useState("");
   // 명언 부분 주석 처리
   // const url = "http://118.67.134.143:8080/quotes";
   // useEffect(() => {
@@ -147,7 +148,7 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log("Projects", res.data);
       });
   }
   function getRankWallet() {
@@ -156,7 +157,11 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log("RankWallet:", res.data);
+        const topFiveWalletRank = res.data.slice(0, 5);
+        setWalletRank(topFiveWalletRank);
+        console.log(topFiveWalletRank);
+        // setWalletRank(res.data);
       });
   }
   function getLevels() {
@@ -165,7 +170,7 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log("Levels:", res.data);
       });
   }
   function getUsers() {
@@ -174,7 +179,7 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log("Users:", res.data);
       });
   }
   return (
@@ -212,9 +217,15 @@ export default function MainPage({
                               <th>보유한 월렛</th>
                             </thead>
                             <tbody>
-                              <td>1</td>
-                              <td>babbi</td>
-                              <td>5</td>
+                              {walletRank.map((rank, index) => {
+                                return (
+                                  <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{rank.intraId}</td>
+                                    <td>{rank.dollar}</td>
+                                  </tr>
+                                );
+                              })}
                             </tbody>
                           </table>
                         ) : (
