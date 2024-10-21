@@ -9,6 +9,7 @@ let Flexs = styled.div`
 `;
 
 let Logo = styled.div`
+  text-align: center;
   margin: auto;
 `;
 let Fields = styled.input`
@@ -22,6 +23,12 @@ let Buttons = styled.button`
   margin: auto;
   margin-top: 1rem;
   width: 10rem;
+  padding: 1rem;
+  border-radius: 0.8rem;
+`;
+const LoginBox = styled.div`
+  margin: auto;
+  padding: 2rem;
 `;
 
 export default function loginPage({
@@ -31,8 +38,6 @@ export default function loginPage({
   refreshToken,
 }) {
   const navigate = useNavigate();
-  // const [accessToken, setAccesToken] = useState("");
-  // const [refreshToken, setRefreshToken] = useState("");
   // local용 URL
   const toGetAuthCodeUrl =
     "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-598ae18e7a326adf87c4c13c715a91675c6b68458bb4082e24e297616ebd98d4&redirect_uri=http%3A%2F%2Flocalhost%3A5173&response_type=code";
@@ -67,97 +72,23 @@ export default function loginPage({
         console.log(res.data.accessToken);
         console.log("refreshToken:");
         console.log(res.data.refreshToken);
-        setAccesToken(res.data.accessToken);
+        setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
-      });
-  }
-  function getProjects() {
-    axios
-      .get("http://118.67.134.143:8080/projects/yutsong", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
-  }
-  function getRankWallet() {
-    axios
-      .get("http://118.67.134.143:8080/ranking/wallet", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
-  }
-  function getLevels() {
-    axios
-      .get("http://118.67.134.143:8080/levels", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
-  }
-  function getUsers() {
-    axios
-      .get("http://118.67.134.143:8080/users", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((res) => {
-        console.log(res.data);
       });
   }
 
   return (
     <>
       <Flexs>
-        <Logo>42경산로고</Logo>
-        <Buttons>
-          <a href={toGetAuthCodeUrl}>auth test btn</a>
-        </Buttons>
-        <Buttons
-          onClick={() => {
-            getRankWallet();
-          }}
-        >
-          Rank/Wallet
-        </Buttons>
-        <Buttons
-          onClick={() => {
-            getProjects();
-          }}
-        >
-          Projects
-        </Buttons>
-
-        <Buttons
-          onClick={() => {
-            getLevels();
-          }}
-        >
-          Levels
-        </Buttons>
-        <Buttons
-          onClick={() => {
-            getUsers();
-          }}
-        >
-          Users
-        </Buttons>
-        <Buttons
-          onClick={() => {
-            getRefresh();
-          }}
-        >
-          Refresh
-        </Buttons>
-        <Buttons
-          onClick={() => {
-            navigate("/main");
-          }}
-        >
-          Login
-        </Buttons>
+        <LoginBox>
+          <Logo>42경산로고</Logo>
+          <Buttons>
+            <a href={toGetAuthCodeUrl}>
+              <span style={{ color: "white" }}>Login with </span>
+              42GS
+            </a>
+          </Buttons>
+        </LoginBox>
       </Flexs>
     </>
   );

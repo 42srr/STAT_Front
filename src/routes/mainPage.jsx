@@ -27,30 +27,6 @@ const Main = styled.div`
   align-items: center;
 `;
 
-const Data = {
-  labels: ["getnextline", "born2beroot", "printf"],
-  datasets: [
-    {
-      data: [40, 20, 35],
-      backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
-      borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
-    },
-  ],
-};
-
-const BarData = {
-  labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  datasets: [
-    {
-      data: [10, 20, 5, 30, 7, 3, 11, 12, 1, 0],
-      backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
-      borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
-    },
-  ],
-};
-
-const Options = {};
-
 let Layout = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -114,27 +90,37 @@ const dataRank = ["과제 참여 랭킹", "보유 월렛 랭킹", "평가 포인
 
 const datasBar = ["직전 회차 시험 통과율", "유저 레벨 분포"];
 
+const Options = {};
+
 export default function MainPage({
   setAccessToken,
   setRefreshToken,
   accessToken,
   refreshToken,
 }) {
+  // 직전회차 시험 데이터 그래프에 사용하는 더미 데이터
+  const BarData = {
+    labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    datasets: [
+      {
+        data: [10, 20, 5, 30, 7, 3, 11, 12, 1, 0],
+        backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+        borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+      },
+    ],
+  };
+  const [barLevels, setBarLevels] = useState({
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+        borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+      },
+    ],
+  });
   const [walletRank, setWalletRank] = useState([]);
   const [goodWords, setGoodWords] = useState("");
-  // 명언 부분 주석 처리
-  // const url = "http://118.67.134.143:8080/quotes";
-  // useEffect(() => {
-  //   axios
-  //     .get(url)
-  //     .then((response) => {
-  //       setGoodWords(`${response.data.content} - ${response.data.name}`);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-  // 42 프로젝트 데이터 불러오는 코드(CORS 에러 발생함)
 
   useEffect(() => {
     getProjects();
@@ -171,6 +157,16 @@ export default function MainPage({
       })
       .then((res) => {
         console.log("Levels:", res.data);
+        setBarLevels({
+          labels: Object.keys(res.data),
+          datasets: [
+            {
+              data: Object.values(res.data),
+              backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+              borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+            },
+          ],
+        });
       });
   }
   function getUsers() {
@@ -190,9 +186,9 @@ export default function MainPage({
           <Goodwords>{goodWords}</Goodwords>
           <div>
             <Now>
-              {dataRank.map(function (data) {
+              {dataRank.map(function (data, key) {
                 return (
-                  <Nowbox>
+                  <Nowbox key={key}>
                     <NowboxTitle>
                       {data}{" "}
                       <Main>
@@ -251,16 +247,16 @@ export default function MainPage({
           </div>
           <div>
             <Now>
-              {datasBar.map(function (data) {
+              {datasBar.map(function (data, key) {
                 return (
-                  <Nowbox>
+                  <Nowbox key={key}>
                     <NowboxTitle>
                       {data}{" "}
                       <Main>
                         {data == "직전 회차 시험 통과율" ? (
                           <Bar data={BarData} options={Options}></Bar>
                         ) : (
-                          <Bar data={BarData} options={Options}></Bar>
+                          <Bar data={barLevels} options={Options}></Bar>
                         )}
                       </Main>
                     </NowboxTitle>
