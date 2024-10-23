@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import SideBar from "../components/SideBar.jsx";
 import { Doughnut, Bar } from "react-chartjs-2";
+import { useNavigate } from "react-router-dom";
 
 import {
   Chart as ChartJS,
@@ -97,7 +98,9 @@ export default function MainPage({
   setRefreshToken,
   accessToken,
   refreshToken,
+  intraId,
 }) {
+  const navigate = useNavigate();
   // 직전회차 시험 데이터 그래프에 사용하는 더미 데이터
   const BarData = {
     labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -121,13 +124,20 @@ export default function MainPage({
   });
   const [walletRank, setWalletRank] = useState([]);
   const [goodWords, setGoodWords] = useState("");
+  const [evalPointRank, setEvalPointRank] = useState([]);
 
   useEffect(() => {
     getProjects();
     getLevels();
     getRankWallet();
     getUsers();
+    getUserProjects();
   }, []);
+  function logoutBtn() {
+    setAccessToken("");
+    setRefreshToken("");
+    navigate("/");
+  }
   function getProjects() {
     axios
       .get("http://118.67.134.143:8080/projects/yutsong", {
@@ -147,7 +157,6 @@ export default function MainPage({
         const topFiveWalletRank = res.data.slice(0, 5);
         setWalletRank(topFiveWalletRank);
         console.log(topFiveWalletRank);
-        // setWalletRank(res.data);
       });
   }
   function getLevels() {
@@ -176,6 +185,21 @@ export default function MainPage({
       })
       .then((res) => {
         console.log("Users:", res.data);
+        const sortedUsers = res.data.sort(
+          (a, b) => b.collectionPoint - a.collectionPoint
+        );
+        const topFive = sortedUsers.slice(0, 5);
+        console.log("point:", topFive);
+        setEvalPointRank(topFive);
+      });
+  }
+  function getUserProjects() {
+    axios
+      .get("http://118.67.134.143:8080/projects/" + intraId, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        console.log("UserProjects:", res.data);
       });
   }
   return (
@@ -184,6 +208,14 @@ export default function MainPage({
         <SideBar />
         <Mainbox>
           <Goodwords>{goodWords}</Goodwords>
+          <button
+            onClick={() => {
+              logoutBtn();
+            }}
+          >
+            로그아웃버튼
+          </button>
+          <div>인트라아이디 : {intraId}</div>
           <div>
             <Now>
               {dataRank.map(function (data, key) {
@@ -232,9 +264,15 @@ export default function MainPage({
                               <th>포인트</th>
                             </thead>
                             <tbody>
-                              <td>1</td>
-                              <td>babbi</td>
-                              <td>5</td>
+                              {evalPointRank.map((rank, index) => {
+                                return (
+                                  <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{rank.intraId}</td>
+                                    <td>{rank.collectionPoint}</td>
+                                  </tr>
+                                );
+                              })}
                             </tbody>
                           </table>
                         )}

@@ -36,6 +36,7 @@ export default function loginPage({
   setRefreshToken,
   accessToken,
   refreshToken,
+  setIntraId,
 }) {
   const navigate = useNavigate();
   // local용 URL
@@ -55,8 +56,11 @@ export default function loginPage({
         console.log(res.data.accessToken);
         console.log("refreshToken:");
         console.log(res.data.refreshToken);
+        console.log("intraId");
+        console.log(res.data.intraId);
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
+        setIntraId(res.data.intraId);
       })
       .then(() => {
         navigate("/main");
@@ -68,6 +72,7 @@ export default function loginPage({
         refreshToken: refreshToken,
       })
       .then((res) => {
+        console.log(res.data);
         console.log("accessToken:");
         console.log(res.data.accessToken);
         console.log("refreshToken:");

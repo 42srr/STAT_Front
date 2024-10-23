@@ -11,6 +11,7 @@ import { useState } from "react";
 function App() {
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
+  const [intraId, setIntraId] = useState("");
   return (
     <>
       <Routes>
@@ -22,6 +23,8 @@ function App() {
               setRefreshToken={setRefreshToken}
               accessToken={accessToken}
               refreshToken={refreshToken}
+              setIntraId={setIntraId}
+              intraId={intraId}
             />
           }
         />
@@ -33,6 +36,7 @@ function App() {
               setRefreshToken={setRefreshToken}
               accessToken={accessToken}
               refreshToken={refreshToken}
+              intraId={intraId}
             />
           }
         />
