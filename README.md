@@ -135,3 +135,5 @@ npm run dev
 ## UI
 
 - Setting 화면 버튼 추가
+- branch: 
+-- new-form : 전체 화면 적용 가능한 wrapper 적용
