@@ -128,3 +128,10 @@ npm run dev
 ## UI
 
 - 로그아웃 버튼 추가
+
+
+# 24.10.27 개발 특이사항(hyeyeom)
+
+## UI
+
+- Setting 화면 버튼 추가
