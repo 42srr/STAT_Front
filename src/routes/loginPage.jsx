@@ -31,7 +31,7 @@ const LoginBox = styled.div`
   padding: 2rem;
 `;
 
-export default function loginPage({
+export default function LoginPage({
   setAccessToken,
   setRefreshToken,
   accessToken,
@@ -47,39 +47,49 @@ export default function loginPage({
     if (search) {
       getAuth(search);
     }
-  }, []);
+  }, [navigate]);
   async function getAuth(code) {
-    axios
-      .get("http://118.67.134.143:8080/login", { params: { code: code } })
-      .then((res) => {
-        console.log("accessToken:");
-        console.log(res.data.accessToken);
-        console.log("refreshToken:");
-        console.log(res.data.refreshToken);
-        console.log("intraId");
-        console.log(res.data.intraId);
-        setAccessToken(res.data.accessToken);
-        setRefreshToken(res.data.refreshToken);
-        setIntraId(res.data.intraId);
-      })
-      .then(() => {
-        navigate("/main");
+    try {
+      const res = await axios.get("http://118.67.134.143:8080/login", {
+        params: { code: code },
       });
+      const { accessToken, refreshToken, intraId } = res.data;
+      // 세션에 토큰 저장
+      sessionStorage.setItem("accessToken", accessToken);
+      console.log("accessToken:");
+      console.log(accessToken);
+      console.log("refreshToken:");
+      console.log(refreshToken);
+      console.log("intraId");
+      console.log(intraId);
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+      setIntraId(intraId);
+      navigate("/main", { replace: true });
+    } catch (error) {
+      console.error("login failed:", error);
+      if (error.response) {
+        console.log("Server Error Status:", error.response.status);
+        console.log("Server Error Data:", error.response.data);
+      }
+    }
   }
   async function getRefresh() {
-    axios
-      .post("http://118.67.134.143:8080/refresh", {
+    try {
+      const res = await axios.post("http://118.67.134.143:8080/refresh", {
         refreshToken: refreshToken,
-      })
-      .then((res) => {
-        console.log(res.data);
-        console.log("accessToken:");
-        console.log(res.data.accessToken);
-        console.log("refreshToken:");
-        console.log(res.data.refreshToken);
-        setAccessToken(res.data.accessToken);
-        setRefreshToken(res.data.refreshToken);
       });
+      const { accessToken, refreshToken: newRefreshToken } = res.data;
+      console.log("accessToken:");
+      console.log(accessToken);
+      console.log("refreshToken:");
+      console.log(refreshToken);
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+    } catch (error) {
+      console.error("Token refresh failed:", error);
+      navigate("/");
+    }
   }
 
   return (

@@ -132,6 +132,7 @@ export default function MainPage({
     getRankWallet();
     getUsers();
     getUserProjects();
+    if (!accessToken) navigate("/");
   }, []);
   function logoutBtn() {
     setAccessToken("");
@@ -227,22 +228,28 @@ export default function MainPage({
                         {data === "과제 참여 랭킹" ? (
                           <table>
                             <thead>
-                              <th>순위</th>
-                              <th>과제명</th>
-                              <th>인원수</th>
+                              <tr>
+                                <th scope="col">순위</th>
+                                <th scope="col">과제명</th>
+                                <th scope="col">인원수</th>
+                              </tr>
                             </thead>
                             <tbody>
-                              <td>1</td>
-                              <td>gnl</td>
-                              <td>5</td>
+                              <tr>
+                                <td>1</td>
+                                <td>gnl</td>
+                                <td>5</td>
+                              </tr>
                             </tbody>
                           </table>
                         ) : data === "보유 월렛 랭킹" ? (
                           <table>
                             <thead>
-                              <th>순위</th>
-                              <th>이름</th>
-                              <th>보유한 월렛</th>
+                              <tr>
+                                <th>순위</th>
+                                <th>이름</th>
+                                <th>보유한 월렛</th>
+                              </tr>
                             </thead>
                             <tbody>
                               {walletRank.map((rank, index) => {
@@ -259,9 +266,11 @@ export default function MainPage({
                         ) : (
                           <table>
                             <thead>
-                              <th>순위</th>
-                              <th>이름</th>
-                              <th>포인트</th>
+                              <tr>
+                                <th>순위</th>
+                                <th>이름</th>
+                                <th>포인트</th>
+                              </tr>
                             </thead>
                             <tbody>
                               {evalPointRank.map((rank, index) => {
