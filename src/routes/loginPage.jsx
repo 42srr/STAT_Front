@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const Title = styled.div`
+  font-size: 2rem;
+`;
+
 let Flexs = styled.div`
   display: flex;
   flex-direction: column;
@@ -29,6 +33,8 @@ let Buttons = styled.button`
 const LoginBox = styled.div`
   margin: auto;
   padding: 2rem;
+  text-align: center;
+  font-weight: bold;
 `;
 
 export default function LoginPage({
@@ -96,7 +102,7 @@ export default function LoginPage({
     <>
       <Flexs>
         <LoginBox>
-          <Logo>42경산로고</Logo>
+          <Title>42경산로고</Title>
           <Buttons>
             <a href={toGetAuthCodeUrl}>
               <span style={{ color: "white" }}>Login with </span>
