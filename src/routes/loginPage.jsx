@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 import mainLogo from "../assets/logo.png";
 
 const LogoImg = styled.img`
@@ -9,25 +10,11 @@ const LogoImg = styled.img`
   margin: auto;
 `;
 
-const Title = styled.div`
-  font-size: 2rem;
-`;
-
 let Flexs = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-let Logo = styled.div`
-  text-align: center;
-  margin: auto;
-`;
-let Fields = styled.input`
-  background: #d9d9d9;
-  width: 10rem;
-  margin: auto;
-  margin-top: 1rem;
-`;
 let Buttons = styled.button`
   background: #d9d9d9;
   margin: auto;
@@ -109,7 +96,6 @@ export default function LoginPage({
       <Flexs>
         <LoginBox>
           <LogoImg src={mainLogo} />
-          {/* <Title>42경산로고</Title> */}
           <Buttons>
             <a href={toGetAuthCodeUrl}>
               <span style={{ color: "white" }}>Login with </span>
