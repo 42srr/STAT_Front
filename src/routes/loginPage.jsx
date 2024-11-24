@@ -6,15 +6,14 @@ import mainLogo from "../assets/light/logo.svg";
 import RollingImages from "../components/RollingImages";
 
 const Main = styled.div`
-  
   background-color: #171717;
   height: 100vh;
   width: 100%;
   display: grid;
-  grid-template-rows: 1fr 230px 1fr;
+  grid-template-rows: 0.8fr 230px 1.2fr;
   background-image: url("src/assets/root-page/background.jpg");
-  /*background-size: cover;
-  background-repeat: no-repeat; */
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 let DivWrapper = styled.div``;
@@ -31,6 +30,15 @@ let LoginWrapper = styled.div`
 const LogoImg = styled.img`
   width: 15rem;
   margin: auto;
+`;
+
+let Text = styled.div`
+  font-family: "Daheang", serif;
+  color : #d9d9dF; 
+  margin : auto;
+  padding : 1rem;
+  line-height: 1.15;
+  font-size: 1.8rem;
 `;
 
 let Buttons = styled.button`
@@ -109,6 +117,11 @@ export default function LoginPage({
       <DivWrapper>
         <LoginWrapper>
           <LogoImg src={mainLogo} />
+          <Text>
+            "42GS" 정거장에 온 히치하이커, <br />
+            당신만의 행성을 찾아 나아가세요. <br />
+            당신만의 여행을 응원합니다.
+          </Text>
           <Buttons>
             <a href={toGetAuthCodeUrl}>
               <span style={{ color: "white" }}>Login with </span>
