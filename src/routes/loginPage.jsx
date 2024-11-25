@@ -16,12 +16,17 @@ const Main = styled.div`
   background-repeat: no-repeat;
 `;
 
-
-let DivWrapper = styled.div``;
+let DivWrapper = styled.div`
+/* margin: auto; */
+`;
 
 let LoginWrapper = styled.div`
   z-index: 999;
   position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const LogoImg = styled.img`
@@ -117,12 +122,12 @@ export default function LoginPage({
           <Text>
             "42GS" 정거장에 온 히치하이커, <br />
             당신만의 행성을 찾아 나아가세요. <br />
-            당신만의 여행을 응원합니다.
+            당신의 여행을 응원합니다.
           </Text>
           <Buttons>
             <a href={toGetAuthCodeUrl}>
               <span style={{ color: "white" }}>Login with </span>
-              42GS
+              <b>42GS</b>
             </a>
           </Buttons>
         </LoginWrapper>
