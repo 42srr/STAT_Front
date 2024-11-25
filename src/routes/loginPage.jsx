@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import mainLogo from "../assets/light/logo.svg";
 import RollingImages from "../components/RollingImages";
 
@@ -16,15 +16,12 @@ const Main = styled.div`
   background-repeat: no-repeat;
 `;
 
+
 let DivWrapper = styled.div``;
 
 let LoginWrapper = styled.div`
   z-index: 999;
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin: auto;
 `;
 
 const LogoImg = styled.img`

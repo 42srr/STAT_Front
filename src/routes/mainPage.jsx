@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SideBar from "../components/SideBar.jsx";
 import { Doughnut, Bar } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
+// import { CardBox } from "../components/CardBox.jsx";
 
 import {
   Chart as ChartJS,
@@ -24,8 +25,35 @@ ChartJS.register(
   Legend
 );
 
-const Main = styled.div`
+const CardOne = styled.div`
+  display: flex;
+  display-direction: column;
+  width: 320px;
+  height: 380px;
+  margin: 12px;
+  padding: 12px;
+  object-fit: contain;
+  border-radius: 30px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: rgba(189, 191, 163, 0.15);
+`;
+const CardTwo = styled.div`
+  display: flex;
+  display-direction: column;
+  width: 340px;
+  height: 380px;
+  margin: 7px 36px 120px 0;
+  padding: 36px 15px 280px 10px;
+  object-fit: contain;
+  border-radius: 30px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: rgba(189, 191, 163, 0.15);
+`;
+
+const CardContents = styled.div`
   align-items: center;
+  text-align: center;
+  width: 100%;
 `;
 
 let Layout = styled.div`
@@ -125,6 +153,7 @@ export default function MainPage({
   const [walletRank, setWalletRank] = useState([]);
   const [goodWords, setGoodWords] = useState("");
   const [evalPointRank, setEvalPointRank] = useState([]);
+  const [cntProjects, setCntProjects] = useState([]);
 
   useEffect(() => {
     getProjects();
@@ -141,11 +170,15 @@ export default function MainPage({
   }
   function getProjects() {
     axios
-      .get("http://118.67.134.143:8080/projects/yutsong", {
+      .get("http://118.67.134.143:8080/projects", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
         console.log("Projects", res.data);
+        const sortedCntProjects = res.data.sort((a, b) => b.count - a.count);
+        const topFive = sortedCntProjects.slice(0, 5);
+        setCntProjects(topFive);
+        console.log("SortedProjects:", topFive);
       });
   }
   function getRankWallet() {
@@ -218,13 +251,14 @@ export default function MainPage({
           </button>
           <div>인트라아이디 : {intraId}</div>
           <div>
+            {/* <CardBox title={"과제참여랭킹"} contents={cntProjects} /> */}
             <Now>
               {dataRank.map(function (data, key) {
                 return (
-                  <Nowbox key={key}>
+                  <CardOne key={key}>
                     <NowboxTitle>
                       {data}{" "}
-                      <Main>
+                      <CardContents>
                         {data === "과제 참여 랭킹" ? (
                           <table>
                             <thead>
@@ -235,11 +269,15 @@ export default function MainPage({
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>gnl</td>
-                                <td>5</td>
-                              </tr>
+                              {cntProjects.map((rank, index) => {
+                                return (
+                                  <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{rank.projectName}</td>
+                                    <td>{rank.count}</td>
+                                  </tr>
+                                );
+                              })}
                             </tbody>
                           </table>
                         ) : data === "보유 월렛 랭킹" ? (
@@ -285,9 +323,9 @@ export default function MainPage({
                             </tbody>
                           </table>
                         )}
-                      </Main>
+                      </CardContents>
                     </NowboxTitle>
-                  </Nowbox>
+                  </CardOne>
                 );
               })}
             </Now>
@@ -296,18 +334,18 @@ export default function MainPage({
             <Now>
               {datasBar.map(function (data, key) {
                 return (
-                  <Nowbox key={key}>
+                  <CardTwo key={key}>
                     <NowboxTitle>
                       {data}{" "}
-                      <Main>
+                      <CardContents>
                         {data == "직전 회차 시험 통과율" ? (
                           <Bar data={BarData} options={Options}></Bar>
                         ) : (
                           <Bar data={barLevels} options={Options}></Bar>
                         )}
-                      </Main>
+                      </CardContents>
                     </NowboxTitle>
-                  </Nowbox>
+                  </CardTwo>
                 );
               })}
             </Now>
