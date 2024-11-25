@@ -1,18 +1,41 @@
 import styled from "styled-components";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import mainLogo from "../assets/light/logo.svg";
+import RollingImages from "../components/RollingImages";
 
-import mainLogo from "../assets/logo.png";
+const Main = styled.div`
+  background-color: #171717;
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 0.8fr 230px 1.2fr;
+  background-image: url("src/assets/root-page/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+`;
+
+
+let DivWrapper = styled.div``;
+
+let LoginWrapper = styled.div`
+  z-index: 999;
+  position: absolute;
+`;
 
 const LogoImg = styled.img`
-  width: 30%;
+  width: 15rem;
   margin: auto;
 `;
 
-let Flexs = styled.div`
-  display: flex;
-  flex-direction: column;
+let Text = styled.div`
+  font-family: "Daheang", serif;
+  color : #d9d9dF; 
+  margin : auto;
+  padding : 1rem;
+  line-height: 1.15;
+  font-size: 1.8rem;
 `;
 
 let Buttons = styled.button`
@@ -22,12 +45,6 @@ let Buttons = styled.button`
   width: 10rem;
   padding: 1rem;
   border-radius: 0.8rem;
-`;
-const LoginBox = styled.div`
-  margin: auto;
-  padding: 2rem;
-  text-align: center;
-  font-weight: bold;
 `;
 
 export default function LoginPage({
@@ -92,18 +109,26 @@ export default function LoginPage({
   }
 
   return (
-    <>
-      <Flexs>
-        <LoginBox>
+    <Main>
+      <RollingImages stylenum={8} />
+      <DivWrapper>
+        <LoginWrapper>
           <LogoImg src={mainLogo} />
+          <Text>
+            "42GS" 정거장에 온 히치하이커, <br />
+            당신만의 행성을 찾아 나아가세요. <br />
+            당신만의 여행을 응원합니다.
+          </Text>
           <Buttons>
             <a href={toGetAuthCodeUrl}>
               <span style={{ color: "white" }}>Login with </span>
               42GS
             </a>
           </Buttons>
-        </LoginBox>
-      </Flexs>
-    </>
+        </LoginWrapper>
+        <RollingImages stylenum={4} startIndex={5} />
+      </DivWrapper>
+      <RollingImages stylenum={0} startIndex={9} />
+    </Main>
   );
 }
