@@ -17,7 +17,7 @@ const Main = styled.div`
 `;
 
 let DivWrapper = styled.div`
-/* margin: auto; */
+  /* margin: auto; */
 `;
 
 let LoginWrapper = styled.div`
@@ -36,9 +36,9 @@ const LogoImg = styled.img`
 
 let Text = styled.div`
   font-family: "Daheang", serif;
-  color : #d9d9dF; 
-  margin : auto;
-  padding : 1rem;
+  color: #d9d9df;
+  margin: auto;
+  padding: 1rem;
   line-height: 1.15;
   font-size: 1.8rem;
 `;
