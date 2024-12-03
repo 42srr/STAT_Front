@@ -174,8 +174,10 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("Projects", res.data);
-        const sortedCntProjects = res.data.sort((a, b) => b.count - a.count);
+        console.log("Projects", res.data.data);
+        const sortedCntProjects = res.data.data.sort(
+          (a, b) => b.count - a.count
+        );
         const topFive = sortedCntProjects.slice(0, 5);
         setCntProjects(topFive);
         console.log("SortedProjects:", topFive);
@@ -187,8 +189,8 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("RankWallet:", res.data);
-        const topFiveWalletRank = res.data.slice(0, 5);
+        console.log("RankWallet:", res.data.data);
+        const topFiveWalletRank = res.data.data.slice(0, 5);
         setWalletRank(topFiveWalletRank);
         console.log(topFiveWalletRank);
       });
@@ -199,12 +201,12 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("Levels:", res.data);
+        console.log("Levels:", res.data.data);
         setBarLevels({
-          labels: Object.keys(res.data),
+          labels: Object.keys(res.data.data),
           datasets: [
             {
-              data: Object.values(res.data),
+              data: Object.values(res.data.data),
               backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
               borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
             },
@@ -218,8 +220,8 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("Users:", res.data);
-        const sortedUsers = res.data.sort(
+        console.log("Users:", res.data.data);
+        const sortedUsers = res.data.data.sort(
           (a, b) => b.collectionPoint - a.collectionPoint
         );
         const topFive = sortedUsers.slice(0, 5);
@@ -233,7 +235,7 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("UserProjects:", res.data);
+        console.log("UserProjects:", res.data.data);
       });
   }
   return (

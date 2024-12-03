@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import mainLogo from "../assets/light/logo.svg";
 import RollingImages from "../components/RollingImages";
@@ -60,32 +60,46 @@ export default function LoginPage({
   setIntraId,
 }) {
   const navigate = useNavigate();
+  const requestSentRef = useRef(false);
   // local용 URL
   const toGetAuthCodeUrl =
     "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-598ae18e7a326adf87c4c13c715a91675c6b68458bb4082e24e297616ebd98d4&redirect_uri=http%3A%2F%2Flocalhost%3A5173&response_type=code";
   useEffect(() => {
     const search = window.location?.search.split("code=")[1];
-    if (search) {
+    if (search && !requestSentRef.current) {
+      requestSentRef.current = true;
       getAuth(search);
     }
   }, [navigate]);
   async function getAuth(code) {
     try {
-      const res = await axios.get("http://118.67.134.143:8080/login", {
+      const res = await axios.get("/api/login", {
         params: { code: code },
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-      const { accessToken, refreshToken, intraId } = res.data;
+      console.log("Server res:", res.data.data);
+      const { accessToken, refreshToken, intraId } = res.data.data;
+      if (!accessToken || !refreshToken || !intraId) {
+        throw new Error("Invalid token");
+      }
       // 세션에 토큰 저장
       sessionStorage.setItem("accessToken", accessToken);
+      sessionStorage.setItem("refreshToken", refreshToken);
+      sessionStorage.setItem("intraId", intraId);
+
+      // 상태 업데이트
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+      setIntraId(intraId);
+
       console.log("accessToken:");
       console.log(accessToken);
       console.log("refreshToken:");
       console.log(refreshToken);
       console.log("intraId");
       console.log(intraId);
-      setAccessToken(accessToken);
-      setRefreshToken(refreshToken);
-      setIntraId(intraId);
       navigate("/main", { replace: true });
     } catch (error) {
       console.error("login failed:", error);
