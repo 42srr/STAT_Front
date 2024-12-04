@@ -170,7 +170,7 @@ export default function MainPage({
   }
   function getProjects() {
     axios
-      .get("http://118.67.134.143:8080/projects", {
+      .get("/api/projects", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
@@ -185,7 +185,7 @@ export default function MainPage({
   }
   function getRankWallet() {
     axios
-      .get("http://118.67.134.143:8080/ranking/wallet", {
+      .get("/api/ranking/wallet", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
@@ -197,7 +197,7 @@ export default function MainPage({
   }
   function getLevels() {
     axios
-      .get("http://118.67.134.143:8080/levels", {
+      .get("/api/levels", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
@@ -216,12 +216,14 @@ export default function MainPage({
   }
   function getUsers() {
     axios
-      .get("http://118.67.134.143:8080/users", {
+      .get("/api/users", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("Users:", res.data.data);
-        const sortedUsers = res.data.data.sort(
+        const UsersData = res.data.data.users;
+        console.log("Users:", UsersData.users);
+
+        const sortedUsers = UsersData.sort(
           (a, b) => b.collectionPoint - a.collectionPoint
         );
         const topFive = sortedUsers.slice(0, 5);
@@ -231,7 +233,7 @@ export default function MainPage({
   }
   function getUserProjects() {
     axios
-      .get("http://118.67.134.143:8080/projects/" + intraId, {
+      .get("/api/projects/" + intraId, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
