@@ -65,6 +65,7 @@ export default function LoginPage({
   const toGetAuthCodeUrl = import.meta.env.VITE_AUTH_CODE;
   useEffect(() => {
     const search = window.location?.search.split("code=")[1];
+    console.log("search:", search);
     if (search && !requestSentRef.current) {
       requestSentRef.current = true;
       getAuth(search);
