@@ -80,6 +80,7 @@ export default function LoginPage({
         },
       });
       console.log("Server res:", res.data.data);
+      console.log("res.data:", res.data);
       const { accessToken, refreshToken, intraId } = res.data.data;
       if (!accessToken || !refreshToken || !intraId) {
         throw new Error("Invalid token");
