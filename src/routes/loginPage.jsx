@@ -77,6 +77,7 @@ export default function LoginPage({
         params: { code: code },
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
       });
       console.log("Server res:", res.data.data);
