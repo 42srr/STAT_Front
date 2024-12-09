@@ -77,11 +77,11 @@ export default function LoginPage({
         params: { code: code },
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
         },
       });
       console.log("Server res:", res.data.data);
       console.log("res.data:", res.data);
+      console.log("res:", res);
       const { accessToken, refreshToken, intraId } = res.data.data;
       if (!accessToken || !refreshToken || !intraId) {
         throw new Error("Invalid token");
