@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import SideBar from "../components/SideBar.jsx";
 import { Doughnut, Bar } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
-// import { CardBox } from "../components/CardBox.jsx";
 
 import {
   Chart as ChartJS,
@@ -15,6 +14,7 @@ import {
   LinearScale,
   BarElement,
 } from "chart.js";
+import { plugin } from "postcss";
 
 ChartJS.register(
   ArcElement,
@@ -27,52 +27,89 @@ ChartJS.register(
 
 const CardOne = styled.div`
   display: flex;
-  display-direction: column;
-  width: 320px;
-  height: 380px;
-  margin: 12px;
-  padding: 12px;
+  flex-direction: column;
+  width: 20rem;
+  height: 20rem;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 0.8rem;
   object-fit: contain;
-  border-radius: 30px;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  background-color: rgba(189, 191, 163, 0.15);
+  // background-color: rgba(189, 191, 163, 0.15);
+  // background-color: #000055;
+  border: solid 1px rgba(189, 191, 163, 0.3);
+  background-color: white;
+  color: black;
 `;
-const CardTwo = styled.div`
-  display: flex;
-  display-direction: column;
-  width: 340px;
-  height: 380px;
-  margin: 7px 36px 120px 0;
-  padding: 36px 15px 280px 10px;
-  object-fit: contain;
-  border-radius: 30px;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  background-color: rgba(189, 191, 163, 0.15);
+
+const CardTitle = styled.div`
+  align-items: center;
+  text-align: center;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
 `;
 
 const CardContents = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  text-align: center;
   width: 100%;
+`;
+
+const CardTwo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 42rem;
+  height: 25rem;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  object-fit: contain;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  // background-color: rgba(189, 191, 163, 0.15);
+  // background-color: #000055;
+  border: solid 1px rgba(189, 191, 163, 0.3);
+  // color: white;
+`;
+
+const StyledTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  th,
+  td {
+    padding: 0.5rem;
+    text-align: center;
+    border: 1px solid white;
+  }
 `;
 
 let Layout = styled.div`
   display: flex;
   justify-content: flex-start;
+  // background-color: #030313;
 `;
 
 let Mainbox = styled.div`
   flex: 3;
 `;
 
-let Now = styled.div`
+const CardRow = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  width: fit-content;
+`;
+
+const GraphRow = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 let Goodwords = styled.div`
-  width: 1032px;
-  height: 187px;
-  margin: 100px 0 120px 0;
+  width: 20rem;
+  height: 10rem;
+  margin: 1.2rem;
   padding: 82px 667px 69px 309px;
   transform: rotate(-180deg);
   border-radius: 30px;
@@ -87,39 +124,35 @@ let Goodwords = styled.div`
   }
 `;
 
-let Nowbox = styled.div`
-  display: flex;
-  display-direction: column;
-  width: 320px;
-  height: 380px;
-  margin: 7px 36px 120px 0;
-  padding: 36px 15px 280px 10px;
-  object-fit: contain;
-  border-radius: 30px;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  background-color: rgba(189, 191, 163, 0.15);
-`;
-
-let NowboxTitle = styled.div`
-  width: 329px;
-  height: 30px;
-  margin: 0 36px 7px 0;
-  font-family: Inter;
-  font-size: 25px;
-  font-weight: 300;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: center;
-  color: #4b4545;
-`;
-
 const dataRank = ["과제 참여 랭킹", "보유 월렛 랭킹", "평가 포인트 랭킹"];
 
 const datasBar = ["직전 회차 시험 통과율", "유저 레벨 분포"];
 
-const Options = {};
+const Options = {
+  plugins: {
+    legend: {
+      display: false,
+    },
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: "black",
+      },
+      // grid: {
+      //   color: "white",
+      // },
+    },
+    y: {
+      ticks: {
+        color: "black",
+      },
+      // grid: {
+      //   color: "white",
+      // },
+    },
+  },
+};
 
 export default function MainPage({
   setAccessToken,
@@ -246,114 +279,108 @@ export default function MainPage({
         <SideBar />
         <Mainbox>
           <Goodwords>{goodWords}</Goodwords>
-          <button
-            onClick={() => {
-              logoutBtn();
-            }}
-          >
-            로그아웃버튼
-          </button>
-          <div>인트라아이디 : {intraId}</div>
-          <div>
-            {/* <CardBox title={"과제참여랭킹"} contents={cntProjects} /> */}
-            <Now>
-              {dataRank.map(function (data, key) {
-                return (
-                  <CardOne key={key}>
-                    <NowboxTitle>
-                      {data}{" "}
-                      <CardContents>
-                        {data === "과제 참여 랭킹" ? (
-                          <table>
-                            <thead>
-                              <tr>
-                                <th scope="col">순위</th>
-                                <th scope="col">과제명</th>
-                                <th scope="col">인원수</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {cntProjects.map((rank, index) => {
-                                return (
-                                  <tr key={index}>
-                                    <td>{index + 1}</td>
-                                    <td>{rank.projectName}</td>
-                                    <td>{rank.count}</td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
-                        ) : data === "보유 월렛 랭킹" ? (
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>순위</th>
-                                <th>이름</th>
-                                <th>보유한 월렛</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {walletRank.map((rank, index) => {
-                                return (
-                                  <tr key={index}>
-                                    <td>{index + 1}</td>
-                                    <td>{rank.intraId}</td>
-                                    <td>{rank.dollar}</td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
-                        ) : (
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>순위</th>
-                                <th>이름</th>
-                                <th>포인트</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {evalPointRank.map((rank, index) => {
-                                return (
-                                  <tr key={index}>
-                                    <td>{index + 1}</td>
-                                    <td>{rank.intraId}</td>
-                                    <td>{rank.collectionPoint}</td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
-                        )}
-                      </CardContents>
-                    </NowboxTitle>
-                  </CardOne>
-                );
-              })}
-            </Now>
+          <div className="ml-10">
+            <button
+              onClick={() => {
+                logoutBtn();
+              }}
+            >
+              로그아웃버튼
+            </button>
+            <div>인트라아이디 : {intraId}</div>
           </div>
-          <div>
-            <Now>
-              {datasBar.map(function (data, key) {
-                return (
-                  <CardTwo key={key}>
-                    <NowboxTitle>
-                      {data}{" "}
-                      <CardContents>
-                        {data == "직전 회차 시험 통과율" ? (
-                          <Bar data={BarData} options={Options}></Bar>
-                        ) : (
-                          <Bar data={barLevels} options={Options}></Bar>
-                        )}
-                      </CardContents>
-                    </NowboxTitle>
-                  </CardTwo>
-                );
-              })}
-            </Now>
-          </div>
+          <CardRow>
+            {dataRank.map(function (data, key) {
+              return (
+                <CardOne key={key}>
+                  <CardTitle>{data}</CardTitle>
+                  <CardContents>
+                    {data === "과제 참여 랭킹" ? (
+                      <StyledTable>
+                        <thead>
+                          <tr>
+                            <th scope="col">순위</th>
+                            <th scope="col">과제명</th>
+                            <th scope="col">인원수</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {cntProjects.map((rank, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{rank.projectName}</td>
+                                <td>{rank.count}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </StyledTable>
+                    ) : data === "보유 월렛 랭킹" ? (
+                      <StyledTable>
+                        <thead>
+                          <tr>
+                            <th>순위</th>
+                            <th>이름</th>
+                            <th>보유한 월렛</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {walletRank.map((rank, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{rank.intraId}</td>
+                                <td>{rank.dollar}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </StyledTable>
+                    ) : (
+                      <StyledTable>
+                        <thead>
+                          <tr>
+                            <th>순위</th>
+                            <th>이름</th>
+                            <th>포인트</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {evalPointRank.map((rank, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{rank.intraId}</td>
+                                <td>{rank.collectionPoint}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </StyledTable>
+                    )}
+                  </CardContents>
+                </CardOne>
+              );
+            })}
+          </CardRow>
+
+          <GraphRow>
+            {datasBar.map(function (data, key) {
+              return (
+                <CardTwo key={key}>
+                  <CardTitle>{data}</CardTitle>
+                  <CardContents>
+                    {data == "직전 회차 시험 통과율" ? (
+                      <Bar data={BarData} options={Options}></Bar>
+                    ) : (
+                      <Bar data={barLevels} options={Options}></Bar>
+                    )}
+                  </CardContents>
+                </CardTwo>
+              );
+            })}
+          </GraphRow>
         </Mainbox>
       </Layout>
     </>
