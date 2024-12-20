@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import mainLogo from "../assets/light/logo.svg";
+import BackgroundImg from "../assets/background.jpg";
 import RollingImages from "../components/RollingImages";
 
 const Footer = styled.footer`
@@ -59,7 +60,7 @@ const Main = styled.div`
   width: 100%;
   display: grid;
   grid-template-rows: 0.8fr 230px 1.2fr;
-  background-image: url("src/assets/root-page/background.jpg");
+  background-image: url(${BackgroundImg});
   background-size: cover;
   background-repeat: no-repeat;
 `;
