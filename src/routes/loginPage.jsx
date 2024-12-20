@@ -1,9 +1,57 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import mainLogo from "../assets/light/logo.svg";
 import RollingImages from "../components/RollingImages";
+
+const Footer = styled.footer`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+`;
+
+const FooterContent = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;
+
+const FooterLink = styled(Link)`
+  color: #999;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  cursor: pointer;
+  z-index: 1000;
+
+  &:hover {
+    color: #fff;
+  }
+`;
+
+const Divider = styled.span`
+  color: #666;
+  font-size: 0.8rem;
+`;
+
+const PrivacyLink = styled(Link)`
+  position: absolute;
+  bottom: 20px;
+  color: #666;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  &:hover {
+    color: #888;
+  }
+`;
 
 const Main = styled.div`
   background-color: #171717;
@@ -150,6 +198,19 @@ export default function LoginPage({
         <RollingImages stylenum={4} startIndex={5} />
       </DivWrapper>
       <RollingImages stylenum={0} startIndex={9} />
+      <Footer>
+        <FooterContent>
+          <FooterLink to="/webprivacy">Privacy Policy</FooterLink>
+          <Divider>|</Divider>
+          <FooterLink to="/terms">Terms of Service</FooterLink>
+          <Divider>|</Divider>
+          <FooterLink as="a" href="mailto:neveradio@gmail.com">
+            Contact
+          </FooterLink>
+          <Divider>|</Divider>
+          <FooterLink as="span">© 2024 42SRR</FooterLink>
+        </FooterContent>
+      </Footer>
     </Main>
   );
 }

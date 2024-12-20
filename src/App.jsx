@@ -7,6 +7,8 @@ import ReservationPage from "./routes/reservationPage.jsx";
 import ReservationDetail from "./routes/reservationDetail.jsx";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import WebPrivacy from "./routes/webprivacy.jsx";
+import AppPrivacy from "./routes/app.privacy.jsx";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -45,6 +47,8 @@ function App() {
         <Route path="/reservation" element={<ReservationPage />} />
         <Route path="/reservationDetail" element={<ReservationDetail />} />
         <Route path="/info" element={<InfoPage />} />
+        <Route path="/webprivacy" element={<WebPrivacy />} />
+        <Route path="/appprivacy" element={<AppPrivacy />} />
       </Routes>
     </>
   );
