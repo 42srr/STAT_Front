@@ -192,7 +192,7 @@ export default function LoginPage({
           <Buttons>
             <a href={toGetAuthCodeUrl}>
               <span style={{ color: "white" }}>Login with </span>
-              <b>42GS</b>
+              <b>42GS!</b>
             </a>
           </Buttons>
         </LoginWrapper>
