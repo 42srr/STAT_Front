@@ -93,7 +93,7 @@ let Text = styled.div`
 `;
 
 let Buttons = styled.button`
-  background: #d9d9d9;
+  background: #ebebed;
   margin: auto;
   margin-top: 1rem;
   width: 10rem;
@@ -191,7 +191,7 @@ export default function LoginPage({
           </Text>
           <Buttons>
             <a href={toGetAuthCodeUrl}>
-              <span style={{ color: "white" }}>Login with </span>
+              <span style={{ color: "black" }}>Login with </span>
               <b>42GS</b>
             </a>
           </Buttons>
