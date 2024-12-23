@@ -114,7 +114,7 @@ export default function LoginPage({
   const toGetAuthCodeUrl = import.meta.env.VITE_AUTH_CODE;
   useEffect(() => {
     const search = window.location?.search.split("code=")[1];
-    console.log("search:", search);
+    // console.log("search:", search);
     if (search && !requestSentRef.current) {
       requestSentRef.current = true;
       getAuth(search);
@@ -128,9 +128,9 @@ export default function LoginPage({
           "Content-Type": "application/json",
         },
       });
-      console.log("Server res:", res.data.data);
-      console.log("res.data:", res.data);
-      console.log("res:", res);
+      // console.log("Server res:", res.data.data);
+      // console.log("res.data:", res.data);
+      // console.log("res:", res);
       const { accessToken, refreshToken, intraId } = res.data.data;
       if (!accessToken || !refreshToken || !intraId) {
         throw new Error("Invalid token");
@@ -145,18 +145,18 @@ export default function LoginPage({
       setRefreshToken(refreshToken);
       setIntraId(intraId);
 
-      console.log("accessToken:");
-      console.log(accessToken);
-      console.log("refreshToken:");
-      console.log(refreshToken);
-      console.log("intraId");
-      console.log(intraId);
+      // console.log("accessToken:");
+      // console.log(accessToken);
+      // console.log("refreshToken:");
+      // console.log(refreshToken);
+      // console.log("intraId");
+      // console.log(intraId);
       navigate("/main", { replace: true });
     } catch (error) {
-      console.error("login failed:", error);
+      // console.error("login failed:", error);
       if (error.response) {
-        console.log("Server Error Status:", error.response.status);
-        console.log("Server Error Data:", error.response.data);
+        // console.log("Server Error Status:", error.response.status);
+        // console.log("Server Error Data:", error.response.data);
       }
     }
   }
@@ -166,14 +166,14 @@ export default function LoginPage({
         refreshToken: refreshToken,
       });
       const { accessToken, refreshToken: newRefreshToken } = res.data;
-      console.log("accessToken:");
-      console.log(accessToken);
-      console.log("refreshToken:");
-      console.log(refreshToken);
+      // console.log("accessToken:");
+      // console.log(accessToken);
+      // console.log("refreshToken:");
+      // console.log(refreshToken);
       setAccessToken(accessToken);
       setRefreshToken(refreshToken);
     } catch (error) {
-      console.error("Token refresh failed:", error);
+      // console.error("Token refresh failed:", error);
       navigate("/");
     }
   }

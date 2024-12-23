@@ -14,7 +14,6 @@ import {
   LinearScale,
   BarElement,
 } from "chart.js";
-import { plugin } from "postcss";
 
 ChartJS.register(
   ArcElement,
@@ -207,13 +206,13 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("Projects", res.data.data);
+        // console.log("Projects", res.data.data);
         const sortedCntProjects = res.data.data.sort(
           (a, b) => b.count - a.count
         );
         const topFive = sortedCntProjects.slice(0, 5);
         setCntProjects(topFive);
-        console.log("SortedProjects:", topFive);
+        // console.log("SortedProjects:", topFive);
       });
   }
   function getRankWallet() {
@@ -222,10 +221,10 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("RankWallet:", res.data.data);
+        // console.log("RankWallet:", res.data.data);
         const topFiveWalletRank = res.data.data.slice(0, 5);
         setWalletRank(topFiveWalletRank);
-        console.log(topFiveWalletRank);
+        // console.log(topFiveWalletRank);
       });
   }
   function getLevels() {
@@ -234,7 +233,7 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("Levels:", res.data.data);
+        // console.log("Levels:", res.data.data);
         setBarLevels({
           labels: Object.keys(res.data.data),
           datasets: [
@@ -254,13 +253,13 @@ export default function MainPage({
       })
       .then((res) => {
         const UsersData = res.data.data.users;
-        console.log("Users:", UsersData.users);
+        // console.log("Users:", UsersData.users);
 
         const sortedUsers = UsersData.sort(
           (a, b) => b.collectionPoint - a.collectionPoint
         );
         const topFive = sortedUsers.slice(0, 5);
-        console.log("point:", topFive);
+        // console.log("point:", topFive);
         setEvalPointRank(topFive);
       });
   }
@@ -270,7 +269,7 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("UserProjects:", res.data.data);
+        // console.log("UserProjects:", res.data.data);
       });
   }
   return (
