@@ -7,7 +7,7 @@ import BackgroundImg from "../assets/background.jpg";
 import RollingImages from "../components/RollingImages";
 
 const Footer = styled.footer`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   padding: 20px 0;
@@ -23,6 +23,11 @@ const FooterContent = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
+  @media (max-width: 768px) {
+    gap: 10px;
+    flex-wrap: wrap; // 모바일에서 여러 줄로 표시
+    padding: 10px;
+  }
 `;
 
 const FooterLink = styled(Link)`
@@ -33,6 +38,10 @@ const FooterLink = styled(Link)`
   cursor: pointer;
   z-index: 1000;
 
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+
   &:hover {
     color: #fff;
   }
@@ -41,6 +50,10 @@ const FooterLink = styled(Link)`
 const Divider = styled.span`
   color: #666;
   font-size: 0.8rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
 `;
 
 const PrivacyLink = styled(Link)`
@@ -63,6 +76,7 @@ const Main = styled.div`
   background-image: url(${BackgroundImg});
   background-size: cover;
   background-repeat: no-repeat;
+  padding-bottom: 60px;
 `;
 
 let DivWrapper = styled.div`
