@@ -294,7 +294,7 @@ export default function MainPage({
         <SideBar />
         <Mainbox>
           <Goodwords>{goodWords}</Goodwords>
-          <UserInfo userInfo={userInfo} userProjects={userProjects} />
+          {/* <UserInfo userInfo={userInfo} userProjects={userProjects} /> */}
           <div className="ml-10">
             <button
               onClick={() => {
