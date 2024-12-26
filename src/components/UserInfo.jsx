@@ -3,10 +3,10 @@ const UserInfo = ({ userInfo, userProjects }) => {
     <div>
       <div>
         UserInfo
-        <div>{userInfo.intraId}</div>
-        <div>{userInfo.wallet}</div>
-        <div>{userInfo.collectionPoint}</div>
-        <div>{userInfo.level}</div>
+        <div>인트라아이디 : {userInfo.intraId}</div>
+        <div>월렛 : {userInfo.wallet}</div>
+        <div>평가포인트 : {userInfo.collectionPoint}</div>
+        <div>레벨 : {userInfo.level}</div>
       </div>
 
       <div>
