@@ -3,16 +3,19 @@ const UserInfo = ({ userInfo, userProjects }) => {
     <div>
       <div>
         UserInfo
-        <div>{userInfo.data.intraId}</div>
-        <div>{userInfo.data.wallet}</div>
-        <div>{userInfo.data.collectionPoint}</div>
-        <div>{userInfo.data.level}</div>
+        <div>{userInfo.intraId}</div>
+        <div>{userInfo.wallet}</div>
+        <div>{userInfo.collectionPoint}</div>
+        <div>{userInfo.level}</div>
       </div>
 
       <div>
         UserProjects
-        <div>{userProjects.data.projectName}</div>
-        <div>{userProjects.data.status}</div>
+        {userProjects.map((project) => {
+          return (
+            project.status === "in_progress" && <div>{project.projectName}</div>
+          );
+        })}
       </div>
     </div>
   );
