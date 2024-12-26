@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SideBar from "../components/SideBar.jsx";
 import { Doughnut, Bar } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
+import UserInfo from "../components/UserInfo.jsx";
 
 import {
   Chart as ChartJS,
@@ -186,6 +187,8 @@ export default function MainPage({
   const [goodWords, setGoodWords] = useState("");
   const [evalPointRank, setEvalPointRank] = useState([]);
   const [cntProjects, setCntProjects] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
+  const [userProjects, setUserProjects] = useState([]);
 
   useEffect(() => {
     getProjects();
@@ -193,6 +196,7 @@ export default function MainPage({
     getRankWallet();
     getUsers();
     getUserProjects();
+    getUserInfo();
     if (!accessToken) navigate("/");
   }, []);
   function logoutBtn() {
@@ -269,15 +273,28 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        // console.log("UserProjects:", res.data.data);
+        console.log("UserProjects:", res.data.data);
+        setUserProjects(res.data.data);
       });
   }
+  function getUserInfo() {
+    axios
+      .get("/api/users/" + intraId, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        console.log("UserInfo:", res.data.data);
+        setUserInfo(res.data.data);
+      });
+  }
+
   return (
     <>
       <Layout>
         <SideBar />
         <Mainbox>
           <Goodwords>{goodWords}</Goodwords>
+          <UserInfo userInfo={userInfo} userProjects={userProjects} />
           <div className="ml-10">
             <button
               onClick={() => {
