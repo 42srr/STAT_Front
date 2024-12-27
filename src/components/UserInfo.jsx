@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 const UserInfoCard = styled.div`
   display: flex;
@@ -51,6 +52,17 @@ const ProjectItem = styled.div`
 `;
 
 const UserInfo = ({ userInfo, userProjects }) => {
+  const [uniqueProjects, setUniqueProjects] = useState([]);
+
+  useEffect(() => {
+    const filtered = [
+      ...new Set(userProjects.map((project) => project.project_name)),
+    ].map((name) =>
+      userProjects.find((project) => project.project_name === name)
+    );
+
+    setUniqueProjects(filtered);
+  }, [userProjects]); // userProjects가 변경될 때마다 실행
   return (
     <UserInfoCard>
       <InfoSection>
@@ -76,7 +88,7 @@ const UserInfo = ({ userInfo, userProjects }) => {
       <InfoSection>
         <CardTitle>Current Projects</CardTitle>
         <ProjectList>
-          {userProjects.map(
+          {uniqueProjects.map(
             (project, index) =>
               project.status === "in_progress" && (
                 <ProjectItem key={index}>{project.projectName}</ProjectItem>
