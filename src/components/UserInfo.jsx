@@ -91,7 +91,7 @@ const UserInfo = ({ userInfo, userProjects }) => {
           {uniqueProjects.map(
             (project, index) =>
               project.status === "in_progress" && (
-                <ProjectItem key={index}>{project.projectName}</ProjectItem>
+                <ProjectItem key={index}>{project.project_Name}</ProjectItem>
               )
           )}
         </ProjectList>

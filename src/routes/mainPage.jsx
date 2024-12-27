@@ -273,7 +273,7 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("UserProjects:", res.data.data);
+        // console.log("UserProjects:", res.data.data);
         setUserProjects(res.data.data);
       });
   }
@@ -283,7 +283,7 @@ export default function MainPage({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log("UserInfo:", res.data.data);
+        // console.log("UserInfo:", res.data.data);
         setUserInfo(res.data.data);
       });
   }
