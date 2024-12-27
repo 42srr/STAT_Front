@@ -262,7 +262,7 @@ export default function MainPage({
         const sortedUsers = UsersData.sort(
           (a, b) => b.collectionPoint - a.collectionPoint
         );
-        const topFive = sortedUsers.slice(0, 5);
+        const topFive = sortedUsers.slice(1, 6);
         // console.log("point:", topFive);
         setEvalPointRank(topFive);
       });
