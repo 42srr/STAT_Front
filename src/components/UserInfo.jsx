@@ -56,9 +56,9 @@ const UserInfo = ({ userInfo, userProjects }) => {
 
   useEffect(() => {
     const filtered = [
-      ...new Set(userProjects.map((project) => project.project_name)),
+      ...new Set(userProjects.map((project) => project.projectName)),
     ].map((name) =>
-      userProjects.find((project) => project.project_name === name)
+      userProjects.find((project) => project.projectName === name)
     );
 
     setUniqueProjects(filtered);
@@ -91,7 +91,7 @@ const UserInfo = ({ userInfo, userProjects }) => {
           {uniqueProjects.map(
             (project, index) =>
               project.status === "in_progress" && (
-                <ProjectItem key={index}>{project.project_Name}</ProjectItem>
+                <ProjectItem key={index}>{project.projectName}</ProjectItem>
               )
           )}
         </ProjectList>
