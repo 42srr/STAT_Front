@@ -1,23 +1,90 @@
+import styled from "styled-components";
+
+const UserInfoCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 42rem;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  border: solid 1px rgba(189, 191, 163, 0.3);
+  background-color: white;
+  color: black;
+`;
+
+const CardTitle = styled.div`
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
+`;
+
+const InfoSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+`;
+
+const InfoItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+`;
+
+const Label = styled.span`
+  font-weight: 500;
+  min-width: 100px;
+`;
+
+const ProjectList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const ProjectItem = styled.div`
+  padding: 0.5rem;
+  background-color: rgba(189, 191, 163, 0.1);
+  border-radius: 0.4rem;
+`;
+
 const UserInfo = ({ userInfo, userProjects }) => {
   return (
-    <div>
-      <div>
-        UserInfo
-        <div>인트라아이디 : {userInfo.intraId}</div>
-        <div>월렛 : {userInfo.wallet}</div>
-        <div>평가포인트 : {userInfo.collectionPoint}</div>
-        <div>레벨 : {userInfo.level}</div>
-      </div>
+    <UserInfoCard>
+      <InfoSection>
+        <CardTitle>User Information</CardTitle>
+        <InfoItem>
+          <Label>Intra ID:</Label>
+          <span>{userInfo.intraId}</span>
+        </InfoItem>
+        <InfoItem>
+          <Label>Wallet:</Label>
+          <span>{userInfo.wallet}</span>
+        </InfoItem>
+        <InfoItem>
+          <Label>Points:</Label>
+          <span>{userInfo.collectionPoint}</span>
+        </InfoItem>
+        <InfoItem>
+          <Label>Level:</Label>
+          <span>{userInfo.level}</span>
+        </InfoItem>
+      </InfoSection>
 
-      <div>
-        UserProjects
-        {userProjects.map((project) => {
-          return (
-            project.status === "in_progress" && <div>{project.projectName}</div>
-          );
-        })}
-      </div>
-    </div>
+      <InfoSection>
+        <CardTitle>Current Projects</CardTitle>
+        <ProjectList>
+          {userProjects.map(
+            (project, index) =>
+              project.status === "in_progress" && (
+                <ProjectItem key={index}>{project.projectName}</ProjectItem>
+              )
+          )}
+        </ProjectList>
+      </InfoSection>
+    </UserInfoCard>
   );
 };
 
