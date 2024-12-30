@@ -76,7 +76,7 @@ export const useDataStore = create((set) => ({
       set((state) => ({
         allUsers: {
           ...state.allUsers,
-          data: response.data.data,
+          data: response.data.data.users,
           loading: false,
         },
       }));
