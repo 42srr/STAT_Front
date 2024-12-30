@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const UserInfoCard = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50rem;
+  width: 42rem;
   margin: 1rem;
   padding: 1rem;
   border-radius: 0.8rem;
@@ -22,8 +22,8 @@ const UserInfoContainer = styled.div`
 `;
 
 const UserImage = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 10rem;
+  height: 10rem;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid rgba(189, 191, 163, 0.3);
@@ -40,6 +40,7 @@ const InfoSection = styled.div`
   flex-direction: column;
   gap: 0.8rem;
   margin-bottom: 1.5rem;
+  flex : 1; s
 `;
 
 const InfoItem = styled.div`
