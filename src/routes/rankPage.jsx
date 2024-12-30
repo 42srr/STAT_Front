@@ -456,6 +456,23 @@ export default function RankPage({ accessToken, intraId }) {
         <thead>
           <TableRow>
             {headers.map((header) => (
+              <TableHeader key={header}>{header}</TableHeader>
+            ))}
+          </TableRow>
+        </thead>
+        <tbody>
+          {allUsers.map((user) => (
+            <TableRow key={user.intraId}>
+              <TableData>{user.intraId}</TableData>
+              <TableData>{user.wallet}</TableData>
+              <TableData>{user.collectionPoint}</TableData>
+              <TableData>{user.level}</TableData>
+            </TableRow>
+          ))}
+        </tbody>
+        <thead>
+          <TableRow>
+            {headers.map((header) => (
               <TableHeader key={header} switchs={switchs}>
                 {header}
               </TableHeader>
@@ -463,14 +480,6 @@ export default function RankPage({ accessToken, intraId }) {
           </TableRow>
         </thead>
         <tbody>
-          {allUsers.map((user) => (
-            <TableRow key={user.intraId}>
-              <TableData switchs={switchs}>{user.intraId}</TableData>
-              <TableData switchs={switchs}>{user.wallet}</TableData>
-              <TableData switchs={switchs}>{user.collectionPoint}</TableData>
-              <TableData switchs={switchs}>{user.level}</TableData>
-            </TableRow>
-          ))}
           {datas.map((data) => (
             <TableRow key={data.순위}>
               <TableData switchs={switchs}>{data.순위}</TableData>
