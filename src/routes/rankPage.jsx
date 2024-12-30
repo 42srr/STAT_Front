@@ -506,11 +506,6 @@ export default function RankPage({ accessToken, intraId }) {
     <Layout>
       <SideBar />
       <Mainbox>
-        <>
-          {allProjects.map((project) => (
-            <div>{project.projectName}</div>
-          ))}
-        </>
         <TopBar>
           <RankTitle isActive={activeBtn === 0} onClick={() => btnClick(0)}>
             <BoxContainer>
@@ -535,6 +530,26 @@ export default function RankPage({ accessToken, intraId }) {
         </TopBar>
         <Line />
         {renderTable()}
+        <Table>
+          <thead>
+            <TableRow>
+              {headers.map((header) => (
+                <TableHeader key={header}>{header}</TableHeader>
+              ))}
+            </TableRow>
+          </thead>
+          <tbody>
+            {allUsers.map((user) => (
+              <TableRow key={user.intraId}>
+                <TableData>{user.level}</TableData>
+                <TableData>
+                  <img src={user.image} />
+                </TableData>
+                <TableData>{user.intraId}</TableData>
+              </TableRow>
+            ))}
+          </tbody>
+        </Table>
       </Mainbox>
     </Layout>
   );
