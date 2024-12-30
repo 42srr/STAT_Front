@@ -533,9 +533,9 @@ export default function RankPage({ accessToken, intraId }) {
         <Table>
           <thead>
             <TableRow>
-              {headers.map((header) => (
-                <TableHeader key={header}>{header}</TableHeader>
-              ))}
+              <TableHeader>레벨</TableHeader>
+              <TableHeader>사진</TableHeader>
+              <TableHeader>이름</TableHeader>
             </TableRow>
           </thead>
           <tbody>
