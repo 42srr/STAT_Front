@@ -1,6 +1,7 @@
 import SideBar from "../components/SideBar.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useDataStore } from "../store/useDataStore.js";
 
 /*
 
@@ -277,10 +278,21 @@ let TableHeader = styled.th`
     border-bottom-right-radius: 10px;
   }
 
-  &:nth-child(1) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '10%' : '10%')}; }  // 순위
-  &:nth-child(2) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '20%' : '20%')}; }  // 사진
-  &:nth-child(3) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '35%' : '70%')}; }  // 이름
-  &:nth-child(4) { width: 35%; }
+  &:nth-child(1) {
+    width: ${({ switchs }) =>
+      switchs === 1 || switchs === 2 || switchs === 3 ? "10%" : "10%"};
+  } // 순위
+  &:nth-child(2) {
+    width: ${({ switchs }) =>
+      switchs === 1 || switchs === 2 || switchs === 3 ? "20%" : "20%"};
+  } // 사진
+  &:nth-child(3) {
+    width: ${({ switchs }) =>
+      switchs === 1 || switchs === 2 || switchs === 3 ? "35%" : "70%"};
+  } // 이름
+  &:nth-child(4) {
+    width: 35%;
+  }
 `;
 
 let TableData = styled.td`
@@ -291,10 +303,21 @@ let TableData = styled.td`
   border-left: none;
   border-right: none;
 
-  &:nth-child(1) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '10%' : '10%')}; }  // 순위
-  &:nth-child(2) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '20%' : '20%')}; }  // 사진
-  &:nth-child(3) { width: ${({ switchs }) => (switchs === 1 || switchs === 2 || switchs === 3 ? '35%' : '70%')}; }  // 이름
-  &:nth-child(4) { width: 35%; }
+  &:nth-child(1) {
+    width: ${({ switchs }) =>
+      switchs === 1 || switchs === 2 || switchs === 3 ? "10%" : "10%"};
+  } // 순위
+  &:nth-child(2) {
+    width: ${({ switchs }) =>
+      switchs === 1 || switchs === 2 || switchs === 3 ? "20%" : "20%"};
+  } // 사진
+  &:nth-child(3) {
+    width: ${({ switchs }) =>
+      switchs === 1 || switchs === 2 || switchs === 3 ? "35%" : "70%"};
+  } // 이름
+  &:nth-child(4) {
+    width: 35%;
+  }
 `;
 
 let TableRow = styled.tr`
@@ -322,7 +345,8 @@ let RankTitle = styled.div`
     left: 0;
     right: 0;
     height: 4px;
-    background-color: ${({ isActive }) => (isActive ? '#8f9078' : 'transparent')};
+    background-color: ${({ isActive }) =>
+      isActive ? "#8f9078" : "transparent"};
     border-radius: 10px 10px 0 0;
     transition: background-color 0.3s ease;
   }
@@ -333,7 +357,7 @@ let RankTitle = styled.div`
 let Label = styled.span`
   font-size: 20px;
   color: ${({ isActive }) => (isActive ? "#8f9078" : "#4b4545")};
-  font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
+  font-weight: ${({ isActive }) => (isActive ? "bold" : "normal")};
 `;
 
 let BoxContainer = styled.div`
@@ -349,11 +373,28 @@ let Line = styled.div`
   margin-bottom: 30px;
 `;
 
-
 // RankPage 컴포넌트
-export default function RankPage() {
+export default function RankPage({ accessToken, intraId }) {
   let [switchs, setSwitchs] = useState(0); // 데이터 변경을 위한 상태
   let [activeBtn, setActiveBtn] = useState(0); // 활성화된 버튼 상태
+
+  const allProjects = useDataStore((state) => state.allProjects.data);
+  const fetchAllProjects = useDataStore((state) => state.allProjects.fetchData);
+  const allUsers = useDataStore((state) => state.allUsers.data);
+  const fetchAllUsers = useDataStore((state) => state.allUsers.fetchData);
+  const allWallet = useDataStore((state) => state.allWallet.data);
+  const fetchAllWallet = useDataStore((state) => state.allWallet.fetchData);
+  const allLevels = useDataStore((state) => state.allLevels.data);
+  const fetchAllLevels = useDataStore((state) => state.allLevels.fetchData);
+
+  useEffect(() => {
+    if (accessToken) {
+      fetchAllProjects(accessToken);
+      fetchAllUsers(accessToken);
+      fetchAllWallet(accessToken);
+      fetchAllLevels(accessToken);
+    }
+  }, [accessToken]);
 
   let btnClick = (idx) => {
     setSwitchs(idx);
@@ -361,10 +402,38 @@ export default function RankPage() {
   };
 
   let datas = [
-    { 순위: 1, 사진: "이미지", 이름: "제갈민수", 레벨: 10, 횟수: 5, 최대길이: 255 },
-    { 순위: 2, 사진: "이미지", 이름: "남궁민수", 레벨: 10, 횟수: 5, 최대길이: 255 },
-    { 순위: 3, 사진: "이미지", 이름: "사공민수", 레벨: 10, 횟수: 5, 최대길이: 255 },
-    { 순위: 4, 사진: "이미지", 이름: "사공민수", 레벨: 10, 횟수: 5, 최대길이: 255 },
+    {
+      순위: 1,
+      사진: "이미지",
+      이름: "제갈민수",
+      레벨: 10,
+      횟수: 5,
+      최대길이: 255,
+    },
+    {
+      순위: 2,
+      사진: "이미지",
+      이름: "남궁민수",
+      레벨: 10,
+      횟수: 5,
+      최대길이: 255,
+    },
+    {
+      순위: 3,
+      사진: "이미지",
+      이름: "사공민수",
+      레벨: 10,
+      횟수: 5,
+      최대길이: 255,
+    },
+    {
+      순위: 4,
+      사진: "이미지",
+      이름: "사공민수",
+      레벨: 10,
+      횟수: 5,
+      최대길이: 255,
+    },
   ];
 
   let totalAvg = ["순위", "사진", "이름"];
@@ -373,26 +442,49 @@ export default function RankPage() {
   let lenComments = ["순위", "사진", "이름", "최대길이"];
 
   let renderTable = () => {
-    let headers = switchs === 0 ? totalAvg : switchs === 1 ? levels : switchs === 2 ? countEvals : lenComments;
+    let headers =
+      switchs === 0
+        ? totalAvg
+        : switchs === 1
+        ? levels
+        : switchs === 2
+        ? countEvals
+        : lenComments;
 
     return (
       <Table>
         <thead>
           <TableRow>
             {headers.map((header) => (
-              <TableHeader key={header} switchs={switchs}>{header}</TableHeader>
+              <TableHeader key={header} switchs={switchs}>
+                {header}
+              </TableHeader>
             ))}
           </TableRow>
         </thead>
         <tbody>
+          {allUsers.map((user) => (
+            <TableRow key={user.intraId}>
+              <TableData switchs={switchs}>{user.intraId}</TableData>
+              <TableData switchs={switchs}>{user.wallet}</TableData>
+              <TableData switchs={switchs}>{user.collectionPoint}</TableData>
+              <TableData switchs={switchs}>{user.level}</TableData>
+            </TableRow>
+          ))}
           {datas.map((data) => (
             <TableRow key={data.순위}>
               <TableData switchs={switchs}>{data.순위}</TableData>
               <TableData switchs={switchs}>{data.사진}</TableData>
               <TableData switchs={switchs}>{data.이름}</TableData>
-              {switchs === 1 && <TableData switchs={switchs}>{data.레벨}</TableData>}
-              {switchs === 2 && <TableData switchs={switchs}>{data.횟수}</TableData>}
-              {switchs === 3 && <TableData switchs={switchs}>{data.최대길이}</TableData>}
+              {switchs === 1 && (
+                <TableData switchs={switchs}>{data.레벨}</TableData>
+              )}
+              {switchs === 2 && (
+                <TableData switchs={switchs}>{data.횟수}</TableData>
+              )}
+              {switchs === 3 && (
+                <TableData switchs={switchs}>{data.최대길이}</TableData>
+              )}
             </TableRow>
           ))}
         </tbody>
@@ -404,6 +496,11 @@ export default function RankPage() {
     <Layout>
       <SideBar />
       <Mainbox>
+        <>
+          {allProjects.map((project) => (
+            <div>{project.projectName}</div>
+          ))}
+        </>
         <TopBar>
           <RankTitle isActive={activeBtn === 0} onClick={() => btnClick(0)}>
             <BoxContainer>
