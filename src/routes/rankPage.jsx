@@ -394,6 +394,7 @@ export default function RankPage({ accessToken, intraId }) {
       fetchAllWallet(accessToken);
       fetchAllLevels(accessToken);
     }
+    console.log(allUsers);
   }, [accessToken]);
 
   let btnClick = (idx) => {

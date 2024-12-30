@@ -13,7 +13,6 @@ export const useDataStore = create((set) => ({
       const response = await axios.get("/api/projects", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      console.log("res:", response.data);
       set((state) => ({
         allProjects: {
           ...state.allProjects,
