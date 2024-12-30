@@ -536,6 +536,8 @@ export default function RankPage({ accessToken, intraId }) {
               <TableHeader>레벨</TableHeader>
               <TableHeader>사진</TableHeader>
               <TableHeader>이름</TableHeader>
+              <TableHeader>포인트</TableHeader>
+              <TableHeader>월렛</TableHeader>
             </TableRow>
           </thead>
           <tbody>
@@ -546,6 +548,8 @@ export default function RankPage({ accessToken, intraId }) {
                   <img src={user.image} />
                 </TableData>
                 <TableData>{user.intraId}</TableData>
+                <TableData>{user.collectionPoint}</TableData>
+                <TableData>{user.wallet}</TableData>
               </TableRow>
             ))}
           </tbody>
