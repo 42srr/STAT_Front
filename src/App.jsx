@@ -49,7 +49,12 @@ function App() {
           path="/rank"
           element={
             <ProtectedRoute accessToken={accessToken}>
-              <RankPage />
+              <RankPage
+                setAccessToken={setAccessToken}
+                setRefreshToken={setRefreshToken}
+                accessToken={accessToken}
+                refreshToken={refreshToken}
+              />
             </ProtectedRoute>
           }
         />
@@ -57,7 +62,7 @@ function App() {
           path="/set"
           element={
             <ProtectedRoute accessToken={accessToken}>
-              <SetPage />
+              <SetPage accessToken={accessToken} intraId={intraId} />
             </ProtectedRoute>
           }
         />
@@ -65,7 +70,7 @@ function App() {
           path="/reservation"
           element={
             <ProtectedRoute accessToken={accessToken}>
-              <ReservationPage />
+              <ReservationPage accessToken={accessToken} intraId={intraId} />
             </ProtectedRoute>
           }
         />
@@ -73,7 +78,7 @@ function App() {
           path="/reservationDetail"
           element={
             <ProtectedRoute accessToken={accessToken}>
-              <ReservationDetail />
+              <ReservationDetail accessToken={accessToken} intraId={intraId} />
             </ProtectedRoute>
           }
         />
@@ -81,7 +86,7 @@ function App() {
           path="/info"
           element={
             <ProtectedRoute accessToken={accessToken}>
-              <InfoPage />
+              <InfoPage accessToken={accessToken} intraId={intraId} />
             </ProtectedRoute>
           }
         />
