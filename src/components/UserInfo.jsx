@@ -4,14 +4,29 @@ import { useEffect, useState } from "react";
 const UserInfoCard = styled.div`
   display: flex;
   flex-direction: column;
-  width: 42rem;
+  width: 50rem;
   margin: 1rem;
   padding: 1rem;
   border-radius: 0.8rem;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
   border: solid 1px rgba(189, 191, 163, 0.3);
   background-color: white;
   color: black;
+`;
+
+const UserInfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+`;
+
+const UserImage = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(189, 191, 163, 0.3);
 `;
 
 const CardTitle = styled.div`
@@ -65,26 +80,28 @@ const UserInfo = ({ userInfo, userProjects }) => {
   }, [userProjects]); // userProjects가 변경될 때마다 실행
   return (
     <UserInfoCard>
-      <InfoSection>
-        <CardTitle>User Information</CardTitle>
-        <InfoItem>
-          <Label>Intra ID:</Label>
-          <span>{userInfo.intraId}</span>
-        </InfoItem>
-        <InfoItem>
-          <Label>Wallet:</Label>
-          <span>{userInfo.wallet}</span>
-        </InfoItem>
-        <InfoItem>
-          <Label>Points:</Label>
-          <span>{userInfo.collectionPoint}</span>
-        </InfoItem>
-        <InfoItem>
-          <Label>Level:</Label>
-          <span>{userInfo.level}</span>
-        </InfoItem>
-      </InfoSection>
-
+      <UserInfoContainer>
+        <InfoSection>
+          <CardTitle>User Information</CardTitle>
+          <InfoItem>
+            <Label>Intra ID:</Label>
+            <span>{userInfo.intraId}</span>
+          </InfoItem>
+          <InfoItem>
+            <Label>Wallet:</Label>
+            <span>{userInfo.wallet}</span>
+          </InfoItem>
+          <InfoItem>
+            <Label>Points:</Label>
+            <span>{userInfo.collectionPoint}</span>
+          </InfoItem>
+          <InfoItem>
+            <Label>Level:</Label>
+            <span>{userInfo.level}</span>
+          </InfoItem>
+        </InfoSection>
+        <UserImage src={userInfo.image} alt="user" />
+      </UserInfoContainer>
       <InfoSection>
         <CardTitle>Current Projects</CardTitle>
         <ProjectList>
