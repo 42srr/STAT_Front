@@ -506,7 +506,7 @@ export default function RankPage({ accessToken, intraId }) {
     <Layout>
       <SideBar />
       <Mainbox>
-        <TopBar>
+        {/* <TopBar>
           <RankTitle isActive={activeBtn === 0} onClick={() => btnClick(0)}>
             <BoxContainer>
               <Label isActive={activeBtn === 0}>종합 평균</Label>
@@ -529,7 +529,7 @@ export default function RankPage({ accessToken, intraId }) {
           </RankTitle>
         </TopBar>
         <Line />
-        {renderTable()}
+        {renderTable()} */}
         <Table>
           <thead>
             <TableRow>
