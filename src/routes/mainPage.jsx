@@ -239,10 +239,10 @@ export default function MainPage({
       .then((res) => {
         // console.log("Levels:", res.data.data);
         setBarLevels({
-          labels: Object.keys(res.data.data),
+          labels: Object.keys(res.data.data.levelResponseList),
           datasets: [
             {
-              data: Object.values(res.data.data),
+              data: Object.values(res.data.data.levelResponseList),
               backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
               borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
             },

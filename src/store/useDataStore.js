@@ -56,7 +56,7 @@ export const useDataStore = create((set) => ({
       set((state) => ({
         allLevels: {
           ...state.allLevels,
-          data: response.data.data,
+          data: response.data.data.levelResponseList,
           loading: false,
         },
       }));
