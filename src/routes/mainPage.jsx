@@ -5,6 +5,7 @@ import SideBar from "../components/SideBar.jsx";
 import { Doughnut, Bar } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
 import UserInfo from "../components/UserInfo.jsx";
+import { useDataStore } from "../store/useDataStore.js";
 
 import {
   Chart as ChartJS,
@@ -189,6 +190,30 @@ export default function MainPage({
   const [cntProjects, setCntProjects] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const [userProjects, setUserProjects] = useState([]);
+
+  const allLevels = useDataStore((state) => state.allLevels.data);
+  const fetchAllLevels = useDataStore((state) => state.allLevels.fetchData);
+
+  useEffect(() => {
+    if (accessToken) {
+      fetchAllLevels(accessToken);
+    }
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (allLevels.data.length > 0) {
+      setBarLevels({
+        labels: allLevels.data.map((level) => level.level), // level 값을 labels로 사용
+        datasets: [
+          {
+            data: allLevels.data.map((level) => level.level), // count 값을 data로 사용
+            backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+            borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+          },
+        ],
+      });
+    }
+  }, [allLevels.data]);
 
   useEffect(() => {
     getProjects();
