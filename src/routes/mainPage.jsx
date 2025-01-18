@@ -217,7 +217,7 @@ export default function MainPage({
 
   useEffect(() => {
     getProjects();
-    getLevels();
+    // getLevels();
     getRankWallet();
     getUsers();
     getUserProjects();
