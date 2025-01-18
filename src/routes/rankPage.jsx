@@ -542,7 +542,7 @@ export default function RankPage({ accessToken, intraId }) {
           <tbody>
             {allUsers.map((user) => (
               <TableRow key={user.intraId}>
-                <TableData>{Math.floor(user.level)}</TableData>
+                <TableData>{Number(user.level).toFixed(2)}</TableData>
                 <TableData>
                   <img src={user.image} />
                 </TableData>
