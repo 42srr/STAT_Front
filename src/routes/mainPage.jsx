@@ -201,7 +201,7 @@ export default function MainPage({
   }, [accessToken]);
 
   useEffect(() => {
-    if (allLevels.data.length > 0) {
+    if (allLevels.data && allLevels.data.length > 0) {
       setBarLevels({
         labels: allLevels.data.map((level) => level.level), // level 값을 labels로 사용
         datasets: [
