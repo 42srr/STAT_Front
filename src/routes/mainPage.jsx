@@ -201,12 +201,12 @@ export default function MainPage({
   }, [accessToken]);
 
   useEffect(() => {
-    if (allLevels.data && allLevels.data.length > 0) {
+    if (allLevels && allLevels.length > 0) {
       setBarLevels({
-        labels: allLevels.data.map((level) => level.level), // level 값을 labels로 사용
+        labels: allLevels.map((level) => level.level), // level 값을 labels로 사용
         datasets: [
           {
-            data: allLevels.data.map((level) => level.level), // count 값을 data로 사용
+            data: allLevels.map((level) => level.count), // count 값을 data로 사용
             backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
             borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
           },
