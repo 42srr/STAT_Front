@@ -256,25 +256,25 @@ export default function MainPage({
         // console.log(topFiveWalletRank);
       });
   }
-  function getLevels() {
-    axios
-      .get("/api/levels", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((res) => {
-        // console.log("Levels:", res.data.data);
-        setBarLevels({
-          labels: Object.keys(res.data.data.levelResponseList),
-          datasets: [
-            {
-              data: Object.values(res.data.data.levelResponseList),
-              backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
-              borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
-            },
-          ],
-        });
-      });
-  }
+  // function getLevels() {
+  //   axios
+  //     .get("/api/levels", {
+  //       headers: { Authorization: `Bearer ${accessToken}` },
+  //     })
+  //     .then((res) => {
+  //       // console.log("Levels:", res.data.data);
+  //       setBarLevels({
+  //         labels: Object.keys(res.data.data.levelResponseList),
+  //         datasets: [
+  //           {
+  //             data: Object.values(res.data.data.levelResponseList),
+  //             backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+  //             borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+  //           },
+  //         ],
+  //       });
+  //     });
+  // }
   function getUsers() {
     axios
       .get("/api/users", {
