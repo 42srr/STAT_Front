@@ -1,27 +1,16 @@
-import SideBar from "../components/SideBar.jsx";
+import React from "react";
+import SideBar from "../components/SideBar";
+import styled from "styled-components";
+import { useDataStore } from "../store/useDataStore.js";
 import "../main.css";
 import { useNavigate } from "react-router-dom";
 
-// import SideBar from "../components/SideBar.jsx";
+interface SetPageProps {
+  accessToken: string;
+  intraId: string;
+}
 
-// export default function SetPage() {
-//   return (
-//     <>
-//       <SideBar />
-//       <div>
-//         문의하기<button>문의하기</button>
-//       </div>
-//       <div>
-//         계정
-//         <div>
-//           <button>로그아웃</button>
-//           <button>회원탈퇴</button>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-export default function SetPage() {
+const SetPage: React.FC<SetPageProps> = ({ accessToken, intraId }) => {
   // api
   // 반응형
   // tailwind로 확인
@@ -58,4 +47,6 @@ export default function SetPage() {
       </main>
     </div>
   );
-}
+};
+
+export default SetPage;

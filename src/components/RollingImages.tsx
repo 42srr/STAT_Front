@@ -1,6 +1,14 @@
 import React from "react";
 
-const RollingImages = ({ stylenum, startIndex = 1}) => {
+interface RollingImagesProps {
+  stylenum: number;
+  startIndex?: number;
+}
+
+const RollingImages: React.FC<RollingImagesProps> = ({
+  stylenum,
+  startIndex = 0,
+}) => {
   return (
     <div className={`marquee marquee--${stylenum}`}>
       <img
@@ -24,7 +32,7 @@ const RollingImages = ({ stylenum, startIndex = 1}) => {
         height="250"
         alt={`${startIndex + 3}`}
       />
-       <img
+      <img
         className="marquee__item"
         src={`/assets/icons/${startIndex + 3}.svg`}
         width="250"

@@ -1,20 +1,22 @@
-import LoginPage from "./routes/loginPage.jsx";
-import MainPage from "./routes/mainPage.jsx";
-import RankPage from "./routes/rankPage.jsx";
-import SetPage from "./routes/setPage.jsx";
-import InfoPage from "./routes/infoPage.jsx";
-import ReservationPage from "./routes/reservationPage.jsx";
-import ReservationDetail from "./routes/reservationDetail.jsx";
+import React, { useState } from "react";
+import LoginPage from "./routes/loginPage";
+import MainPage from "./routes/mainPage";
+import RankPage from "./routes/rankPage";
+import SetPage from "./routes/setPage";
+import InfoPage from "./routes/infoPage";
+import ReservationPage from "./routes/reservationPage";
+import ReservationDetail from "./routes/reservationDetail";
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import WebPrivacy from "./routes/webprivacy.jsx";
-import AppPrivacy from "./routes/app.privacy.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import WebPrivacy from "./routes/webprivacy";
+import AppPrivacy from "./routes/app.privacy";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
-  const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
-  const [intraId, setIntraId] = useState("");
+interface AppProps {}
+
+const App: React.FC<AppProps> = () => {
+  const [accessToken, setAccessToken] = useState<string>("");
+  const [refreshToken, setRefreshToken] = useState<string>("");
+  const [intraId, setIntraId] = useState<string>("");
   return (
     <>
       <Routes>
@@ -95,6 +97,6 @@ function App() {
       </Routes>
     </>
   );
-}
+};
 
 export default App;

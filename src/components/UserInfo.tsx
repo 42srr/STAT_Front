@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import React from "react";
 import { useEffect, useState } from "react";
 
 const UserInfoCard = styled.div`
@@ -40,7 +41,7 @@ const InfoSection = styled.div`
   flex-direction: column;
   gap: 0.8rem;
   margin-bottom: 1.5rem;
-  flex : 1; s
+  flex: 1;
 `;
 
 const InfoItem = styled.div`
@@ -67,8 +68,22 @@ const ProjectItem = styled.div`
   border-radius: 0.4rem;
 `;
 
-const UserInfo = ({ userInfo, userProjects }) => {
-  const [uniqueProjects, setUniqueProjects] = useState([]);
+interface UserInfoProps {
+  userInfo: {
+    intraId: string;
+    wallet: string;
+    collectionPoint: number;
+    level: number;
+    image: string;
+  };
+  userProjects: Array<{
+    projectName: string;
+    status: string;
+  }>;
+}
+
+const UserInfo: React.FC<UserInfoProps> = ({ userInfo, userProjects }) => {
+  const [uniqueProjects, setUniqueProjects] = useState<Array<any>>([]);
 
   useEffect(() => {
     const filtered = [
@@ -79,6 +94,7 @@ const UserInfo = ({ userInfo, userProjects }) => {
 
     setUniqueProjects(filtered);
   }, [userProjects]); // userProjects가 변경될 때마다 실행
+
   return (
     <UserInfoCard>
       <UserInfoContainer>

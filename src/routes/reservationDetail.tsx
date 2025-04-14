@@ -1,7 +1,18 @@
-import SideBar from "../components/SideBar.jsx";
+import React from "react";
+import SideBar from "../components/SideBar";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import "../reservation.css";
 
-export default function reservationDetail() {
+interface ReservationDetailProps {
+  accessToken: string;
+  intraId: string;
+}
+
+const ReservationDetail: React.FC<ReservationDetailProps> = ({
+  accessToken,
+  intraId,
+}) => {
   return (
     <>
       <div className="container">
@@ -23,7 +34,7 @@ export default function reservationDetail() {
                 <p>13 : 30pm - 15 : 30pm</p>
               </div>
               <div className="reservation-status">
-              <h2>Reservation status</h2>
+                <h2>Reservation status</h2>
                 <div className="reservation-status-elements">
                   <p>Your name </p>
                   <p>User Kim</p>
@@ -55,4 +66,6 @@ export default function reservationDetail() {
       </div>
     </>
   );
-}
+};
+
+export default ReservationDetail;

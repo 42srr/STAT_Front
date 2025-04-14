@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import SideBar from "../components/SideBar.jsx";
+import SideBar from "../components/SideBar";
 import { Doughnut, Bar } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
-import UserInfo from "../components/UserInfo.jsx";
+import UserInfo from "../components/UserInfo";
 import { useDataStore } from "../store/useDataStore.js";
 
 import {
@@ -155,13 +156,21 @@ const Options = {
   },
 };
 
-export default function MainPage({
+interface MainPageProps {
+  setAccessToken: React.Dispatch<React.SetStateAction<string>>;
+  setRefreshToken: React.Dispatch<React.SetStateAction<string>>;
+  accessToken: string;
+  refreshToken: string;
+  intraId: string;
+}
+
+const MainPage: React.FC<MainPageProps> = ({
   setAccessToken,
   setRefreshToken,
   accessToken,
   refreshToken,
   intraId,
-}) {
+}) => {
   const navigate = useNavigate();
   // 직전회차 시험 데이터 그래프에 사용하는 더미 데이터
   const BarData = {
@@ -224,11 +233,13 @@ export default function MainPage({
     getUserInfo();
     if (!accessToken) navigate("/");
   }, []);
+
   function logoutBtn() {
     setAccessToken("");
     setRefreshToken("");
     navigate("/");
   }
+
   function getProjects() {
     axios
       .get("/api/projects", {
@@ -244,6 +255,7 @@ export default function MainPage({
         // console.log("SortedProjects:", topFive);
       });
   }
+
   function getRankWallet() {
     axios
       .get("/api/ranking/wallet", {
@@ -256,7 +268,8 @@ export default function MainPage({
         // console.log(topFiveWalletRank);
       });
   }
-  // function getLevels() {
+
+  // function getLevels: React.FC<any> () {
   //   axios
   //     .get("/api/levels", {
   //       headers: { Authorization: `Bearer ${accessToken}` },
@@ -275,6 +288,7 @@ export default function MainPage({
   //       });
   //     });
   // }
+
   function getUsers() {
     axios
       .get("/api/users", {
@@ -292,6 +306,7 @@ export default function MainPage({
         setEvalPointRank(topFive);
       });
   }
+
   function getUserProjects() {
     axios
       .get("/api/projects/" + intraId, {
@@ -302,6 +317,7 @@ export default function MainPage({
         setUserProjects(res.data.data);
       });
   }
+
   function getUserInfo() {
     axios
       .get("/api/users/" + intraId, {
@@ -426,4 +442,6 @@ export default function MainPage({
       </Layout>
     </>
   );
-}
+};
+
+export default MainPage;

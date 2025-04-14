@@ -1,9 +1,17 @@
-import SideBar from "../components/SideBar.jsx";
+import React from "react";
+import SideBar from "../components/SideBar";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import "../main.css";
-import { useDataStore } from "../store/useDataStore.js";
+import { useDataStore } from "../store/useDataStore";
 import { useState, useEffect } from "react";
 
-export default function InfoPage({ accessToken, intraId }) {
+interface InfoPageProps {
+  accessToken: string;
+  intraId: string;
+}
+
+const InfoPage: React.FC<InfoPageProps> = ({ accessToken, intraId }) => {
   const userInfo = useDataStore((state) => state.userInfo.data);
   const fetchUserInfo = useDataStore((state) => state.userInfo.fetchData);
 
@@ -66,4 +74,6 @@ export default function InfoPage({ accessToken, intraId }) {
       </main>
     </div>
   );
-}
+};
+
+export default InfoPage;

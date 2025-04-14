@@ -1,8 +1,10 @@
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
+// @ts-ignore
 import mainLogo from "../assets/light/logo.svg";
+// @ts-ignore
 import BackgroundImg from "../assets/background.jpg";
 import RollingImages from "../components/RollingImages";
 
@@ -115,17 +117,27 @@ let Buttons = styled.button`
   border-radius: 0.8rem;
 `;
 
-export default function LoginPage({
+interface LoginPageProps {
+  setAccessToken: React.Dispatch<React.SetStateAction<string>>;
+  setRefreshToken: React.Dispatch<React.SetStateAction<string>>;
+  accessToken: string;
+  refreshToken: string;
+  setIntraId: React.Dispatch<React.SetStateAction<string>>;
+  intraId?: string;
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({
   setAccessToken,
   setRefreshToken,
   accessToken,
   refreshToken,
   setIntraId,
-}) {
+}) => {
   const navigate = useNavigate();
-  const requestSentRef = useRef(false);
+  const requestSentRef = useRef<boolean>(false);
   // local용 URL
-  const toGetAuthCodeUrl = import.meta.env.VITE_AUTH_CODE;
+  const toGetAuthCodeUrl = import.meta.env.VITE_AUTH_CODE as string;
+
   useEffect(() => {
     const search = window.location?.search.split("code=")[1];
     // console.log("search:", search);
@@ -134,14 +146,16 @@ export default function LoginPage({
       getAuth(search);
     }
   }, [navigate]);
-  async function getAuth(code) {
+
+  async function getAuth(code: string) {
     try {
-      const res = await axios.get("/api/login", {
+      const res = await axios.get("/login/oauth2/42", {
         params: { code: code },
         headers: {
           "Content-Type": "application/json",
         },
       });
+
       // console.log("Server res:", res.data.data);
       // console.log("res.data:", res.data);
       // console.log("res:", res);
@@ -166,7 +180,7 @@ export default function LoginPage({
       // console.log("intraId");
       // console.log(intraId);
       navigate("/main", { replace: true });
-    } catch (error) {
+    } catch (error: any) {
       // console.error("login failed:", error);
       if (error.response) {
         // console.log("Server Error Status:", error.response.status);
@@ -174,6 +188,7 @@ export default function LoginPage({
       }
     }
   }
+
   async function getRefresh() {
     try {
       const res = await axios.post("/api/refresh", {
@@ -228,4 +243,6 @@ export default function LoginPage({
       </Footer>
     </Main>
   );
-}
+};
+
+export default LoginPage;

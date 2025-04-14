@@ -1,12 +1,71 @@
 import { create } from "zustand";
 import axios from "axios";
 
-export const useDataStore = create((set) => ({
+interface Project {
+  // 프로젝트 관련 필드 정의
+  [key: string]: any;
+}
+
+interface User {
+  // 사용자 관련 필드 정의
+  [key: string]: any;
+}
+
+interface Level {
+  // 레벨 관련 필드 정의
+  [key: string]: any;
+}
+
+interface Wallet {
+  // 지갑 관련 필드 정의
+  [key: string]: any;
+}
+
+interface DataState {
+  allProjects: {
+    data: Project[];
+    loading: boolean;
+    error: string | null;
+    fetchData: (accessToken: string) => Promise<void>;
+  };
+  allWallet: {
+    data: Wallet[];
+    loading: boolean;
+    error: string | null;
+    fetchData: (accessToken: string) => Promise<void>;
+  };
+  allLevels: {
+    data: Level[];
+    loading: boolean;
+    error: string | null;
+    fetchData: (accessToken: string) => Promise<void>;
+  };
+  allUsers: {
+    data: User[];
+    loading: boolean;
+    error: string | null;
+    fetchData: (accessToken: string) => Promise<void>;
+  };
+  userProjects: {
+    data: Project[];
+    loading: boolean;
+    error: string | null;
+    fetchData: (accessToken: string, intraId: string) => Promise<void>;
+  };
+  userInfo: {
+    data: User | null;
+    loading: boolean;
+    error: string | null;
+    fetchData: (accessToken: string, intraId: string) => Promise<void>;
+  };
+}
+
+export const useDataStore = create<DataState>((set) => ({
   allProjects: {
     data: [],
     loading: false,
     error: null,
-    fetchData: async (accessToken) => {
+    fetchData: async (accessToken: string) => {
       set((state) => ({
         allProjects: { ...state.allProjects, loading: true },
       }));
@@ -26,7 +85,7 @@ export const useDataStore = create((set) => ({
     data: [],
     loading: false,
     error: null,
-    fetchData: async (accessToken) => {
+    fetchData: async (accessToken: string) => {
       set((state) => ({
         allWallet: { ...state.allWallet, loading: true },
       }));
@@ -46,7 +105,7 @@ export const useDataStore = create((set) => ({
     data: [],
     loading: false,
     error: null,
-    fetchData: async (accessToken) => {
+    fetchData: async (accessToken: string) => {
       set((state) => ({
         allLevels: { ...state.allLevels, loading: true },
       }));
@@ -66,7 +125,7 @@ export const useDataStore = create((set) => ({
     data: [],
     loading: false,
     error: null,
-    fetchData: async (accessToken) => {
+    fetchData: async (accessToken: string) => {
       set((state) => ({
         allUsers: { ...state.allUsers, loading: true },
       }));
@@ -86,7 +145,7 @@ export const useDataStore = create((set) => ({
     data: [],
     loading: false,
     error: null,
-    fetchData: async (accessToken, intraId) => {
+    fetchData: async (accessToken: string, intraId: string) => {
       set((state) => ({
         userProjects: { ...state.userProjects, loading: true },
       }));
@@ -103,10 +162,10 @@ export const useDataStore = create((set) => ({
     },
   },
   userInfo: {
-    data: [],
+    data: null,
     loading: false,
     error: null,
-    fetchData: async (accessToken, intraId) => {
+    fetchData: async (accessToken: string, intraId: string) => {
       try {
         set((state) => ({
           userInfo: { ...state.userInfo, loading: true },
@@ -123,7 +182,7 @@ export const useDataStore = create((set) => ({
             loading: false,
           },
         }));
-      } catch (error) {
+      } catch (error: any) {
         set((state) => ({
           userInfo: {
             ...state.userInfo,

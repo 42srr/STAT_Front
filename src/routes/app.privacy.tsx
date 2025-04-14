@@ -32,7 +32,7 @@ const List = styled.ul`
   padding-left: 2rem;
 `;
 
-const AppPrivacy = () => {
+const AppPrivacy: React.FC = () => {
   return (
     <>
       <Container>

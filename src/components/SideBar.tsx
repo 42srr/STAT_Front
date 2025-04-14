@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const MENU_ITEMS = [
@@ -139,7 +140,9 @@ let SearchIcorn = styled.div`
   margin-left: 5px;
 `;
 
-export default function SideBar() {
+interface SideBarProps {}
+
+const SideBar: React.FC<SideBarProps> = () => {
   let navigate = useNavigate();
 
   return (
@@ -290,4 +293,6 @@ export default function SideBar() {
       </BtnIconGroup>
     </Sidebox>
   );
-}
+};
+
+export default SideBar;
