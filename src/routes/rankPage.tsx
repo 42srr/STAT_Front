@@ -1,20 +1,31 @@
-import SideBar from "../components/SideBar";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDataStore } from "../store/useDataStore";
 import { User } from "../store/types";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
-const Layout = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100vh;
-`;
+const Button3 = styled.button`
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
 
-const Mainbox = styled.div`
-  flex: 1;
-  padding: 2rem;
-  overflow-y: auto;
+  &.active {
+    background: #1976d2;
+    color: white;
+    border-color: #1976d2;
+  }
+
+  &:hover {
+    background: #e0e0e0;
+    &.active {
+      background: #1565c0;
+    }
+  }
 `;
 
 const Table = styled.table`
@@ -209,47 +220,66 @@ const RankPage: React.FC<RankPageProps> = ({
   // 로딩 상태 처리
   if (walletLoading || pointLoading) {
     return (
-      <Layout>
-        <SideBar />
-        <Mainbox>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          ml: "260px",
+          width: { sm: `calc(100% - 260px)` },
+          mt: "64px", // 상단바 높이만큼 margin-top 추가
+        }}
+      >
+        <Container maxWidth="xl" sx={{ py: 4 }}>
           <div style={{ textAlign: "center", padding: "2rem" }}>
             데이터를 불러오는 중입니다...
           </div>
-        </Mainbox>
-      </Layout>
+        </Container>
+      </Box>
     );
   }
 
   return (
-    <Layout>
-      <SideBar />
-      <Mainbox>
-        <Table>
-          <thead>
-            <TableRow>
-              <TableHeader>레벨</TableHeader>
-              <TableHeader>사진</TableHeader>
-              <TableHeader>이름</TableHeader>
-              <TableHeader>포인트</TableHeader>
-              <TableHeader>월렛</TableHeader>
-            </TableRow>
-          </thead>
-          <tbody>
-            {pointRanking.map((user: User) => (
-              <TableRow key={user.intraId}>
-                <TableData>{Number(user.level).toFixed(2)}</TableData>
-                <TableData>
-                  <img src={user.imgURL} alt={user.intraId} />
-                </TableData>
-                <TableData>{user.intraId}</TableData>
-                <TableData>{user.collectionPoint}</TableData>
-                <TableData>{user.wallet}</TableData>
-              </TableRow>
-            ))}
-          </tbody>
-        </Table>
-      </Mainbox>
-    </Layout>
+    <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        p: 3,
+        ml: "260px",
+        width: { sm: `calc(100% - 260px)` },
+        mt: "64px", // 상단바 높이만큼 margin-top 추가
+      }}
+    >
+      <Container maxWidth="xl" sx={{ py: 4 }}>
+        <div className="group">
+          <Button3
+            className={activeBtn === 0 ? "active" : ""}
+            onClick={() => btnClick(0)}
+          >
+            월렛 랭킹
+          </Button3>
+          <Button3
+            className={activeBtn === 1 ? "active" : ""}
+            onClick={() => btnClick(1)}
+          >
+            레벨 랭킹
+          </Button3>
+          <Button3
+            className={activeBtn === 2 ? "active" : ""}
+            onClick={() => btnClick(2)}
+          >
+            평가횟수
+          </Button3>
+          <Button3
+            className={activeBtn === 3 ? "active" : ""}
+            onClick={() => btnClick(3)}
+          >
+            최대 회고록 길이
+          </Button3>
+        </div>
+        {renderTable()}
+      </Container>
+    </Box>
   );
 };
 

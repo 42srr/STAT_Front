@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import AppHeader from "./AppHeader";
+import SideBar from "./SideBar";
 import Box from "@mui/material/Box";
 
 interface ProtectedRouteProps {
@@ -34,6 +35,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "#f5f5f7" }}>
       <AppHeader intraId={intraId} onLogout={handleLogout} />
+      <SideBar />
       {children}
     </Box>
   );
