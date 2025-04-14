@@ -252,7 +252,15 @@ const MainPage: React.FC<MainPageProps> = ({
       fetchProjectDistribution(accessToken);
       fetchLevelDistribution(accessToken);
     }
-
+    console.log("accessToken:", accessToken);
+    console.log("userId:", userId);
+    console.log("intraId:", intraId);
+    console.log("userInfo:", userInfo);
+    console.log("userProjects:", userProjects);
+    console.log("walletRanking:", walletRanking);
+    console.log("pointRanking:", pointRanking);
+    console.log("projectDistribution:", projectDistribution);
+    console.log("levelDistribution:", levelDistribution);
     if (!accessToken) navigate("/");
   }, [accessToken, intraId]);
 
