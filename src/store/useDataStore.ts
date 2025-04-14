@@ -52,7 +52,7 @@ export const useDataStore = create<StoreState>((set, get) => ({
   },
 
   // 사용자 정보 조회
-  fetchUserInfo: async (accessToken: string, intraId: string) => {
+  fetchUserInfo: async (accessToken: string, userId: string) => {
     try {
       set((state) => ({
         userInfo: {
@@ -62,7 +62,7 @@ export const useDataStore = create<StoreState>((set, get) => ({
         },
       }));
 
-      const data = await api.getUserInfo(accessToken, intraId);
+      const data = await api.getUserInfo(accessToken, userId);
 
       set((state) => ({
         userInfo: {
@@ -83,7 +83,7 @@ export const useDataStore = create<StoreState>((set, get) => ({
   },
 
   // 사용자 프로젝트 조회
-  fetchUserProjects: async (accessToken: string, intraId: string) => {
+  fetchUserProjects: async (accessToken: string, userId: string) => {
     try {
       set((state) => ({
         userProjects: {
@@ -93,7 +93,7 @@ export const useDataStore = create<StoreState>((set, get) => ({
         },
       }));
 
-      const data = await api.getUserProjects(accessToken, intraId);
+      const data = await api.getUserProjects(accessToken, userId);
 
       set((state) => ({
         userProjects: {
