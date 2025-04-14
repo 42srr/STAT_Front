@@ -158,6 +158,8 @@ interface LoginPageProps {
   refreshToken: string;
   setIntraId: React.Dispatch<React.SetStateAction<string>>;
   intraId?: string;
+  setUserId: React.Dispatch<React.SetStateAction<string>>;
+  userId: string;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({
@@ -166,6 +168,8 @@ const LoginPage: React.FC<LoginPageProps> = ({
   accessToken,
   refreshToken,
   setIntraId,
+  setUserId,
+  userId,
 }) => {
   const navigate = useNavigate();
   const requestSentRef = useRef<boolean>(false);
@@ -193,20 +197,20 @@ const LoginPage: React.FC<LoginPageProps> = ({
       // console.log("Server res:", res.data.data);
       // console.log("res.data:", res.data);
       // console.log("res:", res);
-      const { accessToken, refreshToken, intraId } = res.data.data;
-      if (!accessToken || !refreshToken || !intraId) {
+      const { accessToken, refreshToken, intraId, userId } = res.data.data;
+      if (!accessToken || !refreshToken || !intraId || !userId) {
         throw new Error("Invalid token");
       }
       // 세션에 토큰 저장
       sessionStorage.setItem("accessToken", accessToken);
       sessionStorage.setItem("refreshToken", refreshToken);
       sessionStorage.setItem("intraId", intraId);
-
+      sessionStorage.setItem("userId", userId);
       // 상태 업데이트
       setAccessToken(accessToken);
       setRefreshToken(refreshToken);
       setIntraId(intraId);
-
+      setUserId(userId);
       // console.log("accessToken:");
       // console.log(accessToken);
       // console.log("refreshToken:");

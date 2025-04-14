@@ -17,6 +17,7 @@ const App: React.FC<AppProps> = () => {
   const [accessToken, setAccessToken] = useState<string>("");
   const [refreshToken, setRefreshToken] = useState<string>("");
   const [intraId, setIntraId] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
   return (
     <>
       <Routes>
@@ -30,6 +31,8 @@ const App: React.FC<AppProps> = () => {
               refreshToken={refreshToken}
               setIntraId={setIntraId}
               intraId={intraId}
+              setUserId={setUserId}
+              userId={userId}
             />
           }
         />
@@ -43,6 +46,7 @@ const App: React.FC<AppProps> = () => {
                 accessToken={accessToken}
                 refreshToken={refreshToken}
                 intraId={intraId}
+                userId={userId}
               />
             </ProtectedRoute>
           }
@@ -56,6 +60,7 @@ const App: React.FC<AppProps> = () => {
                 setRefreshToken={setRefreshToken}
                 accessToken={accessToken}
                 refreshToken={refreshToken}
+                userId={userId}
               />
             </ProtectedRoute>
           }
@@ -64,7 +69,11 @@ const App: React.FC<AppProps> = () => {
           path="/set"
           element={
             <ProtectedRoute accessToken={accessToken}>
-              <SetPage accessToken={accessToken} intraId={intraId} />
+              <SetPage
+                accessToken={accessToken}
+                intraId={intraId}
+                userId={userId}
+              />
             </ProtectedRoute>
           }
         />
@@ -72,7 +81,11 @@ const App: React.FC<AppProps> = () => {
           path="/reservation"
           element={
             <ProtectedRoute accessToken={accessToken}>
-              <ReservationPage accessToken={accessToken} intraId={intraId} />
+              <ReservationPage
+                accessToken={accessToken}
+                intraId={intraId}
+                userId={userId}
+              />
             </ProtectedRoute>
           }
         />
@@ -80,7 +93,11 @@ const App: React.FC<AppProps> = () => {
           path="/reservationDetail"
           element={
             <ProtectedRoute accessToken={accessToken}>
-              <ReservationDetail accessToken={accessToken} intraId={intraId} />
+              <ReservationDetail
+                accessToken={accessToken}
+                intraId={intraId}
+                userId={userId}
+              />
             </ProtectedRoute>
           }
         />
@@ -88,7 +105,11 @@ const App: React.FC<AppProps> = () => {
           path="/info"
           element={
             <ProtectedRoute accessToken={accessToken}>
-              <InfoPage accessToken={accessToken} intraId={intraId} />
+              <InfoPage
+                accessToken={accessToken}
+                intraId={intraId}
+                userId={userId}
+              />
             </ProtectedRoute>
           }
         />

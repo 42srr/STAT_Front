@@ -55,6 +55,7 @@ interface RankPageProps {
   setRefreshToken: React.Dispatch<React.SetStateAction<string>>;
   accessToken: string;
   refreshToken: string;
+  userId: string;
 }
 
 const RankPage: React.FC<RankPageProps> = ({
@@ -62,6 +63,7 @@ const RankPage: React.FC<RankPageProps> = ({
   setRefreshToken,
   accessToken,
   refreshToken,
+  userId,
 }) => {
   const [switchs, setSwitchs] = useState(0);
   const [activeBtn, setActiveBtn] = useState(0);

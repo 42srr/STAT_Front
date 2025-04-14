@@ -9,9 +9,9 @@ const createAuthHeader = (accessToken: string) => ({
 
 export const api = {
   // 사용자 정보 조회
-  getUserInfo: async (accessToken: string, intraId: string): Promise<User> => {
+  getUserInfo: async (accessToken: string, userId: string): Promise<User> => {
     const response = await axios.get<ApiResponse<User>>(
-      `${API_BASE_URL}/users/${intraId}`,
+      `${API_BASE_URL}/users/${userId}`,
       createAuthHeader(accessToken)
     );
     return response.data.data;
@@ -20,10 +20,10 @@ export const api = {
   // 사용자 프로젝트 조회
   getUserProjects: async (
     accessToken: string,
-    intraId: string
+    userId: string
   ): Promise<Project[]> => {
     const response = await axios.get<ApiResponse<Project[]>>(
-      `${API_BASE_URL}/users/${intraId}/projects`,
+      `${API_BASE_URL}/users/${userId}/projects`,
       createAuthHeader(accessToken)
     );
     return response.data.data;

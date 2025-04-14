@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 interface SetPageProps {
   accessToken: string;
   intraId: string;
+  userId: string;
 }
 
 const SetPage: React.FC<SetPageProps> = ({ accessToken, intraId }) => {

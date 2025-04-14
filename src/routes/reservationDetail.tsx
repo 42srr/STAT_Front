@@ -7,6 +7,7 @@ import "../reservation.css";
 interface ReservationDetailProps {
   accessToken: string;
   intraId: string;
+  userId: string;
 }
 
 const ReservationDetail: React.FC<ReservationDetailProps> = ({

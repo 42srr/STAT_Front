@@ -10,9 +10,14 @@ import { User } from "../store/types";
 interface InfoPageProps {
   accessToken: string;
   intraId: string;
+  userId: string;
 }
 
-const InfoPage: React.FC<InfoPageProps> = ({ accessToken, intraId }) => {
+const InfoPage: React.FC<InfoPageProps> = ({
+  accessToken,
+  intraId,
+  userId,
+}) => {
   // Zustand 스토어에서 사용자 정보 및 액션 가져오기
   const userInfo = useDataStore((state) => state.userInfo.data);
   const userInfoLoading = useDataStore((state) => state.userInfo.loading);

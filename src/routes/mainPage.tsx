@@ -156,6 +156,7 @@ interface MainPageProps {
   accessToken: string;
   refreshToken: string;
   intraId: string;
+  userId: string;
 }
 
 const MainPage: React.FC<MainPageProps> = ({
@@ -164,6 +165,7 @@ const MainPage: React.FC<MainPageProps> = ({
   accessToken,
   refreshToken,
   intraId,
+  userId,
 }) => {
   const navigate = useNavigate();
   const [goodWords, setGoodWords] = useState("");

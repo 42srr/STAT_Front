@@ -7,6 +7,7 @@ import "../reservation.css";
 interface ReservationPageProps {
   accessToken: string;
   intraId: string;
+  userId: string;
 }
 
 const ReservationPage: React.FC<ReservationPageProps> = ({
