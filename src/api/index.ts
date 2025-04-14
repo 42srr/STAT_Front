@@ -10,11 +10,18 @@ const createAuthHeader = (accessToken: string) => ({
 export const api = {
   // 사용자 정보 조회
   getUserInfo: async (accessToken: string, userId: string): Promise<User> => {
-    const response = await axios.get<ApiResponse<User>>(
-      `${API_BASE_URL}/users/${userId}`,
-      createAuthHeader(accessToken)
-    );
-    return response.data.data;
+    console.log(`Fetching user info for userId: ${userId}`);
+    try {
+      const response = await axios.get<ApiResponse<User>>(
+        `${API_BASE_URL}/users/${userId}`,
+        createAuthHeader(accessToken)
+      );
+      console.log("User info response:", response.data);
+      return response.data.data;
+    } catch (error) {
+      console.error("Error fetching user info:", error);
+      throw error;
+    }
   },
 
   // 사용자 프로젝트 조회

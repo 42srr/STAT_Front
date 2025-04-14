@@ -11,7 +11,7 @@ interface SetPageProps {
   userId: string;
 }
 
-const SetPage: React.FC<SetPageProps> = ({ accessToken, intraId }) => {
+const SetPage: React.FC<SetPageProps> = ({ accessToken, intraId, userId }) => {
   // api
   // 반응형
   // tailwind로 확인

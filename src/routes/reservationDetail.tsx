@@ -13,6 +13,7 @@ interface ReservationDetailProps {
 const ReservationDetail: React.FC<ReservationDetailProps> = ({
   accessToken,
   intraId,
+  userId,
 }) => {
   return (
     <>

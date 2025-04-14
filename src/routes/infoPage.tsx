@@ -25,10 +25,10 @@ const InfoPage: React.FC<InfoPageProps> = ({
   const fetchUserInfo = useDataStore((state) => state.fetchUserInfo);
 
   useEffect(() => {
-    if (accessToken && intraId) {
-      fetchUserInfo(accessToken, intraId);
+    if (accessToken && userId) {
+      fetchUserInfo(accessToken, userId);
     }
-  }, [accessToken, intraId, fetchUserInfo]);
+  }, [accessToken, userId, fetchUserInfo]);
 
   // 로딩 중이거나 사용자 정보가 없을 때 처리
   if (userInfoLoading) {
