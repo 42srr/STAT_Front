@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import UserInfo from "../components/UserInfo";
 import { useDataStore } from "../store/useDataStore";
 import { User, Project, ProjectDistribution } from "../store/types";
+import Box from "@mui/material/Box";
 
 import {
   Chart as ChartJS,
@@ -89,12 +90,16 @@ const StyledTable = styled.table`
 
 let Layout = styled.div`
   display: flex;
-  justify-content: flex-start;
-  // background-color: #030313;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f5f5f7;
 `;
 
 let Mainbox = styled.div`
-  flex: 3;
+  flex: 1;
+  padding: 20px;
+  margin-left: 260px; /* SideBar width */
+  width: calc(100% - 260px);
 `;
 
 const CardRow = styled.div`
