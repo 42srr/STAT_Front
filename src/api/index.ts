@@ -1,7 +1,8 @@
 import axios from "axios";
 import { ApiResponse, User, Project, LevelDistribution } from "../store/types";
 
-const API_BASE_URL = "/api";
+// 환경 변수에서 API URL 가져오기 (기본값 설정)
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://api.42srr.com";
 
 const createAuthHeader = (accessToken: string) => ({
   headers: { Authorization: `Bearer ${accessToken}` },
@@ -13,7 +14,7 @@ export const api = {
     console.log(`Fetching user info for userId: ${userId}`);
     try {
       const response = await axios.get<ApiResponse<User>>(
-        `${API_BASE_URL}/users/${userId}`,
+        `${API_BASE_URL}/api/users/${userId}`,
         createAuthHeader(accessToken)
       );
       console.log("User info response:", response.data);
@@ -30,7 +31,7 @@ export const api = {
     userId: string
   ): Promise<Project[]> => {
     const response = await axios.get<ApiResponse<Project[]>>(
-      `${API_BASE_URL}/users/${userId}/projects`,
+      `${API_BASE_URL}/api/users/${userId}/projects`,
       createAuthHeader(accessToken)
     );
     return response.data.data;
@@ -42,7 +43,7 @@ export const api = {
     size: number = 5
   ): Promise<User[]> => {
     const response = await axios.get<ApiResponse<User[]>>(
-      `${API_BASE_URL}/users/ranking?type=wallet&size=${size}`,
+      `${API_BASE_URL}/api/users/ranking?type=wallet&size=${size}`,
       createAuthHeader(accessToken)
     );
     return response.data.data;
@@ -54,7 +55,7 @@ export const api = {
     size: number = 5
   ): Promise<User[]> => {
     const response = await axios.get<ApiResponse<User[]>>(
-      `${API_BASE_URL}/users/ranking?type=correction-point&size=${size}`,
+      `${API_BASE_URL}/api/users/ranking?type=correction-point&size=${size}`,
       createAuthHeader(accessToken)
     );
     return response.data.data;
@@ -64,7 +65,10 @@ export const api = {
   getProjectDistribution: async (accessToken: string) => {
     const response = await axios.get<
       ApiResponse<{ distribution: Record<string, number> }>
-    >(`${API_BASE_URL}/projects/distribution`, createAuthHeader(accessToken));
+    >(
+      `${API_BASE_URL}/api/projects/distribution`,
+      createAuthHeader(accessToken)
+    );
 
     // API 응답 형식 변환
     const distribution = response.data.data.distribution;
@@ -81,7 +85,7 @@ export const api = {
     const response = await axios.get<
       ApiResponse<{ distribution: Record<string, number> }>
     >(
-      `${API_BASE_URL}/users/distribution/level`,
+      `${API_BASE_URL}/api/users/distribution/level`,
       createAuthHeader(accessToken)
     );
 

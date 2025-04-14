@@ -5,8 +5,10 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://api.42srr.com";
+
 const instance = axios.create({
-  baseURL: "/api",
+  baseURL: `${API_BASE_URL}/api`,
   timeout: 5000,
 });
 
