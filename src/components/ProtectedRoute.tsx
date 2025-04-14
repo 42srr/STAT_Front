@@ -41,7 +41,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         sx={{
           flexGrow: 1,
           width: "100%",
-          ml: { xs: 0, sm: "260px" }, // 반응형으로 사이드바 너비만큼 마진 적용
+          ml: { xs: 0 }, // 반응형으로 사이드바 너비만큼 마진 적용
           mt: "64px", // 상단바 높이만큼 margin-top 추가
         }}
       >
