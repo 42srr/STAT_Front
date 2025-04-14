@@ -50,20 +50,42 @@ const dataRank = ["과제 참여 랭킹", "보유 월렛 랭킹", "평가 포인
 const datasBar = ["직전 회차 시험 통과율", "유저 레벨 분포"];
 
 const Options = {
+  responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       display: false,
     },
+    tooltip: {
+      backgroundColor: "rgba(0, 0, 0, 0.7)",
+      padding: 10,
+      cornerRadius: 4,
+    },
   },
   scales: {
     x: {
+      grid: {
+        display: false,
+        drawBorder: false,
+      },
       ticks: {
-        color: "black",
+        color: "#666",
+        font: {
+          size: 12,
+        },
       },
     },
     y: {
+      grid: {
+        color: "rgba(0, 0, 0, 0.05)",
+        drawBorder: false,
+      },
       ticks: {
-        color: "black",
+        color: "#666",
+        font: {
+          size: 12,
+        },
+        stepSize: 5,
       },
     },
   },
@@ -95,8 +117,23 @@ const MainPage: React.FC<MainPageProps> = ({
     datasets: [
       {
         data: [10, 20, 5, 30, 7, 3, 11, 12, 1, 0],
-        backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
-        borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+        backgroundColor: [
+          "rgba(25, 118, 210, 0.7)", // primary color
+          "rgba(156, 39, 176, 0.7)", // purple
+          "rgba(0, 150, 136, 0.7)", // teal
+        ],
+        borderColor: [
+          "rgba(25, 118, 210, 1)",
+          "rgba(156, 39, 176, 1)",
+          "rgba(0,, 150, 136, 1)",
+        ],
+        borderWidth: 1,
+        borderRadius: 4,
+        hoverBackgroundColor: [
+          "rgba(25, 118, 210, 0.9)",
+          "rgba(156, 39, 176, 0.9)",
+          "rgba(0, 150, 136, 0.9)",
+        ],
       },
     ],
   };
@@ -139,8 +176,23 @@ const MainPage: React.FC<MainPageProps> = ({
     datasets: [
       {
         data: [],
-        backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
-        borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+        backgroundColor: [
+          "rgba(25, 118, 210, 0.7)", // primary color
+          "rgba(156, 39, 176, 0.7)", // purple
+          "rgba(0, 150, 136, 0.7)", // teal
+        ],
+        borderColor: [
+          "rgba(25, 118, 210, 1)",
+          "rgba(156, 39, 176, 1)",
+          "rgba(0, 150, 136, 1)",
+        ],
+        borderWidth: 1,
+        borderRadius: 4,
+        hoverBackgroundColor: [
+          "rgba(25, 118, 210, 0.9)",
+          "rgba(156, 39, 176, 0.9)",
+          "rgba(0, 150, 136, 0.9)",
+        ],
       },
     ],
   });
@@ -149,12 +201,27 @@ const MainPage: React.FC<MainPageProps> = ({
   useEffect(() => {
     if (levelDistribution && levelDistribution.length > 0) {
       setBarLevels({
-        labels: levelDistribution.map((level) => level.level), // level 값을 labels로 사용
+        labels: levelDistribution.map((level) => level.level),
         datasets: [
           {
-            data: levelDistribution.map((level) => level.count), // count 값을 data로 사용
-            backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
-            borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+            data: levelDistribution.map((level) => level.count),
+            backgroundColor: [
+              "rgba(25, 118, 210, 0.7)", // primary color
+              "rgba(156, 39, 176, 0.7)", // purple
+              "rgba(0, 150, 136, 0.7)", // teal
+            ],
+            borderColor: [
+              "rgba(25, 118, 210, 1)",
+              "rgba(156, 39, 176, 1)",
+              "rgba(0, 150, 136, 1)",
+            ],
+            borderWidth: 1,
+            borderRadius: 4,
+            hoverBackgroundColor: [
+              "rgba(25, 118, 210, 0.9)",
+              "rgba(156, 39, 176, 0.9)",
+              "rgba(0, 150, 136, 0.9)",
+            ],
           },
         ],
       });
@@ -417,22 +484,40 @@ const MainPage: React.FC<MainPageProps> = ({
         <Grid container spacing={3}>
           {datasBar.map((data, key) => (
             <Grid item xs={12} lg={6} key={key}>
-              <Card elevation={3} sx={{ p: 2, height: "100%" }}>
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  align="center"
-                  fontWeight="bold"
-                >
-                  {data}
-                </Typography>
+              <Card
+                elevation={3}
+                sx={{
+                  p: 0,
+                  height: "100%",
+                  borderRadius: 2,
+                  overflow: "hidden",
+                  transition: "all 0.3s",
+                  "&:hover": {
+                    boxShadow: 6,
+                    transform: "translateY(-4px)",
+                  },
+                }}
+              >
                 <Box
                   sx={{
                     p: 2,
-                    height: 300,
+                    backgroundColor: "primary.light",
+                    color: "white",
+                    borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <Typography variant="h6" align="center" fontWeight="bold">
+                    {data}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    p: 3,
+                    height: 350,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    bgcolor: "background.paper",
                   }}
                 >
                   {data === "직전 회차 시험 통과율" ? (
