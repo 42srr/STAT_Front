@@ -242,7 +242,7 @@ const MainPage: React.FC<MainPageProps> = ({
 
   function getProjects() {
     axios
-      .get("/api/projects", {
+      .get("/api/projects/distribution", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
@@ -309,7 +309,7 @@ const MainPage: React.FC<MainPageProps> = ({
 
   function getUserProjects() {
     axios
-      .get("/api/projects/" + intraId, {
+      .get(`/api/users/${intraId}/projects`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
