@@ -49,6 +49,40 @@ const FooterLink = styled(Link)`
   }
 `;
 
+const FooterAnchor = styled.a`
+  color: #999;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  cursor: pointer;
+  z-index: 1000;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+
+  &:hover {
+    color: #fff;
+  }
+`;
+
+const FooterSpan = styled.span`
+  color: #999;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  cursor: pointer;
+  z-index: 1000;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+
+  &:hover {
+    color: #fff;
+  }
+`;
+
 const Divider = styled.span`
   color: #666;
   font-size: 0.8rem;
@@ -234,11 +268,9 @@ const LoginPage: React.FC<LoginPageProps> = ({
           <Divider>|</Divider>
           <FooterLink to="/terms">Terms of Service</FooterLink>
           <Divider>|</Divider>
-          <FooterLink as="a" href="mailto:neveradio@gmail.com">
-            Contact
-          </FooterLink>
+          <FooterAnchor href="mailto:anonymous">Contact</FooterAnchor>
           <Divider>|</Divider>
-          <FooterLink as="span">© 2024 42SRR</FooterLink>
+          <FooterSpan>© 2024 42SRR</FooterSpan>
         </FooterContent>
       </Footer>
     </Main>
