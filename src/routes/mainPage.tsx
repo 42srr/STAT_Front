@@ -1,13 +1,29 @@
-import styled from "styled-components";
-import React from "react";
-import { useEffect, useState } from "react";
-import SideBar from "../components/SideBar";
-import { Bar } from "react-chartjs-2";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Bar } from "react-chartjs-2";
+import SideBar from "../components/SideBar";
 import UserInfo from "../components/UserInfo";
 import { useDataStore } from "../store/useDataStore";
 import { User, Project, ProjectDistribution } from "../store/types";
+
+// MUI 컴포넌트
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import {
   Chart as ChartJS,
@@ -28,111 +44,7 @@ ChartJS.register(
   Legend
 );
 
-const CardOne = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 20rem;
-  height: 20rem;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 0.8rem;
-  object-fit: contain;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  // background-color: rgba(189, 191, 163, 0.15);
-  // background-color: #000055;
-  border: solid 1px rgba(189, 191, 163, 0.3);
-  background-color: white;
-  color: black;
-`;
-
-const CardTitle = styled.div`
-  align-items: center;
-  text-align: center;
-
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 1.2rem;
-`;
-
-const CardContents = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`;
-
-const CardTwo = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 42rem;
-  height: 25rem;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 0.8rem;
-  object-fit: contain;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  // background-color: rgba(189, 191, 163, 0.15);
-  // background-color: #000055;
-  border: solid 1px rgba(189, 191, 163, 0.3);
-  // color: white;
-`;
-
-const StyledTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  th,
-  td {
-    padding: 0.5rem;
-    text-align: center;
-    border: 1px solid white;
-  }
-`;
-
-let Layout = styled.div`
-  display: flex;
-  width: 100%;
-  min-height: 100vh;
-  background-color: #f5f5f7;
-`;
-
-let Mainbox = styled.div`
-  flex: 1;
-  padding: 20px;
-  margin-left: 260px; /* SideBar width */
-  width: calc(100% - 260px);
-`;
-
-const CardRow = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  width: fit-content;
-`;
-
-const GraphRow = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-let Goodwords = styled.div`
-  width: 20rem;
-  height: 10rem;
-  margin: 1.2rem;
-  padding: 82px 667px 69px 309px;
-  transform: rotate(-180deg);
-  border-radius: 30px;
-  background-color: #fff;
-  border: solid 2px rgba(189, 191, 163, 0.3);
-
-  @media (max-width: 768px) {
-    padding: 1rem;
-    font-size: 0.8rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-`;
-
 const dataRank = ["과제 참여 랭킹", "보유 월렛 랭킹", "평가 포인트 랭킹"];
-
 const datasBar = ["직전 회차 시험 통과율", "유저 레벨 분포"];
 
 const Options = {
@@ -281,107 +193,300 @@ const MainPage: React.FC<MainPageProps> = ({
     : [];
 
   return (
-    <>
-      <Layout>
-        <SideBar />
-        <Mainbox>
-          <Goodwords>{goodWords}</Goodwords>
-          {userInfo && userProjects && (
-            <UserInfo userInfo={userInfo} userProjects={userProjects} />
-          )}
-          <div className="ml-10">
-            <button onClick={logoutBtn}>로그아웃버튼</button>
-            <div>인트라아이디 : {intraId}</div>
-          </div>
-          <CardRow>
-            {dataRank.map(function (data, key) {
-              return (
-                <CardOne key={key}>
-                  <CardTitle>{data}</CardTitle>
-                  <CardContents>
-                    {data === "과제 참여 랭킹" ? (
-                      <StyledTable>
-                        <thead>
-                          <tr>
-                            <th scope="col">순위</th>
-                            <th scope="col">과제명</th>
-                            <th scope="col">인원수</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {topProjects.map((project, index) => (
-                            <tr key={index}>
-                              <td>{index + 1}</td>
-                              <td>{project.projectName}</td>
-                              <td>{project.count}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </StyledTable>
-                    ) : data === "보유 월렛 랭킹" ? (
-                      <StyledTable>
-                        <thead>
-                          <tr>
-                            <th>순위</th>
-                            <th>이름</th>
-                            <th>보유한 월렛</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {walletRanking.map((user: User, index) => (
-                            <tr key={index}>
-                              <td>{index + 1}</td>
-                              <td>{user.intraId}</td>
-                              <td>{user.wallet}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </StyledTable>
-                    ) : (
-                      <StyledTable>
-                        <thead>
-                          <tr>
-                            <th>순위</th>
-                            <th>이름</th>
-                            <th>포인트</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {pointRanking.map((user: User, index) => (
-                            <tr key={index}>
-                              <td>{index + 1}</td>
-                              <td>{user.intraId}</td>
-                              <td>{user.collectionPoint}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </StyledTable>
-                    )}
-                  </CardContents>
-                </CardOne>
-              );
-            })}
-          </CardRow>
+    <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "#f5f5f7" }}>
+      <SideBar />
+      <Box
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          ml: "260px",
+          width: { sm: `calc(100% - 260px)` },
+        }}
+      >
+        <Container maxWidth="xl">
+          {/* 유저 정보 및 로그아웃 섹션 */}
+          <Box sx={{ mb: 4 }}>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={12} md={8}>
+                {userInfo && userProjects && (
+                  <UserInfo userInfo={userInfo} userProjects={userProjects} />
+                )}
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Card
+                  elevation={2}
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography variant="h6" gutterBottom>
+                    계정 정보
+                  </Typography>
+                  <Chip
+                    label={`인트라ID: ${intraId}`}
+                    color="primary"
+                    variant="outlined"
+                    sx={{ mb: 2, width: "100%" }}
+                  />
+                  <Button
+                    variant="contained"
+                    color="error"
+                    startIcon={<LogoutIcon />}
+                    onClick={logoutBtn}
+                    fullWidth
+                  >
+                    로그아웃
+                  </Button>
+                </Card>
+              </Grid>
+            </Grid>
+          </Box>
 
-          <GraphRow>
-            {datasBar.map(function (data, key) {
-              return (
-                <CardTwo key={key}>
-                  <CardTitle>{data}</CardTitle>
-                  <CardContents>
-                    {data === "직전 회차 시험 통과율" ? (
-                      <Bar data={BarData} options={Options}></Bar>
+          {/* 랭킹 카드 섹션 */}
+          <Typography
+            variant="h5"
+            gutterBottom
+            fontWeight="medium"
+            sx={{ mt: 4, mb: 2 }}
+          >
+            42GS 랭킹
+          </Typography>
+          <Divider sx={{ mb: 3 }} />
+
+          <Grid container spacing={3}>
+            {dataRank.map((data, key) => (
+              <Grid item xs={12} md={6} lg={4} key={key}>
+                <Card
+                  elevation={3}
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <CardContent>
+                    <Typography
+                      variant="h6"
+                      gutterBottom
+                      align="center"
+                      fontWeight="bold"
+                    >
+                      {data}
+                    </Typography>
+
+                    {data === "과제 참여 랭킹" ? (
+                      <TableContainer
+                        component={Paper}
+                        elevation={0}
+                        sx={{ mt: 2 }}
+                      >
+                        <Table size="small">
+                          <TableHead>
+                            <TableRow sx={{ bgcolor: "primary.light" }}>
+                              <TableCell
+                                align="center"
+                                sx={{ color: "white", fontWeight: "bold" }}
+                              >
+                                순위
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ color: "white", fontWeight: "bold" }}
+                              >
+                                과제명
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ color: "white", fontWeight: "bold" }}
+                              >
+                                인원수
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {topProjects.map((project, index) => (
+                              <TableRow
+                                key={index}
+                                sx={{
+                                  "&:nth-of-type(odd)": {
+                                    bgcolor: "action.hover",
+                                  },
+                                }}
+                              >
+                                <TableCell align="center">
+                                  {index + 1}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {project.projectName}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {project.count}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    ) : data === "보유 월렛 랭킹" ? (
+                      <TableContainer
+                        component={Paper}
+                        elevation={0}
+                        sx={{ mt: 2 }}
+                      >
+                        <Table size="small">
+                          <TableHead>
+                            <TableRow sx={{ bgcolor: "primary.light" }}>
+                              <TableCell
+                                align="center"
+                                sx={{ color: "white", fontWeight: "bold" }}
+                              >
+                                순위
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ color: "white", fontWeight: "bold" }}
+                              >
+                                이름
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ color: "white", fontWeight: "bold" }}
+                              >
+                                보유한 월렛
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {walletRanking.map((user: User, index) => (
+                              <TableRow
+                                key={index}
+                                sx={{
+                                  "&:nth-of-type(odd)": {
+                                    bgcolor: "action.hover",
+                                  },
+                                }}
+                              >
+                                <TableCell align="center">
+                                  {index + 1}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {user.intraId}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {user.wallet}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
                     ) : (
-                      <Bar data={barLevels} options={Options}></Bar>
+                      <TableContainer
+                        component={Paper}
+                        elevation={0}
+                        sx={{ mt: 2 }}
+                      >
+                        <Table size="small">
+                          <TableHead>
+                            <TableRow sx={{ bgcolor: "primary.light" }}>
+                              <TableCell
+                                align="center"
+                                sx={{ color: "white", fontWeight: "bold" }}
+                              >
+                                순위
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ color: "white", fontWeight: "bold" }}
+                              >
+                                이름
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ color: "white", fontWeight: "bold" }}
+                              >
+                                포인트
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {pointRanking.map((user: User, index) => (
+                              <TableRow
+                                key={index}
+                                sx={{
+                                  "&:nth-of-type(odd)": {
+                                    bgcolor: "action.hover",
+                                  },
+                                }}
+                              >
+                                <TableCell align="center">
+                                  {index + 1}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {user.intraId}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {user.collectionPoint}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
                     )}
-                  </CardContents>
-                </CardTwo>
-              );
-            })}
-          </GraphRow>
-        </Mainbox>
-      </Layout>
-    </>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+
+          {/* 차트 섹션 */}
+          <Typography
+            variant="h5"
+            gutterBottom
+            fontWeight="medium"
+            sx={{ mt: 6, mb: 2 }}
+          >
+            42GS 통계
+          </Typography>
+          <Divider sx={{ mb: 3 }} />
+
+          <Grid container spacing={3}>
+            {datasBar.map((data, key) => (
+              <Grid item xs={12} lg={6} key={key}>
+                <Card elevation={3} sx={{ p: 2, height: "100%" }}>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    align="center"
+                    fontWeight="bold"
+                  >
+                    {data}
+                  </Typography>
+                  <Box
+                    sx={{
+                      p: 2,
+                      height: 300,
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    {data === "직전 회차 시험 통과율" ? (
+                      <Bar data={BarData} options={Options} />
+                    ) : (
+                      <Bar data={barLevels} options={Options} />
+                    )}
+                  </Box>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+    </Box>
   );
 };
 
