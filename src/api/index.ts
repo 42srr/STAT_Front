@@ -2,7 +2,7 @@ import axios from "axios";
 import { ApiResponse, User, Project, LevelDistribution } from "../store/types";
 
 // 상대 경로 사용 (프록시를 통해 라우팅)
-const API_BASE_URL = "";
+const API_BASE_URL = "/api/";
 
 const createAuthHeader = (accessToken: string) => ({
   headers: { Authorization: `Bearer ${accessToken}` },
