@@ -1,8 +1,8 @@
 import axios from "axios";
 import { ApiResponse, User, Project, LevelDistribution } from "../store/types";
 
-// 환경 변수에서 API URL 가져오기 (기본값 설정)
-const API_BASE_URL = import.meta.env.VITE_API_URL || "https://api.42srr.com";
+// 상대 경로 사용 (프록시를 통해 라우팅)
+const API_BASE_URL = "";
 
 const createAuthHeader = (accessToken: string) => ({
   headers: { Authorization: `Bearer ${accessToken}` },

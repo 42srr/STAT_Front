@@ -5,10 +5,9 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "https://api.42srr.com";
-
+// 상대 경로 사용 (프록시를 통해 라우팅)
 const instance = axios.create({
-  baseURL: `${API_BASE_URL}/api`,
+  baseURL: "/api",
   timeout: 5000,
 });
 
