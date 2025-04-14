@@ -174,15 +174,15 @@ const MainPage: React.FC<MainPageProps> = ({
       fetchProjectDistribution(accessToken);
       fetchLevelDistribution(accessToken);
     }
-    console.log("accessToken:", accessToken);
-    console.log("userId:", userId);
-    console.log("intraId:", intraId);
-    console.log("userInfo:", userInfo);
-    console.log("userProjects:", userProjects);
-    console.log("walletRanking:", walletRanking);
-    console.log("pointRanking:", pointRanking);
-    console.log("projectDistribution:", projectDistribution);
-    console.log("levelDistribution:", levelDistribution);
+    // console.log("accessToken:", accessToken);
+    // console.log("userId:", userId);
+    // console.log("intraId:", intraId);
+    // console.log("userInfo:", userInfo);
+    // console.log("userProjects:", userProjects);
+    // console.log("walletRanking:", walletRanking);
+    // console.log("pointRanking:", pointRanking);
+    // console.log("projectDistribution:", projectDistribution);
+    // console.log("levelDistribution:", levelDistribution);
     if (!accessToken) navigate("/");
   }, [accessToken, intraId]);
 
@@ -242,7 +242,7 @@ const MainPage: React.FC<MainPageProps> = ({
         sx={{
           flexGrow: 1,
           p: 3,
-          ml: "260px",
+          // ml: "260px",
           width: { sm: `calc(100% - 260px)` },
           mt: "64px", // AppBar 높이만큼 margin-top 추가
         }}
