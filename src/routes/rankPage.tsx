@@ -225,9 +225,7 @@ const RankPage: React.FC<RankPageProps> = ({
         sx={{
           flexGrow: 1,
           p: 3,
-          ml: "260px",
-          width: { sm: `calc(100% - 260px)` },
-          mt: "64px", // 상단바 높이만큼 margin-top 추가
+          width: "100%",
         }}
       >
         <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -245,9 +243,7 @@ const RankPage: React.FC<RankPageProps> = ({
       sx={{
         flexGrow: 1,
         p: 3,
-        ml: "260px",
-        width: { sm: `calc(100% - 260px)` },
-        mt: "64px", // 상단바 높이만큼 margin-top 추가
+        width: "100%",
       }}
     >
       <Container maxWidth="xl" sx={{ py: 4 }}>
