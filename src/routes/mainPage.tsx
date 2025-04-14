@@ -244,9 +244,9 @@ const MainPage: React.FC<MainPageProps> = ({
 
   // 초기 데이터 로드
   useEffect(() => {
-    if (accessToken && intraId) {
-      fetchUserInfo(accessToken, intraId);
-      fetchUserProjects(accessToken, intraId);
+    if (accessToken && userId) {
+      fetchUserInfo(accessToken, userId);
+      fetchUserProjects(accessToken, userId);
       fetchWalletRanking(accessToken);
       fetchPointRanking(accessToken);
       fetchProjectDistribution(accessToken);
