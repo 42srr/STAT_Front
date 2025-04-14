@@ -6,7 +6,7 @@ import SideBar from "../components/SideBar";
 import { Doughnut, Bar } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
 import UserInfo from "../components/UserInfo";
-import { useDataStore } from "../store/useDataStore.js";
+import { useDataStore } from "../store/useDataStore";
 
 import {
   Chart as ChartJS,
@@ -197,7 +197,15 @@ const MainPage: React.FC<MainPageProps> = ({
   const [goodWords, setGoodWords] = useState("");
   const [evalPointRank, setEvalPointRank] = useState([]);
   const [cntProjects, setCntProjects] = useState([]);
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({
+    id: 0,
+    intraId: "",
+    level: 0,
+    wallet: 0,
+    collectionPoint: 0,
+    imgURL: "",
+    updatable: false,
+  });
   const [userProjects, setUserProjects] = useState([]);
 
   const allLevels = useDataStore((state) => state.allLevels.data);
@@ -222,7 +230,7 @@ const MainPage: React.FC<MainPageProps> = ({
         ],
       });
     }
-  }, [allLevels.data]);
+  }, [allLevels]);
 
   useEffect(() => {
     getProjects();
@@ -246,26 +254,28 @@ const MainPage: React.FC<MainPageProps> = ({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        // console.log("Projects", res.data.data);
-        const sortedCntProjects = res.data.data.sort(
+        const projects = res.data.data.distribution;
+        // 데이터를 배열로 변환
+        const projectArray = [];
+        for (const projectName in projects) {
+          const count = parseInt(projects[projectName]);
+          projectArray.push({ projectName, count });
+        }
+        const sortedCntProjects = projectArray.sort(
           (a, b) => b.count - a.count
         );
         const topFive = sortedCntProjects.slice(0, 5);
         setCntProjects(topFive);
-        // console.log("SortedProjects:", topFive);
       });
   }
 
   function getRankWallet() {
     axios
-      .get("/api/ranking/wallet", {
+      .get("/api/users/ranking?type=wallet&size=5", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        // console.log("RankWallet:", res.data.data);
-        const topFiveWalletRank = res.data.data.slice(0, 5);
-        setWalletRank(topFiveWalletRank);
-        // console.log(topFiveWalletRank);
+        setWalletRank(res.data.data);
       });
   }
 
@@ -291,19 +301,11 @@ const MainPage: React.FC<MainPageProps> = ({
 
   function getUsers() {
     axios
-      .get("/api/users", {
+      .get("/api/users/ranking?type=correction-point&size=5", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        const UsersData = res.data.data.users;
-        // console.log("Users:", UsersData.users);
-
-        const sortedUsers = UsersData.sort(
-          (a, b) => b.collectionPoint - a.collectionPoint
-        );
-        const topFive = sortedUsers.slice(1, 6);
-        // console.log("point:", topFive);
-        setEvalPointRank(topFive);
+        setEvalPointRank(res.data.data);
       });
   }
 
@@ -313,18 +315,16 @@ const MainPage: React.FC<MainPageProps> = ({
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        // console.log("UserProjects:", res.data.data);
         setUserProjects(res.data.data);
       });
   }
 
   function getUserInfo() {
     axios
-      .get("/api/users/" + intraId, {
+      .get(`/api/users/${intraId}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        // console.log("UserInfo:", res.data.data);
         setUserInfo(res.data.data);
       });
   }
@@ -388,7 +388,7 @@ const MainPage: React.FC<MainPageProps> = ({
                               <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{rank.intraId}</td>
-                                <td>{rank.dollar}</td>
+                                <td>{rank.wallet}</td>
                               </tr>
                             );
                           })}

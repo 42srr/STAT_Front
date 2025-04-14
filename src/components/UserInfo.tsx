@@ -70,14 +70,18 @@ const ProjectItem = styled.div`
 
 interface UserInfoProps {
   userInfo: {
+    id: number;
     intraId: string;
-    wallet: string;
-    collectionPoint: number;
     level: number;
-    image: string;
+    wallet: number;
+    collectionPoint: number;
+    imgURL: string;
+    updatable: boolean;
   };
   userProjects: Array<{
+    projectId: number;
     projectName: string;
+    finalMark: number;
     status: string;
   }>;
 }
@@ -93,7 +97,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ userInfo, userProjects }) => {
     );
 
     setUniqueProjects(filtered);
-  }, [userProjects]); // userProjects가 변경될 때마다 실행
+  }, [userProjects]);
 
   return (
     <UserInfoCard>
@@ -117,14 +121,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ userInfo, userProjects }) => {
             <span>{userInfo.level}</span>
           </InfoItem>
         </InfoSection>
-        <UserImage src={userInfo.image} alt="user" />
+        <UserImage src={userInfo.imgURL} alt="user" />
       </UserInfoContainer>
       <InfoSection>
         <CardTitle>Current Projects</CardTitle>
         <ProjectList>
           {uniqueProjects.map(
             (project, index) =>
-              project.status === "in_progress" && (
+              project.status === "IN_PROGRESS" && (
                 <ProjectItem key={index}>{project.projectName}</ProjectItem>
               )
           )}
