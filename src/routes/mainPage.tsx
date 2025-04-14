@@ -24,6 +24,11 @@ import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import {
   Chart as ChartJS,
@@ -194,63 +199,68 @@ const MainPage: React.FC<MainPageProps> = ({
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "#f5f5f7" }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+          backgroundColor: "white",
+        }}
+      >
+        <Toolbar>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, fontWeight: "bold", color: "#1976d2" }}
+          >
+            42 STAT & RESERVATION
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Chip
+              icon={<AccountCircleIcon />}
+              label={intraId}
+              color="primary"
+              variant="outlined"
+            />
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              startIcon={<LogoutIcon />}
+              onClick={logoutBtn}
+            >
+              로그아웃
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
+
       <SideBar />
+
       <Box
+        component="main"
         sx={{
           flexGrow: 1,
           p: 3,
           ml: "260px",
           width: { sm: `calc(100% - 260px)` },
+          mt: "64px", // AppBar 높이만큼 margin-top 추가
         }}
       >
-        <Container maxWidth="xl">
-          {/* 유저 정보 및 로그아웃 섹션 */}
-          <Box sx={{ mb: 4 }}>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} md={8}>
-                {userInfo && userProjects && (
-                  <UserInfo userInfo={userInfo} userProjects={userProjects} />
-                )}
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Card
-                  elevation={2}
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography variant="h6" gutterBottom>
-                    계정 정보
-                  </Typography>
-                  <Chip
-                    label={`인트라ID: ${intraId}`}
-                    color="primary"
-                    variant="outlined"
-                    sx={{ mb: 2, width: "100%" }}
-                  />
-                  <Button
-                    variant="contained"
-                    color="error"
-                    startIcon={<LogoutIcon />}
-                    onClick={logoutBtn}
-                    fullWidth
-                  >
-                    로그아웃
-                  </Button>
-                </Card>
-              </Grid>
-            </Grid>
-          </Box>
+        <Container maxWidth="xl" sx={{ py: 4 }}>
+          {/* 유저 정보 섹션 */}
+          {userInfo && userProjects && (
+            <Card elevation={2} sx={{ mb: 4, p: 2 }}>
+              <UserInfo userInfo={userInfo} userProjects={userProjects} />
+            </Card>
+          )}
 
           {/* 랭킹 카드 섹션 */}
           <Typography
             variant="h5"
             gutterBottom
             fontWeight="medium"
-            sx={{ mt: 4, mb: 2 }}
+            sx={{ mt: 2, mb: 2 }}
           >
             42GS 랭킹
           </Typography>
@@ -472,6 +482,7 @@ const MainPage: React.FC<MainPageProps> = ({
                       height: 300,
                       display: "flex",
                       alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
                     {data === "직전 회차 시험 통과율" ? (
