@@ -149,7 +149,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
 
   async function getAuth(code: string) {
     try {
-      const res = await axios.get("/login/oauth2/42", {
+      const res = await axios.get("/api/login/oauth2/42", {
         params: { code: code },
         headers: {
           "Content-Type": "application/json",
