@@ -117,45 +117,11 @@ const RankPage: React.FC<RankPageProps> = ({
     setActiveBtn(idx);
   };
 
-  let datas = [
-    {
-      순위: 1,
-      사진: "이미지",
-      이름: "제갈민수",
-      레벨: 10,
-      횟수: 5,
-      최대길이: 255,
-    },
-    {
-      순위: 2,
-      사진: "이미지",
-      이름: "남궁민수",
-      레벨: 10,
-      횟수: 5,
-      최대길이: 255,
-    },
-    {
-      순위: 3,
-      사진: "이미지",
-      이름: "사공민수",
-      레벨: 10,
-      횟수: 5,
-      최대길이: 255,
-    },
-    {
-      순위: 4,
-      사진: "이미지",
-      이름: "사공민수",
-      레벨: 10,
-      횟수: 5,
-      최대길이: 255,
-    },
-  ];
-
-  let totalAvg = ["순위", "사진", "이름"];
-  let levels = ["순위", "사진", "이름", "레벨"];
-  let countEvals = ["순위", "사진", "이름", "횟수"];
-  let lenComments = ["순위", "사진", "이름", "최대길이"];
+  // 헤더 정의
+  let totalAvg = ["순위", "인트라ID", "월렛"];
+  let levels = ["순위", "인트라ID", "레벨"];
+  let countEvals = ["순위", "인트라ID", "평가횟수"];
+  let lenComments = ["순위", "인트라ID", "회고록 길이"];
 
   let renderTable = () => {
     let headers =
@@ -167,6 +133,25 @@ const RankPage: React.FC<RankPageProps> = ({
         ? countEvals
         : lenComments;
 
+    // 표시할 데이터를 switchs 값에 따라 선택
+    let rankingData =
+      switchs === 0
+        ? walletRanking
+        : switchs === 1
+        ? [...walletRanking].sort((a, b) => Number(b.level) - Number(a.level))
+        : switchs === 2
+        ? pointRanking
+        : pointRanking; // 회고록 길이 데이터가 없으므로 pointRanking으로 대체
+
+    // 데이터가 비어있는 경우 처리
+    if (!rankingData || rankingData.length === 0) {
+      return (
+        <div style={{ textAlign: "center", padding: "2rem" }}>
+          데이터가 없습니다.
+        </div>
+      );
+    }
+
     return (
       <Table>
         <thead>
@@ -177,39 +162,16 @@ const RankPage: React.FC<RankPageProps> = ({
           </TableRow>
         </thead>
         <tbody>
-          {pointRanking.map((user: User) => (
+          {rankingData.map((user: User, index) => (
             <TableRow key={user.intraId}>
+              <TableData>{index + 1}</TableData>
               <TableData>{user.intraId}</TableData>
-              <TableData>{user.wallet}</TableData>
-              <TableData>{user.collectionPoint}</TableData>
-              <TableData>{user.level}</TableData>
-            </TableRow>
-          ))}
-        </tbody>
-        <thead>
-          <TableRow>
-            {headers.map((header) => (
-              <TableHeader key={header} switchs={switchs}>
-                {header}
-              </TableHeader>
-            ))}
-          </TableRow>
-        </thead>
-        <tbody>
-          {datas.map((data) => (
-            <TableRow key={data.순위}>
-              <TableData switchs={switchs}>{data.순위}</TableData>
-              <TableData switchs={switchs}>{data.사진}</TableData>
-              <TableData switchs={switchs}>{data.이름}</TableData>
+              {switchs === 0 && <TableData>{user.wallet}</TableData>}
               {switchs === 1 && (
-                <TableData switchs={switchs}>{data.레벨}</TableData>
+                <TableData>{Number(user.level).toFixed(2)}</TableData>
               )}
-              {switchs === 2 && (
-                <TableData switchs={switchs}>{data.횟수}</TableData>
-              )}
-              {switchs === 3 && (
-                <TableData switchs={switchs}>{data.최대길이}</TableData>
-              )}
+              {switchs === 2 && <TableData>{user.collectionPoint}</TableData>}
+              {switchs === 3 && <TableData>-</TableData>}
             </TableRow>
           ))}
         </tbody>
