@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React from "react";
 import { useEffect, useState } from "react";
+import { User, Project } from "../store/types";
 
 const UserInfoCard = styled.div`
   display: flex;
@@ -69,35 +70,28 @@ const ProjectItem = styled.div`
 `;
 
 interface UserInfoProps {
-  userInfo: {
-    id: number;
-    intraId: string;
-    level: number;
-    wallet: number;
-    collectionPoint: number;
-    imgURL: string;
-    updatable: boolean;
-  };
-  userProjects: Array<{
-    projectId: number;
-    projectName: string;
-    finalMark: number;
-    status: string;
-  }>;
+  userInfo: User;
+  userProjects: Project[];
 }
 
 const UserInfo: React.FC<UserInfoProps> = ({ userInfo, userProjects }) => {
-  const [uniqueProjects, setUniqueProjects] = useState<Array<any>>([]);
+  const [uniqueProjects, setUniqueProjects] = useState<Project[]>([]);
 
   useEffect(() => {
-    const filtered = [
-      ...new Set(userProjects.map((project) => project.projectName)),
-    ].map((name) =>
-      userProjects.find((project) => project.projectName === name)
-    );
+    if (!userProjects || userProjects.length === 0) return;
 
-    setUniqueProjects(filtered);
+    // 중복 제거된 프로젝트 목록 생성
+    const projectMap = new Map<number, Project>();
+    userProjects.forEach((project) => {
+      if (!projectMap.has(project.projectId)) {
+        projectMap.set(project.projectId, project);
+      }
+    });
+
+    setUniqueProjects(Array.from(projectMap.values()));
   }, [userProjects]);
+
+  if (!userInfo) return null;
 
   return (
     <UserInfoCard>
@@ -129,7 +123,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ userInfo, userProjects }) => {
           {uniqueProjects.map(
             (project, index) =>
               project.status === "IN_PROGRESS" && (
-                <ProjectItem key={index}>{project.projectName}</ProjectItem>
+                <ProjectItem key={project.projectId || index}>
+                  {project.projectName}
+                </ProjectItem>
               )
           )}
         </ProjectList>

@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import React from "react";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
-import { Doughnut, Bar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
 import UserInfo from "../components/UserInfo";
 import { useDataStore } from "../store/useDataStore";
+import { User, Project, ProjectDistribution } from "../store/types";
 
 import {
   Chart as ChartJS,
@@ -141,17 +141,11 @@ const Options = {
       ticks: {
         color: "black",
       },
-      // grid: {
-      //   color: "white",
-      // },
     },
     y: {
       ticks: {
         color: "black",
       },
-      // grid: {
-      //   color: "white",
-      // },
     },
   },
 };
@@ -172,6 +166,8 @@ const MainPage: React.FC<MainPageProps> = ({
   intraId,
 }) => {
   const navigate = useNavigate();
+  const [goodWords, setGoodWords] = useState("");
+
   // 직전회차 시험 데이터 그래프에 사용하는 더미 데이터
   const BarData = {
     labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -183,6 +179,40 @@ const MainPage: React.FC<MainPageProps> = ({
       },
     ],
   };
+
+  // Zustand 스토어에서 상태와 액션 가져오기
+  const userInfo = useDataStore((state) => state.userInfo.data);
+  const userProjects = useDataStore((state) => state.userProjects.data);
+  const walletRanking = useDataStore((state) => state.walletRanking.data);
+  const pointRanking = useDataStore((state) => state.pointRanking.data);
+  const projectDistribution = useDataStore(
+    (state) => state.projectDistribution.data
+  );
+  const levelDistribution = useDataStore(
+    (state) => state.levelDistribution.data
+  );
+
+  // 로딩 상태
+  const userInfoLoading = useDataStore((state) => state.userInfo.loading);
+  const projectsLoading = useDataStore(
+    (state) => state.projectDistribution.loading
+  );
+  const walletLoading = useDataStore((state) => state.walletRanking.loading);
+  const pointLoading = useDataStore((state) => state.pointRanking.loading);
+
+  // 액션 함수들
+  const fetchUserInfo = useDataStore((state) => state.fetchUserInfo);
+  const fetchUserProjects = useDataStore((state) => state.fetchUserProjects);
+  const fetchWalletRanking = useDataStore((state) => state.fetchWalletRanking);
+  const fetchPointRanking = useDataStore((state) => state.fetchPointRanking);
+  const fetchProjectDistribution = useDataStore(
+    (state) => state.fetchProjectDistribution
+  );
+  const fetchLevelDistribution = useDataStore(
+    (state) => state.fetchLevelDistribution
+  );
+
+  // 레벨 분포 차트 데이터
   const [barLevels, setBarLevels] = useState({
     labels: [],
     datasets: [
@@ -193,54 +223,36 @@ const MainPage: React.FC<MainPageProps> = ({
       },
     ],
   });
-  const [walletRank, setWalletRank] = useState([]);
-  const [goodWords, setGoodWords] = useState("");
-  const [evalPointRank, setEvalPointRank] = useState([]);
-  const [cntProjects, setCntProjects] = useState([]);
-  const [userInfo, setUserInfo] = useState({
-    id: 0,
-    intraId: "",
-    level: 0,
-    wallet: 0,
-    collectionPoint: 0,
-    imgURL: "",
-    updatable: false,
-  });
-  const [userProjects, setUserProjects] = useState([]);
 
-  const allLevels = useDataStore((state) => state.allLevels.data);
-  const fetchAllLevels = useDataStore((state) => state.allLevels.fetchData);
-
+  // 레벨 분포 데이터가 변경될 때 차트 데이터 업데이트
   useEffect(() => {
-    if (accessToken) {
-      fetchAllLevels(accessToken);
-    }
-  }, [accessToken]);
-
-  useEffect(() => {
-    if (allLevels && allLevels.length > 0) {
+    if (levelDistribution && levelDistribution.length > 0) {
       setBarLevels({
-        labels: allLevels.map((level) => level.level), // level 값을 labels로 사용
+        labels: levelDistribution.map((level) => level.level), // level 값을 labels로 사용
         datasets: [
           {
-            data: allLevels.map((level) => level.count), // count 값을 data로 사용
+            data: levelDistribution.map((level) => level.count), // count 값을 data로 사용
             backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
             borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
           },
         ],
       });
     }
-  }, [allLevels]);
+  }, [levelDistribution]);
 
+  // 초기 데이터 로드
   useEffect(() => {
-    getProjects();
-    // getLevels();
-    getRankWallet();
-    getUsers();
-    getUserProjects();
-    getUserInfo();
+    if (accessToken && intraId) {
+      fetchUserInfo(accessToken, intraId);
+      fetchUserProjects(accessToken, intraId);
+      fetchWalletRanking(accessToken);
+      fetchPointRanking(accessToken);
+      fetchProjectDistribution(accessToken);
+      fetchLevelDistribution(accessToken);
+    }
+
     if (!accessToken) navigate("/");
-  }, []);
+  }, [accessToken, intraId]);
 
   function logoutBtn() {
     setAccessToken("");
@@ -248,86 +260,10 @@ const MainPage: React.FC<MainPageProps> = ({
     navigate("/");
   }
 
-  function getProjects() {
-    axios
-      .get("/api/projects/distribution", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((res) => {
-        const projects = res.data.data.distribution;
-        // 데이터를 배열로 변환
-        const projectArray = [];
-        for (const projectName in projects) {
-          const count = parseInt(projects[projectName]);
-          projectArray.push({ projectName, count });
-        }
-        const sortedCntProjects = projectArray.sort(
-          (a, b) => b.count - a.count
-        );
-        const topFive = sortedCntProjects.slice(0, 5);
-        setCntProjects(topFive);
-      });
-  }
-
-  function getRankWallet() {
-    axios
-      .get("/api/users/ranking?type=wallet&size=5", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((res) => {
-        setWalletRank(res.data.data);
-      });
-  }
-
-  // function getLevels: React.FC<any> () {
-  //   axios
-  //     .get("/api/levels", {
-  //       headers: { Authorization: `Bearer ${accessToken}` },
-  //     })
-  //     .then((res) => {
-  //       // console.log("Levels:", res.data.data);
-  //       setBarLevels({
-  //         labels: Object.keys(res.data.data.levelResponseList),
-  //         datasets: [
-  //           {
-  //             data: Object.values(res.data.data.levelResponseList),
-  //             backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
-  //             borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
-  //           },
-  //         ],
-  //       });
-  //     });
-  // }
-
-  function getUsers() {
-    axios
-      .get("/api/users/ranking?type=correction-point&size=5", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((res) => {
-        setEvalPointRank(res.data.data);
-      });
-  }
-
-  function getUserProjects() {
-    axios
-      .get(`/api/users/${intraId}/projects`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((res) => {
-        setUserProjects(res.data.data);
-      });
-  }
-
-  function getUserInfo() {
-    axios
-      .get(`/api/users/${intraId}`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((res) => {
-        setUserInfo(res.data.data);
-      });
-  }
+  // 프로젝트 분포 데이터 정렬 및 상위 5개 추출
+  const topProjects = projectDistribution
+    ? [...projectDistribution].sort((a, b) => b.count - a.count).slice(0, 5)
+    : [];
 
   return (
     <>
@@ -335,15 +271,11 @@ const MainPage: React.FC<MainPageProps> = ({
         <SideBar />
         <Mainbox>
           <Goodwords>{goodWords}</Goodwords>
-          <UserInfo userInfo={userInfo} userProjects={userProjects} />
+          {userInfo && userProjects && (
+            <UserInfo userInfo={userInfo} userProjects={userProjects} />
+          )}
           <div className="ml-10">
-            <button
-              onClick={() => {
-                logoutBtn();
-              }}
-            >
-              로그아웃버튼
-            </button>
+            <button onClick={logoutBtn}>로그아웃버튼</button>
             <div>인트라아이디 : {intraId}</div>
           </div>
           <CardRow>
@@ -362,15 +294,13 @@ const MainPage: React.FC<MainPageProps> = ({
                           </tr>
                         </thead>
                         <tbody>
-                          {cntProjects.map((rank, index) => {
-                            return (
-                              <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{rank.projectName}</td>
-                                <td>{rank.count}</td>
-                              </tr>
-                            );
-                          })}
+                          {topProjects.map((project, index) => (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>{project.projectName}</td>
+                              <td>{project.count}</td>
+                            </tr>
+                          ))}
                         </tbody>
                       </StyledTable>
                     ) : data === "보유 월렛 랭킹" ? (
@@ -383,15 +313,13 @@ const MainPage: React.FC<MainPageProps> = ({
                           </tr>
                         </thead>
                         <tbody>
-                          {walletRank.map((rank, index) => {
-                            return (
-                              <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{rank.intraId}</td>
-                                <td>{rank.wallet}</td>
-                              </tr>
-                            );
-                          })}
+                          {walletRanking.map((user: User, index) => (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>{user.intraId}</td>
+                              <td>{user.wallet}</td>
+                            </tr>
+                          ))}
                         </tbody>
                       </StyledTable>
                     ) : (
@@ -404,15 +332,13 @@ const MainPage: React.FC<MainPageProps> = ({
                           </tr>
                         </thead>
                         <tbody>
-                          {evalPointRank.map((rank, index) => {
-                            return (
-                              <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{rank.intraId}</td>
-                                <td>{rank.collectionPoint}</td>
-                              </tr>
-                            );
-                          })}
+                          {pointRanking.map((user: User, index) => (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>{user.intraId}</td>
+                              <td>{user.collectionPoint}</td>
+                            </tr>
+                          ))}
                         </tbody>
                       </StyledTable>
                     )}
@@ -428,7 +354,7 @@ const MainPage: React.FC<MainPageProps> = ({
                 <CardTwo key={key}>
                   <CardTitle>{data}</CardTitle>
                   <CardContents>
-                    {data == "직전 회차 시험 통과율" ? (
+                    {data === "직전 회차 시험 통과율" ? (
                       <Bar data={BarData} options={Options}></Bar>
                     ) : (
                       <Bar data={barLevels} options={Options}></Bar>

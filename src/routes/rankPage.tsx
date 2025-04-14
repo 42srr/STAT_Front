@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDataStore } from "../store/useDataStore";
+import { User } from "../store/types";
 
 const Layout = styled.div`
   display: flex;
@@ -62,28 +63,43 @@ const RankPage: React.FC<RankPageProps> = ({
   accessToken,
   refreshToken,
 }) => {
-  let [switchs, setSwitchs] = useState(0);
-  let [activeBtn, setActiveBtn] = useState(0);
+  const [switchs, setSwitchs] = useState(0);
+  const [activeBtn, setActiveBtn] = useState(0);
 
-  const allProjects = useDataStore((state) => state.allProjects.data);
-  const fetchAllProjects = useDataStore((state) => state.allProjects.fetchData);
-  const allUsers = useDataStore((state) => state.allUsers.data);
-  const fetchAllUsers = useDataStore((state) => state.allUsers.fetchData);
-  const allWallet = useDataStore((state) => state.allWallet.data);
-  const fetchAllWallet = useDataStore((state) => state.allWallet.fetchData);
-  const allLevels = useDataStore((state) => state.allLevels.data);
-  const fetchAllLevels = useDataStore((state) => state.allLevels.fetchData);
+  // Zustand 스토어에서 데이터 및 액션 가져오기
+  const walletRanking = useDataStore((state) => state.walletRanking.data);
+  const pointRanking = useDataStore((state) => state.pointRanking.data);
+  const projectDistribution = useDataStore(
+    (state) => state.projectDistribution.data
+  );
+  const levelDistribution = useDataStore(
+    (state) => state.levelDistribution.data
+  );
+
+  // 로딩 상태
+  const walletLoading = useDataStore((state) => state.walletRanking.loading);
+  const pointLoading = useDataStore((state) => state.pointRanking.loading);
+
+  // 액션 함수들
+  const fetchWalletRanking = useDataStore((state) => state.fetchWalletRanking);
+  const fetchPointRanking = useDataStore((state) => state.fetchPointRanking);
+  const fetchProjectDistribution = useDataStore(
+    (state) => state.fetchProjectDistribution
+  );
+  const fetchLevelDistribution = useDataStore(
+    (state) => state.fetchLevelDistribution
+  );
 
   useEffect(() => {
     if (accessToken) {
-      fetchAllProjects(accessToken);
-      fetchAllUsers(accessToken);
-      fetchAllWallet(accessToken);
-      fetchAllLevels(accessToken);
+      fetchWalletRanking(accessToken);
+      fetchPointRanking(accessToken);
+      fetchProjectDistribution(accessToken);
+      fetchLevelDistribution(accessToken);
     }
   }, [accessToken]);
 
-  let btnClick = (idx: number) => {
+  const btnClick = (idx: number) => {
     setSwitchs(idx);
     setActiveBtn(idx);
   };
@@ -148,7 +164,7 @@ const RankPage: React.FC<RankPageProps> = ({
           </TableRow>
         </thead>
         <tbody>
-          {allUsers.map((user) => (
+          {pointRanking.map((user: User) => (
             <TableRow key={user.intraId}>
               <TableData>{user.intraId}</TableData>
               <TableData>{user.wallet}</TableData>
@@ -188,6 +204,20 @@ const RankPage: React.FC<RankPageProps> = ({
     );
   };
 
+  // 로딩 상태 처리
+  if (walletLoading || pointLoading) {
+    return (
+      <Layout>
+        <SideBar />
+        <Mainbox>
+          <div style={{ textAlign: "center", padding: "2rem" }}>
+            데이터를 불러오는 중입니다...
+          </div>
+        </Mainbox>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <SideBar />
@@ -203,11 +233,11 @@ const RankPage: React.FC<RankPageProps> = ({
             </TableRow>
           </thead>
           <tbody>
-            {allUsers.map((user) => (
+            {pointRanking.map((user: User) => (
               <TableRow key={user.intraId}>
                 <TableData>{Number(user.level).toFixed(2)}</TableData>
                 <TableData>
-                  <img src={user.image} />
+                  <img src={user.imgURL} alt={user.intraId} />
                 </TableData>
                 <TableData>{user.intraId}</TableData>
                 <TableData>{user.collectionPoint}</TableData>
