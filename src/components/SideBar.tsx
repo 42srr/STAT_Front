@@ -35,6 +35,7 @@ const DrawerContainer = muiStyled(Drawer)(({ theme }) => ({
     boxSizing: "border-box",
     backgroundColor: "rgba(255, 255, 255, 0.9)",
     borderRight: "1px solid rgba(0, 0, 0, 0.12)",
+    paddingTop: "64px",
   },
 }));
 

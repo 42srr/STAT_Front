@@ -39,7 +39,7 @@ const App: React.FC<AppProps> = () => {
         <Route
           path="/main"
           element={
-            <ProtectedRoute accessToken={accessToken}>
+            <ProtectedRoute accessToken={accessToken} intraId={intraId}>
               <MainPage
                 setAccessToken={setAccessToken}
                 setRefreshToken={setRefreshToken}
@@ -54,7 +54,7 @@ const App: React.FC<AppProps> = () => {
         <Route
           path="/rank"
           element={
-            <ProtectedRoute accessToken={accessToken}>
+            <ProtectedRoute accessToken={accessToken} intraId={intraId}>
               <RankPage
                 setAccessToken={setAccessToken}
                 setRefreshToken={setRefreshToken}
@@ -68,7 +68,7 @@ const App: React.FC<AppProps> = () => {
         <Route
           path="/set"
           element={
-            <ProtectedRoute accessToken={accessToken}>
+            <ProtectedRoute accessToken={accessToken} intraId={intraId}>
               <SetPage
                 accessToken={accessToken}
                 intraId={intraId}
@@ -80,7 +80,7 @@ const App: React.FC<AppProps> = () => {
         <Route
           path="/reservation"
           element={
-            <ProtectedRoute accessToken={accessToken}>
+            <ProtectedRoute accessToken={accessToken} intraId={intraId}>
               <ReservationPage
                 accessToken={accessToken}
                 intraId={intraId}
@@ -92,7 +92,7 @@ const App: React.FC<AppProps> = () => {
         <Route
           path="/reservationDetail"
           element={
-            <ProtectedRoute accessToken={accessToken}>
+            <ProtectedRoute accessToken={accessToken} intraId={intraId}>
               <ReservationDetail
                 accessToken={accessToken}
                 intraId={intraId}
@@ -104,7 +104,7 @@ const App: React.FC<AppProps> = () => {
         <Route
           path="/info"
           element={
-            <ProtectedRoute accessToken={accessToken}>
+            <ProtectedRoute accessToken={accessToken} intraId={intraId}>
               <InfoPage
                 accessToken={accessToken}
                 intraId={intraId}

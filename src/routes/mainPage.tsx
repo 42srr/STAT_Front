@@ -24,8 +24,6 @@ import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -198,53 +196,16 @@ const MainPage: React.FC<MainPageProps> = ({
     : [];
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "#f5f5f7" }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-          backgroundColor: "white",
-        }}
-      >
-        <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, fontWeight: "bold", color: "#1976d2" }}
-          >
-            42 STAT & RESERVATION
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Chip
-              icon={<AccountCircleIcon />}
-              label={intraId}
-              color="primary"
-              variant="outlined"
-            />
-            <Button
-              variant="contained"
-              color="error"
-              size="small"
-              startIcon={<LogoutIcon />}
-              onClick={logoutBtn}
-            >
-              로그아웃
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-
+    <>
       <SideBar />
-
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           p: 3,
-          // ml: "260px",
+          ml: "260px",
           width: { sm: `calc(100% - 260px)` },
-          mt: "64px", // AppBar 높이만큼 margin-top 추가
+          mt: "64px", // 상단바 높이만큼 margin-top 추가
         }}
       >
         <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -497,7 +458,7 @@ const MainPage: React.FC<MainPageProps> = ({
           </Grid>
         </Container>
       </Box>
-    </Box>
+    </>
   );
 };
 
