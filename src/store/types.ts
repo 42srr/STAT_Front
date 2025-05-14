@@ -70,6 +70,7 @@ export interface StoreState {
 
   // 액션 함수들
   fetchUserInfo: (accessToken: string, intraId: string) => Promise<void>;
+  refreshUserInfo: (accessToken: string, intraId: string) => Promise<void>;
   fetchUserProjects: (accessToken: string, intraId: string) => Promise<void>;
   fetchWalletRanking: (accessToken: string) => Promise<void>;
   fetchPointRanking: (accessToken: string) => Promise<void>;

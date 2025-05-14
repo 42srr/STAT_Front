@@ -25,6 +25,24 @@ export const api = {
     }
   },
 
+  // 사용자 정보 새로고침
+  refreshUserInfo: async (
+    accessToken: string,
+    userId: string
+  ): Promise<User> => {
+    try {
+      const response = await axios.patch<ApiResponse<User>>(
+        `${API_BASE_URL}/api/users/${userId}`,
+        {},
+        createAuthHeader(accessToken)
+      );
+      return response.data.data;
+    } catch (error) {
+      console.error("Error refreshing user info:", error);
+      throw error;
+    }
+  },
+
   // 사용자 프로젝트 조회
   getUserProjects: async (
     accessToken: string,

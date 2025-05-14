@@ -272,10 +272,18 @@ const MainPage: React.FC<MainPageProps> = ({
     >
       <Container maxWidth="xl" sx={{ py: 4 }}>
         {/* 유저 정보 섹션 */}
-        {userInfo && userProjects && (
-          <Card elevation={2} sx={{ mb: 4, p: 2 }}>
-            <UserInfo userInfo={userInfo} userProjects={userProjects} />
-          </Card>
+        {userInfo && (
+          <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <UserInfo
+                  userInfo={userInfo}
+                  userProjects={userProjects}
+                  accessToken={accessToken}
+                />
+              </Grid>
+            </Grid>
+          </Container>
         )}
 
         {/* 랭킹 카드 섹션 */}

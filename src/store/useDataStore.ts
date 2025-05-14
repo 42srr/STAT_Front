@@ -82,6 +82,37 @@ export const useDataStore = create<StoreState>((set, get) => ({
     }
   },
 
+  // 사용자 정보 새로고침
+  refreshUserInfo: async (accessToken: string, userId: string) => {
+    try {
+      set((state) => ({
+        userInfo: {
+          ...state.userInfo,
+          loading: true,
+          error: null,
+        },
+      }));
+
+      const data = await api.refreshUserInfo(accessToken, userId);
+
+      set((state) => ({
+        userInfo: {
+          data,
+          loading: false,
+          error: null,
+        },
+      }));
+    } catch (error: any) {
+      set((state) => ({
+        userInfo: {
+          ...state.userInfo,
+          loading: false,
+          error: error.message || "사용자 정보를 새로고침하는데 실패했습니다.",
+        },
+      }));
+    }
+  },
+
   // 사용자 프로젝트 조회
   fetchUserProjects: async (accessToken: string, userId: string) => {
     try {
